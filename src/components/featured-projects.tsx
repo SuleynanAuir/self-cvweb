@@ -29,9 +29,9 @@ export function FeaturedProjects({ projects }: FeaturedProjectsProps) {
               </Link>
             ) : null}
             <Link
-              href="/projects"
+              href={`/projects/${project.slug}`}
               className="focus-ring inline-flex h-10 w-10 items-center justify-center rounded-md border border-border text-muted-foreground transition hover:border-accent hover:text-foreground"
-              aria-label="Open project explorer"
+              aria-label={`View ${project.title} project page`}
             >
               <ArrowUpRight className="h-4 w-4" />
             </Link>

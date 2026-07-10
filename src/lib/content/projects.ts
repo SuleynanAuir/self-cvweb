@@ -47,6 +47,10 @@ export function getAllProjects(): Project[] {
     });
 }
 
+export function getProjectBySlug(slug: string): Project | undefined {
+  return getAllProjects().find((project) => project.slug === slug);
+}
+
 export function getProjectStats(projects: Project[]) {
   const categories = new Set(projects.map((project) => project.category));
   const featured = projects.filter((project) => project.featured).length;

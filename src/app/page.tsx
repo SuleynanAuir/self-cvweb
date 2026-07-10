@@ -77,7 +77,7 @@ export default function HomePage() {
           <SectionHeading
             eyebrow="Project System"
             title="Research projects as reusable knowledge artifacts."
-            description="Each project is stored as Markdown metadata today and can become a detailed architecture, paper, and code explanation page in Phase 2."
+            description="Each project is stored as Markdown metadata and opens into a concise project page with summary, focus, stack, and source links."
           />
           <Link
             href="/projects"

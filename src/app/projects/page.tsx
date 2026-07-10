@@ -18,7 +18,7 @@ export default function ProjectsPage() {
         <SectionHeading
           eyebrow="Open Source Research"
           title="Projects organized by research question, method, and learning outcome."
-          description="Phase 1 ships the project knowledge system and explorer. Phase 2 will expand each project into a dedicated research case study with architecture diagrams and implementation notes."
+          description="Each project includes a short summary, research focus, stack, and a direct link to its dedicated project page."
         />
         <div className="grid grid-cols-3 overflow-hidden rounded-lg border border-border bg-surface">
           {stats.map((stat) => (

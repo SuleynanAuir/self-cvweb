@@ -111,7 +111,7 @@ export function ProjectExplorer({ projects }: ProjectExplorerProps) {
               </div>
             </div>
 
-            <div className="flex gap-2 lg:justify-end">
+            <div className="flex flex-wrap gap-2 lg:justify-end">
               {project.github ? (
                 <Link
                   href={project.github}
@@ -124,11 +124,12 @@ export function ProjectExplorer({ projects }: ProjectExplorerProps) {
                 </Link>
               ) : null}
               <Link
-                href="/research-map"
-                className="focus-ring inline-flex h-10 w-10 items-center justify-center rounded-md border border-border text-muted-foreground transition hover:border-accent hover:text-foreground"
-                aria-label="View related research map"
+                href={`/projects/${project.slug}`}
+                className="focus-ring inline-flex h-10 items-center gap-2 rounded-md border border-border px-3 text-sm font-medium text-muted-foreground transition hover:border-accent hover:text-foreground"
+                aria-label={`View ${project.title} project page`}
               >
                 <ArrowUpRight className="h-4 w-4" />
+                View project
               </Link>
             </div>
           </article>

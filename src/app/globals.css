@@ -4,30 +4,19 @@
 
 :root {
   color-scheme: light;
-  --background: 0 0% 99%;
-  --foreground: 225 18% 11%;
-  --muted: 220 17% 95%;
-  --muted-foreground: 222 9% 42%;
-  --border: 220 13% 87%;
+  --background: 214 44% 98%;
+  --foreground: 220 26% 14%;
+  --muted: 214 45% 96%;
+  --muted-foreground: 220 11% 43%;
+  --border: 214 31% 88%;
   --surface: 0 0% 100%;
-  --accent: 221 84% 56%;
+  --accent: 217 89% 57%;
   --accent-foreground: 0 0% 100%;
-  --violet: 263 76% 58%;
-  --cyan: 191 92% 39%;
-}
-
-.dark {
-  color-scheme: dark;
-  --background: 225 22% 7%;
-  --foreground: 220 18% 92%;
-  --muted: 224 17% 13%;
-  --muted-foreground: 220 10% 66%;
-  --border: 224 15% 20%;
-  --surface: 225 20% 9%;
-  --accent: 216 92% 61%;
-  --accent-foreground: 225 22% 7%;
-  --violet: 265 86% 68%;
-  --cyan: 190 92% 58%;
+  --accent-soft: 214 100% 94%;
+  --violet: 262 66% 60%;
+  --cyan: 191 88% 42%;
+  --green: 142 42% 42%;
+  --amber: 39 92% 52%;
 }
 
 * {
@@ -42,7 +31,7 @@ body {
   min-height: 100vh;
   margin: 0;
   background:
-    linear-gradient(180deg, hsl(var(--background)) 0%, hsl(var(--background)) 62%, hsl(var(--muted)) 100%);
+    linear-gradient(180deg, hsl(var(--background)) 0%, hsl(214 70% 99%) 48%, hsl(215 44% 96%) 100%);
   color: hsl(var(--foreground));
   font-family:
     ui-sans-serif,
@@ -76,7 +65,7 @@ a {
 }
 
 .gradient-text {
-  background: linear-gradient(90deg, hsl(var(--foreground)), hsl(var(--accent)), hsl(var(--violet)));
+  background: linear-gradient(90deg, hsl(var(--accent)), hsl(var(--cyan)), hsl(var(--green)));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -89,4 +78,92 @@ a {
 
 .focus-ring:focus-visible {
   outline-color: hsl(var(--accent));
+}
+
+.surface-grid {
+  background-image:
+    linear-gradient(hsl(var(--border) / 0.45) 1px, transparent 1px),
+    linear-gradient(90deg, hsl(var(--border) / 0.45) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+.material-card {
+  border: 1px solid hsl(var(--border));
+  border-radius: 24px;
+  background: hsl(var(--surface) / 0.92);
+  box-shadow: 0 1px 2px rgba(60, 64, 67, 0.10), 0 8px 24px rgba(60, 64, 67, 0.08);
+}
+
+.interactive-lift {
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    border-color 180ms ease,
+    background-color 180ms ease;
+}
+
+.interactive-lift:hover {
+  transform: translateY(-3px);
+  border-color: hsl(var(--accent) / 0.42);
+  box-shadow: 0 16px 38px rgba(60, 64, 67, 0.14), 0 4px 10px rgba(60, 64, 67, 0.08);
+}
+
+.material-button {
+  position: relative;
+  overflow: hidden;
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease,
+    background-color 160ms ease,
+    border-color 160ms ease;
+}
+
+.material-button::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, hsl(var(--accent-foreground) / 0.18), transparent);
+  opacity: 0;
+  transform: translateX(-100%);
+  transition:
+    opacity 180ms ease,
+    transform 420ms ease;
+}
+
+.material-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(26, 115, 232, 0.18);
+}
+
+.material-button:hover::after {
+  opacity: 1;
+  transform: translateX(100%);
+}
+
+.material-button:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.analysis-line {
+  position: relative;
+  overflow: hidden;
+}
+
+.analysis-line::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 38%;
+  background: linear-gradient(90deg, transparent, hsl(var(--accent) / 0.22), transparent);
+  animation: progress-sweep 2.4s ease-in-out infinite;
+}
+
+@keyframes progress-sweep {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(220%);
+  }
 }

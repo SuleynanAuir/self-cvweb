@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, BrainCircuit, GitBranch, Layers3 } from "lucide-react";
+import { ArrowRight, BrainCircuit, FileSearch, Layers3 } from "lucide-react";
 import { FeaturedProjects } from "@/components/featured-projects";
 import { ResearchHero } from "@/components/research-hero";
 import { ResearchTimeline } from "@/components/research-timeline";
@@ -15,27 +15,33 @@ export default function HomePage() {
     <>
       <ResearchHero />
 
-      <section className="border-y border-border bg-surface">
-        <div className="mx-auto grid max-w-7xl gap-0 px-6 py-0 md:grid-cols-3 lg:px-8">
+      <section className="bg-surface/70">
+        <div className="mx-auto grid max-w-7xl gap-4 px-6 py-8 md:grid-cols-3 lg:px-8">
           {[
             {
               icon: BrainCircuit,
-              title: "Research Direction",
-              body: "LLM agents, RAG systems, multimodal learning, computer vision, and AI engineering foundations.",
+              title: "Reasoning Agent",
+              body: "Plans multi-step material analysis, checks evidence conflict, and keeps hypotheses traceable.",
             },
             {
-              icon: GitBranch,
-              title: "Open Source Systems",
-              body: "Agent simulators, deep search workflows, fine-tuning pipelines, CV projects, and ML implementations.",
+              icon: FileSearch,
+              title: "GraphRAG Retrieval",
+              body: "Searches literature chunks, graph entities, figures, and project notes with source-aware ranking.",
             },
             {
               icon: Layers3,
-              title: "Educational Platform",
-              body: "A living map of concepts, papers, code paths, and learning outcomes for AI research growth.",
+              title: "Report Workspace",
+              body: "Turns retrieved evidence into structured summaries, project pages, and reusable research artifacts.",
             },
-          ].map((item) => (
-            <div key={item.title} className="border-border py-8 md:border-l md:px-8 first:md:border-l-0">
-              <item.icon className="mb-5 h-6 w-6 text-accent" strokeWidth={1.8} />
+          ].map((item, index) => (
+            <div
+              key={item.title}
+              className="material-card interactive-lift animate-fade-up p-6"
+              style={{ animationDelay: `${index * 80}ms` }}
+            >
+              <div className="mb-5 grid h-11 w-11 place-items-center rounded-2xl bg-accent-soft text-accent">
+                <item.icon className="h-5 w-5" strokeWidth={1.9} />
+              </div>
               <h2 className="text-lg font-semibold tracking-normal">{item.title}</h2>
               <p className="mt-3 max-w-sm text-sm leading-6 text-muted-foreground">{item.body}</p>
             </div>
@@ -46,21 +52,22 @@ export default function HomePage() {
       <section className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
         <SectionHeading
           eyebrow="Research Focus"
-          title="A personal map from models to autonomous systems."
-          description="The site organizes learning, research projects, implementation notes, and paper reading around the concepts that matter for practical AI research."
+          title="Materials science intelligence, organized as usable agent modules."
+          description="The platform frames literature, properties, experiments, visual evidence, and project notes as connected objects for scientific question answering."
         />
         <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {focusAreas.map((area) => (
+          {focusAreas.map((area, index) => (
             <article
               key={area.title}
-              className="min-h-48 rounded-lg border border-border bg-surface p-6 shadow-soft transition hover:-translate-y-0.5 hover:border-accent/50"
+              className="material-card interactive-lift min-h-48 animate-fade-up p-6"
+              style={{ animationDelay: `${index * 55}ms` }}
             >
-              <div className="text-xs font-semibold uppercase tracking-[0.22em] text-accent">{area.code}</div>
+              <div className="inline-flex rounded-full bg-muted px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-accent">{area.code}</div>
               <h3 className="mt-5 text-xl font-semibold tracking-normal">{area.title}</h3>
               <p className="mt-3 text-sm leading-6 text-muted-foreground">{area.description}</p>
               <div className="mt-5 flex flex-wrap gap-2">
                 {area.tags.map((tag) => (
-                  <span key={tag} className="rounded-full border border-border px-3 py-1 text-xs text-muted-foreground">
+                  <span key={tag} className="rounded-full border border-border bg-surface px-3 py-1 text-xs text-muted-foreground shadow-sm">
                     {tag}
                   </span>
                 ))}
@@ -81,7 +88,7 @@ export default function HomePage() {
           />
           <Link
             href="/projects"
-            className="focus-ring inline-flex h-11 items-center justify-center gap-2 rounded-md bg-foreground px-5 text-sm font-medium text-background transition hover:opacity-90"
+            className="material-button focus-ring inline-flex h-11 items-center justify-center gap-2 rounded-full bg-accent px-5 text-sm font-medium text-accent-foreground"
           >
             Explore projects
             <ArrowRight className="h-4 w-4" />

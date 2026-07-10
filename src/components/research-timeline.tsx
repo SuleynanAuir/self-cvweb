@@ -3,27 +3,34 @@ import { SectionHeading } from "@/components/section-heading";
 
 export function ResearchTimeline() {
   return (
-    <section className="border-y border-border bg-surface">
+    <section className="border-y border-border/70 bg-surface/76">
       <div className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
         <SectionHeading
-          eyebrow="Research Timeline"
-          title="A staged path from foundations to autonomous AI systems."
-          description="The roadmap is intentionally research-oriented: build foundations, implement systems, then connect papers and projects into a reusable knowledge graph."
+          eyebrow="Agent Pipeline"
+          title="From raw research evidence to structured scientific answers."
+          description="A staged workflow connects data preparation, graph retrieval, reasoning, and report generation into one coherent analysis loop."
         />
-        <div className="mt-12 grid gap-0 overflow-hidden rounded-lg border border-border md:grid-cols-3">
+        <div className="mt-12 grid gap-4 md:grid-cols-3">
           {researchTimeline.map((item, index) => (
-            <article key={item.year} className="border-border bg-background p-6 md:border-l first:md:border-l-0">
+            <article
+              key={item.year}
+              className="material-card interactive-lift animate-fade-up p-6"
+              style={{ animationDelay: `${index * 90}ms` }}
+            >
               <div className="flex items-center justify-between gap-4">
-                <div className="text-3xl font-semibold">{item.year}</div>
-                <div className="flex h-8 w-8 items-center justify-center rounded-full border border-border text-xs text-muted-foreground">
+                <div className="text-3xl font-semibold text-accent">{item.year}</div>
+                <div className="flex h-9 w-9 items-center justify-center rounded-full bg-accent-soft text-xs font-semibold text-accent">
                   {index + 1}
                 </div>
+              </div>
+              <div className="analysis-line mt-6 h-2 overflow-hidden rounded-full bg-muted">
+                <div className="h-full rounded-full bg-accent" style={{ width: `${64 + index * 12}%` }} />
               </div>
               <h3 className="mt-7 text-xl font-semibold tracking-normal">{item.title}</h3>
               <p className="mt-4 text-sm leading-6 text-muted-foreground">{item.description}</p>
               <div className="mt-6 flex flex-wrap gap-2">
                 {item.tags.map((tag) => (
-                  <span key={tag} className="rounded-full bg-muted px-3 py-1 text-xs text-muted-foreground">
+                  <span key={tag} className="rounded-full border border-border bg-surface px-3 py-1 text-xs text-muted-foreground shadow-sm">
                     {tag}
                   </span>
                 ))}

@@ -3,9 +3,9 @@ import "./globals.css";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 
-const siteTitle = "AI Research Laboratory";
+const siteTitle = "Materials AI Research Assistant";
 const siteDescription =
-  "Exploring intelligence from deep learning to autonomous agents through research notes, open source systems, and educational AI roadmaps.";
+  "A light, Material-inspired AI Agent and GraphRAG workspace for materials science research, project exploration, and knowledge analysis.";
 
 export const metadata: Metadata = {
   title: {
@@ -29,14 +29,8 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  colorScheme: "light dark",
+  colorScheme: "light",
 };
-
-function ThemeScript() {
-  const code = `try{var t=localStorage.getItem("theme");var d=window.matchMedia("(prefers-color-scheme: dark)").matches;document.documentElement.classList.toggle("dark",t?t==="dark":d)}catch(e){}`;
-
-  return <script dangerouslySetInnerHTML={{ __html: code }} />;
-}
 
 export default function RootLayout({
   children,
@@ -44,9 +38,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en">
       <body>
-        <ThemeScript />
         <SiteHeader />
         <main>{children}</main>
         <SiteFooter />

@@ -46,15 +46,17 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
     <div className="mx-auto max-w-6xl px-6 py-14 lg:px-8">
       <Link
         href="/projects"
-        className="focus-ring inline-flex items-center gap-2 rounded-md text-sm font-medium text-muted-foreground transition hover:text-foreground"
+        className="focus-ring inline-flex h-10 items-center gap-2 rounded-full border border-border bg-surface px-4 text-sm font-medium text-muted-foreground shadow-material-sm transition hover:-translate-y-0.5 hover:border-accent hover:text-accent"
       >
         <ArrowLeft className="h-4 w-4" />
         Projects
       </Link>
 
       <section className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,0.72fr)_minmax(280px,0.28fr)] lg:items-start">
-        <div>
-          <div className="text-xs font-semibold uppercase tracking-[0.22em] text-accent">{project.category}</div>
+        <div className="material-card p-7">
+          <div className="inline-flex rounded-full bg-accent-soft px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-accent">
+            {project.category}
+          </div>
           <h1 className="mt-4 max-w-4xl text-4xl font-semibold tracking-normal text-balance md:text-5xl">{project.title}</h1>
           <p className="mt-6 max-w-3xl text-base leading-8 text-muted-foreground">{project.summary}</p>
 
@@ -64,7 +66,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 href={project.github}
                 target="_blank"
                 rel="noreferrer"
-                className="focus-ring inline-flex h-11 items-center gap-2 rounded-md border border-border bg-foreground px-4 text-sm font-medium text-background transition hover:border-accent"
+                className="material-button focus-ring inline-flex h-11 items-center gap-2 rounded-full bg-accent px-4 text-sm font-medium text-accent-foreground"
               >
                 <Github className="h-4 w-4" />
                 GitHub
@@ -72,7 +74,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             ) : null}
             <Link
               href="/research-map"
-              className="focus-ring inline-flex h-11 items-center gap-2 rounded-md border border-border bg-surface px-4 text-sm font-medium text-foreground transition hover:border-accent"
+              className="focus-ring inline-flex h-11 items-center gap-2 rounded-full border border-border bg-surface px-4 text-sm font-medium text-foreground shadow-material-sm transition hover:-translate-y-0.5 hover:border-accent hover:text-accent"
             >
               <ArrowUpRight className="h-4 w-4" />
               Research Map
@@ -80,7 +82,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           </div>
         </div>
 
-        <aside className="rounded-lg border border-border bg-surface p-5">
+        <aside className="material-card p-5">
           <div className="grid gap-5">
             <ProjectFact label="Year" value={String(project.year)} />
             <ProjectFact label="Status" value={project.status} />
@@ -93,7 +95,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
       <section className="mt-12 grid gap-8 lg:grid-cols-[minmax(0,0.68fr)_minmax(280px,0.32fr)] lg:items-start">
         <div className="space-y-8">
           {sections.map((section) => (
-            <section key={section.title} className="border-t border-border pt-7">
+            <section key={section.title} className="material-card p-7">
               <h2 className="text-xl font-semibold tracking-normal">{section.title}</h2>
               <div className="mt-4 space-y-4 text-sm leading-7 text-muted-foreground">
                 {section.paragraphs.map((paragraph) => (
@@ -104,7 +106,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           ))}
         </div>
 
-        <div className="space-y-7 border-t border-border pt-7">
+        <div className="material-card space-y-7 p-6">
           <ProjectList title="Tags" items={project.tags} />
           <ProjectList title="Stack" items={project.stack} />
           <ProjectList title="Related Papers" items={project.papers} />
@@ -116,7 +118,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
 function ProjectFact({ label, value }: { label: string; value: string }) {
   return (
-    <div>
+    <div className="rounded-2xl bg-muted/70 p-4">
       <div className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">{label}</div>
       <div className="mt-2 text-sm font-medium text-foreground">{value}</div>
     </div>
@@ -129,7 +131,7 @@ function ProjectList({ title, items }: { title: string; items: string[] }) {
       <h2 className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">{title}</h2>
       <div className="mt-3 flex flex-wrap gap-2">
         {items.map((item) => (
-          <span key={item} className="rounded-md bg-muted px-2.5 py-1.5 text-xs text-muted-foreground">
+          <span key={item} className="rounded-full border border-border bg-surface px-2.5 py-1.5 text-xs text-muted-foreground shadow-sm">
             {item}
           </span>
         ))}

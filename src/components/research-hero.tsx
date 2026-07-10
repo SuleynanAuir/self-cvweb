@@ -2,95 +2,138 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight, Github, Network } from "lucide-react";
+import { ArrowRight, Atom, CheckCircle2, Database, FileText, Github, Search, Sparkles, type LucideIcon } from "lucide-react";
 
-const focus = ["LLM", "Agent", "RAG", "Multimodal AI", "Computer Vision"];
+const promptChips = ["Bandgap prediction", "Synthesis route", "Polymer electrolyte", "Microstructure QA"];
 
-const nodes = [
-  { label: "AI", x: 50, y: 42, size: "lg" },
-  { label: "LLM", x: 28, y: 24, size: "md" },
-  { label: "Agent", x: 70, y: 22, size: "md" },
-  { label: "RAG", x: 76, y: 58, size: "sm" },
-  { label: "CV", x: 30, y: 64, size: "sm" },
-  { label: "RL", x: 52, y: 76, size: "sm" },
+const reasoningSteps = [
+  { label: "Literature retrieval", detail: "128 papers indexed", progress: 86, color: "bg-accent" },
+  { label: "Graph construction", detail: "42 entities linked", progress: 72, color: "bg-cyan" },
+  { label: "Scientific reasoning", detail: "6 hypotheses ranked", progress: 64, color: "bg-green" },
+  { label: "Report synthesis", detail: "Evidence trace ready", progress: 58, color: "bg-amber" },
 ];
 
-const edges = [
-  ["AI", "LLM"],
-  ["AI", "Agent"],
-  ["AI", "RAG"],
-  ["AI", "CV"],
-  ["AI", "RL"],
-  ["LLM", "Agent"],
-  ["Agent", "RAG"],
-  ["CV", "RAG"],
+const graphNodes = [
+  { label: "Question", meta: "QA", x: 50, y: 18, size: "lg", color: "border-accent bg-accent-soft text-accent" },
+  { label: "Li-ion", meta: "Material", x: 22, y: 36, size: "md", color: "border-cyan/40 bg-cyan/10 text-cyan" },
+  { label: "Paper", meta: "Corpus", x: 76, y: 36, size: "md", color: "border-violet/40 bg-violet/10 text-violet" },
+  { label: "Bandgap", meta: "Property", x: 36, y: 66, size: "sm", color: "border-green/40 bg-green/10 text-green" },
+  { label: "Synthesis", meta: "Route", x: 66, y: 68, size: "sm", color: "border-amber/50 bg-amber/10 text-amber" },
+];
+
+const graphEdges = [
+  [0, 1],
+  [0, 2],
+  [1, 3],
+  [2, 3],
+  [2, 4],
+  [4, 1],
 ];
 
 export function ResearchHero() {
   return (
-    <section className="relative overflow-hidden">
-      <div className="research-grid pointer-events-none absolute inset-0 opacity-70" />
-      <div className="mx-auto grid min-h-[calc(100vh-4rem)] max-w-7xl gap-12 px-6 py-20 lg:grid-cols-[minmax(0,0.9fr)_minmax(420px,0.7fr)] lg:items-center lg:px-8">
+    <section className="relative overflow-hidden border-b border-border/70">
+      <div className="surface-grid pointer-events-none absolute inset-0 opacity-45" />
+      <div className="mx-auto grid min-h-[680px] max-w-7xl gap-8 px-6 py-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(430px,0.75fr)] lg:items-center lg:px-8">
         <div className="relative z-10">
           <motion.div
-            initial={{ opacity: 0, y: 16 }}
+            initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, ease: "easeOut" }}
-            className="inline-flex h-9 items-center gap-2 rounded-full border border-border bg-surface/80 px-4 text-xs font-medium uppercase tracking-[0.22em] text-muted-foreground backdrop-blur"
+            transition={{ duration: 0.5, ease: "easeOut" }}
+            className="inline-flex h-10 items-center gap-2 rounded-full border border-border bg-surface px-4 text-sm font-medium text-muted-foreground shadow-material-sm"
           >
-            <Network className="h-4 w-4 text-accent" />
-            AI Research Engineer
+            <Sparkles className="h-4 w-4 text-accent" />
+            Materials GraphRAG Agent
           </motion.div>
 
           <motion.h1
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.08, ease: "easeOut" }}
-            className="mt-8 max-w-4xl text-5xl font-semibold tracking-normal text-balance md:text-7xl"
+            transition={{ duration: 0.58, delay: 0.08, ease: "easeOut" }}
+            className="mt-7 max-w-4xl text-5xl font-semibold tracking-normal text-balance md:text-7xl"
           >
-            AI Research <span className="gradient-text">Laboratory</span>
+            Scientific AI assistant for <span className="gradient-text">materials reasoning</span>.
           </motion.h1>
 
           <motion.p
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.16, ease: "easeOut" }}
+            transition={{ duration: 0.58, delay: 0.16, ease: "easeOut" }}
             className="mt-6 max-w-2xl text-lg leading-8 text-muted-foreground"
           >
-            Exploring intelligence from deep learning to autonomous agents through open source systems, paper reading, and reusable AI engineering knowledge.
+            A light GraphRAG QA workspace for literature retrieval, material knowledge graphs, hypothesis ranking, and evidence-backed research reports.
           </motion.p>
 
           <motion.div
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.24, ease: "easeOut" }}
-            className="mt-8 flex flex-wrap gap-2"
+            transition={{ duration: 0.58, delay: 0.24, ease: "easeOut" }}
+            className="material-card mt-8 p-4"
           >
-            {focus.map((item) => (
-              <span key={item} className="rounded-full border border-border bg-surface/80 px-4 py-2 text-sm text-muted-foreground backdrop-blur">
-                {item}
-              </span>
-            ))}
+            <div className="flex min-h-14 items-center gap-3 rounded-2xl border border-border bg-muted/70 px-4">
+              <Search className="h-5 w-5 shrink-0 text-accent" />
+              <div className="min-w-0 flex-1 text-sm text-foreground">
+                Find solid-state electrolyte candidates with high ionic conductivity and stable synthesis routes
+              </div>
+              <button
+                type="button"
+                className="material-button focus-ring hidden h-10 items-center gap-2 rounded-full bg-accent px-4 text-sm font-medium text-accent-foreground sm:inline-flex"
+              >
+                Analyze
+                <ArrowRight className="h-4 w-4" />
+              </button>
+            </div>
+
+            <div className="mt-4 flex flex-wrap gap-2">
+              {promptChips.map((chip) => (
+                <span key={chip} className="rounded-full border border-border bg-surface px-3 py-1.5 text-xs font-medium text-muted-foreground shadow-sm">
+                  {chip}
+                </span>
+              ))}
+            </div>
+
+            <div className="mt-5 grid gap-3">
+              {reasoningSteps.map((step, index) => (
+                <motion.div
+                  key={step.label}
+                  initial={{ opacity: 0, x: -12 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.36 + index * 0.08, duration: 0.42 }}
+                  className="grid gap-2"
+                >
+                  <div className="flex items-center justify-between gap-3 text-xs">
+                    <div className="flex items-center gap-2 font-medium text-foreground">
+                      <span className="h-2 w-2 rounded-full bg-accent animate-soft-pulse" />
+                      {step.label}
+                    </div>
+                    <span className="text-muted-foreground">{step.detail}</span>
+                  </div>
+                  <div className="analysis-line h-2 overflow-hidden rounded-full bg-muted">
+                    <div className={`h-full rounded-full ${step.color}`} style={{ width: `${step.progress}%` }} />
+                  </div>
+                </motion.div>
+              ))}
+            </div>
           </motion.div>
 
           <motion.div
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.32, ease: "easeOut" }}
-            className="mt-10 flex flex-col gap-3 sm:flex-row"
+            transition={{ duration: 0.58, delay: 0.34, ease: "easeOut" }}
+            className="mt-6 flex flex-col gap-3 sm:flex-row"
           >
             <Link
               href="/projects"
-              className="focus-ring inline-flex h-12 items-center justify-center gap-2 rounded-md bg-foreground px-6 text-sm font-medium text-background transition hover:opacity-90"
+              className="material-button focus-ring inline-flex h-12 items-center justify-center gap-2 rounded-full bg-accent px-6 text-sm font-medium text-accent-foreground"
             >
-              View research projects
+              Explore research projects
               <ArrowRight className="h-4 w-4" />
             </Link>
             <Link
               href="https://github.com/SuleynanAuir"
               target="_blank"
               rel="noreferrer"
-              className="focus-ring inline-flex h-12 items-center justify-center gap-2 rounded-md border border-border bg-surface/80 px-6 text-sm font-medium text-foreground backdrop-blur transition hover:border-accent"
+              className="focus-ring inline-flex h-12 items-center justify-center gap-2 rounded-full border border-border bg-surface px-6 text-sm font-medium text-foreground shadow-material-sm transition hover:-translate-y-0.5 hover:border-accent hover:text-accent"
             >
               <Github className="h-4 w-4" />
               GitHub
@@ -99,11 +142,10 @@ export function ResearchHero() {
         </div>
 
         <motion.div
-          initial={{ opacity: 0, scale: 0.97 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.75, delay: 0.18, ease: "easeOut" }}
-          className="relative z-10 min-h-[420px] rounded-lg border border-border bg-surface/70 p-4 shadow-soft backdrop-blur"
-          aria-label="AI knowledge graph visualization"
+          initial={{ opacity: 0, scale: 0.97, y: 12 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
+          className="relative z-10"
         >
           <KnowledgeGraph />
         </motion.div>
@@ -113,69 +155,101 @@ export function ResearchHero() {
 }
 
 function KnowledgeGraph() {
-  const nodeByLabel = new Map(nodes.map((node) => [node.label, node]));
-
   return (
-    <div className="relative h-full min-h-[390px] overflow-hidden rounded-md bg-background">
-      <svg className="absolute inset-0 h-full w-full" viewBox="0 0 100 100" role="presentation">
-        <defs>
-          <linearGradient id="edgeGradient" x1="0%" x2="100%" y1="0%" y2="100%">
-            <stop offset="0%" stopColor="hsl(var(--accent))" stopOpacity="0.42" />
-            <stop offset="100%" stopColor="hsl(var(--violet))" stopOpacity="0.38" />
-          </linearGradient>
-        </defs>
-        {edges.map(([from, to]) => {
-          const start = nodeByLabel.get(from);
-          const end = nodeByLabel.get(to);
-
-          if (!start || !end) {
-            return null;
-          }
-
-          return (
-            <line
-              key={`${from}-${to}`}
-              x1={start.x}
-              y1={start.y}
-              x2={end.x}
-              y2={end.y}
-              stroke="url(#edgeGradient)"
-              strokeWidth="0.45"
-              strokeDasharray="5 7"
-              className="animate-edge-flow"
-            />
-          );
-        })}
-      </svg>
-      {nodes.map((node, index) => (
-        <div
-          key={node.label}
-          className="absolute"
-          style={{
-            left: `${node.x}%`,
-            top: `${node.y}%`,
-            transform: "translate(-50%, -50%)",
-          }}
-        >
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.36 + index * 0.06, duration: 0.45 }}
-            className={[
-              "flex items-center justify-center rounded-full border border-border bg-surface text-center font-semibold shadow-soft",
-              node.size === "lg" ? "h-24 w-24 text-lg" : node.size === "md" ? "h-20 w-20 text-base" : "h-14 w-14 text-sm",
-            ].join(" ")}
-          >
-            {node.label}
-          </motion.div>
+    <div className="material-card overflow-hidden p-5">
+      <div className="flex items-center justify-between gap-4">
+        <div>
+          <div className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">Live Knowledge Graph</div>
+          <div className="mt-2 text-xl font-semibold tracking-normal">GraphRAG evidence trace</div>
         </div>
-      ))}
-      <div className="absolute bottom-5 left-5 right-5 grid gap-2 rounded-md border border-border bg-surface/90 p-4 backdrop-blur">
-        <div className="text-xs font-semibold uppercase tracking-[0.22em] text-accent">Research Graph Seed</div>
-        <div className="text-sm leading-6 text-muted-foreground">
-          Projects, papers, concepts, and implementation notes will become clickable graph nodes in Phase 2.
+        <div className="inline-flex items-center gap-2 rounded-full bg-accent-soft px-3 py-1.5 text-xs font-medium text-accent">
+          <span className="h-2 w-2 rounded-full bg-accent animate-soft-pulse" />
+          Building
         </div>
       </div>
+
+      <div className="relative mt-5 h-[390px] overflow-hidden rounded-3xl border border-border bg-[linear-gradient(180deg,#ffffff,#f7fbff)]">
+        <svg className="absolute inset-0 h-full w-full" viewBox="0 0 100 100" role="presentation">
+          <defs>
+            <linearGradient id="materialEdgeGradient" x1="0%" x2="100%" y1="0%" y2="100%">
+              <stop offset="0%" stopColor="hsl(var(--accent))" stopOpacity="0.58" />
+              <stop offset="55%" stopColor="hsl(var(--cyan))" stopOpacity="0.45" />
+              <stop offset="100%" stopColor="hsl(var(--green))" stopOpacity="0.42" />
+            </linearGradient>
+          </defs>
+          {graphEdges.map(([from, to], index) => {
+            const start = graphNodes[from];
+            const end = graphNodes[to];
+
+            return (
+              <motion.line
+                key={`${from}-${to}`}
+                x1={start.x}
+                y1={start.y}
+                x2={end.x}
+                y2={end.y}
+                stroke="url(#materialEdgeGradient)"
+                strokeWidth="0.55"
+                strokeLinecap="round"
+                strokeDasharray="5 6"
+                initial={{ opacity: 0, pathLength: 0 }}
+                animate={{ opacity: 1, pathLength: 1 }}
+                transition={{ delay: 0.42 + index * 0.08, duration: 0.7, ease: "easeOut" }}
+                className="animate-edge-flow"
+              />
+            );
+          })}
+        </svg>
+
+        {graphNodes.map((node, index) => (
+          <div
+            key={node.label}
+            className="absolute"
+            style={{ left: `${node.x}%`, top: `${node.y}%`, transform: "translate(-50%, -50%)" }}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.88, y: 10 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ delay: 0.26 + index * 0.1, duration: 0.42, ease: "easeOut" }}
+            >
+              <div
+                className={[
+                  "grid place-items-center rounded-full border bg-surface text-center shadow-material-md",
+                  node.size === "lg" ? "h-28 w-28" : node.size === "md" ? "h-24 w-24" : "h-20 w-20",
+                  node.color,
+                  index === 0 ? "animate-node-pulse" : "",
+                ].join(" ")}
+              >
+                <div>
+                  <div className="text-sm font-semibold">{node.label}</div>
+                  <div className="mt-1 text-[11px] font-medium opacity-75">{node.meta}</div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        ))}
+
+        <div className="absolute bottom-4 left-4 right-4 grid gap-3 rounded-3xl border border-border bg-surface/92 p-4 shadow-material-sm backdrop-blur">
+          <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
+            <CheckCircle2 className="h-4 w-4 text-green" />
+            Candidate report module
+          </div>
+          <div className="grid gap-2 text-xs text-muted-foreground">
+            <ReportRow icon={Database} text="Evidence clusters resolved from graph neighborhoods" />
+            <ReportRow icon={Atom} text="Material-property relationships scored by confidence" />
+            <ReportRow icon={FileText} text="Answer draft linked to citations and project notes" />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ReportRow({ icon: Icon, text }: { icon: LucideIcon; text: string }) {
+  return (
+    <div className="flex items-center gap-2">
+      <Icon className="h-3.5 w-3.5 text-accent" />
+      <span>{text}</span>
     </div>
   );
 }

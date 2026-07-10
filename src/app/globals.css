@@ -1,0 +1,92 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+  --background: 0 0% 99%;
+  --foreground: 225 18% 11%;
+  --muted: 220 17% 95%;
+  --muted-foreground: 222 9% 42%;
+  --border: 220 13% 87%;
+  --surface: 0 0% 100%;
+  --accent: 221 84% 56%;
+  --accent-foreground: 0 0% 100%;
+  --violet: 263 76% 58%;
+  --cyan: 191 92% 39%;
+}
+
+.dark {
+  color-scheme: dark;
+  --background: 225 22% 7%;
+  --foreground: 220 18% 92%;
+  --muted: 224 17% 13%;
+  --muted-foreground: 220 10% 66%;
+  --border: 224 15% 20%;
+  --surface: 225 20% 9%;
+  --accent: 216 92% 61%;
+  --accent-foreground: 225 22% 7%;
+  --violet: 265 86% 68%;
+  --cyan: 190 92% 58%;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  background:
+    linear-gradient(180deg, hsl(var(--background)) 0%, hsl(var(--background)) 62%, hsl(var(--muted)) 100%);
+  color: hsl(var(--foreground));
+  font-family:
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  text-rendering: optimizeLegibility;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+::selection {
+  background: hsl(var(--accent) / 0.18);
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+.research-grid {
+  background-image:
+    linear-gradient(hsl(var(--border) / 0.35) 1px, transparent 1px),
+    linear-gradient(90deg, hsl(var(--border) / 0.35) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: linear-gradient(180deg, black, transparent 78%);
+}
+
+.gradient-text {
+  background: linear-gradient(90deg, hsl(var(--foreground)), hsl(var(--accent)), hsl(var(--violet)));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.focus-ring {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.focus-ring:focus-visible {
+  outline-color: hsl(var(--accent));
+}

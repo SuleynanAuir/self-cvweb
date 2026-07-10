@@ -1,0 +1,2 @@
+name = "self-cvweb"
+pages_build_output_dir = "./out"

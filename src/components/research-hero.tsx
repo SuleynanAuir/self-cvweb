@@ -4,7 +4,6 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import {
   ArrowRight,
-  ArrowUpRight,
   BookOpen,
   Bot,
   Cpu,
@@ -19,53 +18,88 @@ import {
 
 const researchNavItems = [
   {
+    id: "research",
     number: "01",
     title: "Research",
     body: "Explore research directions",
     href: "#research-vision",
     icon: Sparkles,
     external: false,
+    x: 29,
+    y: 23,
+    size: "wide",
   },
   {
+    id: "projects",
     number: "02",
     title: "Projects",
     body: "Open-source AI systems",
     href: "#research-projects",
     icon: Layers3,
     external: false,
+    x: 72,
+    y: 24,
+    size: "medium",
   },
   {
+    id: "agents",
     number: "03",
     title: "Agents",
     body: "LLM agents and autonomous systems",
     href: "/agent-hub",
     icon: Bot,
     external: false,
+    x: 22,
+    y: 57,
+    size: "medium",
   },
   {
+    id: "knowledge",
     number: "04",
     title: "Knowledge",
     body: "RAG and graph intelligence",
     href: "#research-map",
     icon: Network,
     external: false,
+    x: 79,
+    y: 54,
+    size: "wide",
   },
   {
+    id: "science",
     number: "05",
     title: "Science",
     body: "AI for scientific discovery",
     href: "#research-projects",
     icon: FlaskConical,
     external: false,
+    x: 39,
+    y: 83,
+    size: "medium",
   },
   {
+    id: "publications",
     number: "06",
     title: "Publications",
     body: "Research notes and technical explorations",
     href: "/papers",
     icon: BookOpen,
     external: false,
+    x: 70,
+    y: 78,
+    size: "wide",
   },
+] as const;
+
+const researchNavCore = { x: 50, y: 52 } as const;
+
+const researchNavRelations = [
+  ["research", "projects"],
+  ["research", "agents"],
+  ["agents", "knowledge"],
+  ["knowledge", "science"],
+  ["science", "publications"],
+  ["projects", "publications"],
 ] as const;
 
 const timelineIcons = [Cpu, Database, Layers3, Bot, UsersRound, FlaskConical] as const;
@@ -320,45 +354,126 @@ export function ResearchHero() {
 
 function ResearchNavigation() {
   return (
-    <div className="material-card video-fused-panel overflow-hidden rounded-[32px] p-5 md:p-6">
-      <div className="flex items-start justify-between gap-5">
+    <div className="research-landscape-panel min-h-[540px] p-5 md:p-6">
+      <div className="relative z-20 flex items-start justify-between gap-5">
         <div>
           <div className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">Research Laboratory Index</div>
-          <h2 className="mt-3 text-3xl font-semibold tracking-normal text-foreground">Research Laboratory</h2>
-          <p className="mt-2 max-w-md text-sm leading-6 text-muted-foreground">
-            Explore projects, methods, and research directions.
+          <h2 className="mt-3 text-3xl font-semibold tracking-normal text-foreground">Research ecosystem</h2>
+          <p className="mt-2 max-w-sm text-sm leading-6 text-muted-foreground">
+            A laboratory navigation map for projects, agents, knowledge systems, science, and publications.
           </p>
         </div>
-        <div className="hidden rounded-2xl border border-white/10 bg-surface/25 p-3 text-accent shadow-sm backdrop-blur-xl sm:block">
+        <div className="hidden rounded-full bg-surface/20 p-3 text-accent shadow-sm backdrop-blur-xl sm:block">
           <Network className="h-5 w-5" />
         </div>
       </div>
 
-      <div className="mt-7 grid gap-3 sm:grid-cols-2">
+      <div className="relative z-10 mt-5 h-[390px] overflow-hidden rounded-[30px]">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,hsl(var(--surface)/0.22),transparent_34%),radial-gradient(circle_at_18%_68%,hsl(var(--green)/0.07),transparent_28%),radial-gradient(circle_at_86%_26%,hsl(var(--amber)/0.08),transparent_30%)]" />
+        <svg className="pointer-events-none absolute inset-0 h-full w-full" viewBox="0 0 100 100" role="presentation">
+          <defs>
+            <linearGradient id="researchNavLandscapeGradient" x1="0%" x2="100%" y1="0%" y2="100%">
+              <stop offset="0%" stopColor="hsl(var(--green))" stopOpacity="0.20" />
+              <stop offset="52%" stopColor="hsl(var(--amber))" stopOpacity="0.24" />
+              <stop offset="100%" stopColor="hsl(var(--green))" stopOpacity="0.16" />
+            </linearGradient>
+          </defs>
+
+          {researchNavItems.map((item, index) => (
+            <motion.line
+              key={`core-${item.id}`}
+              x1={researchNavCore.x}
+              y1={researchNavCore.y}
+              x2={item.x}
+              y2={item.y}
+              stroke="url(#researchNavLandscapeGradient)"
+              strokeWidth="0.45"
+              strokeLinecap="round"
+              strokeDasharray="3 8"
+              initial={{ opacity: 0, pathLength: 0 }}
+              animate={{ opacity: 1, pathLength: 1 }}
+              transition={{ delay: 0.42 + index * 0.05, duration: 0.7, ease: "easeOut" }}
+              className="animate-edge-flow"
+            />
+          ))}
+
+          {researchNavRelations.map(([from, to], index) => {
+            const start = researchNavItems.find((item) => item.id === from);
+            const end = researchNavItems.find((item) => item.id === to);
+
+            if (!start || !end) {
+              return null;
+            }
+
+            return (
+              <motion.line
+                key={`${from}-${to}`}
+                x1={start.x}
+                y1={start.y}
+                x2={end.x}
+                y2={end.y}
+                stroke="url(#researchNavLandscapeGradient)"
+                strokeWidth="0.32"
+                strokeLinecap="round"
+                strokeDasharray="2 7"
+                initial={{ opacity: 0, pathLength: 0 }}
+                animate={{ opacity: 0.72, pathLength: 1 }}
+                transition={{ delay: 0.62 + index * 0.06, duration: 0.7, ease: "easeOut" }}
+              />
+            );
+          })}
+        </svg>
+
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9, y: 10 }}
+          animate={{ opacity: 1, scale: 1, y: [0, -4, 0] }}
+          transition={{
+            opacity: { duration: 0.42, delay: 0.28 },
+            scale: { duration: 0.42, delay: 0.28 },
+            y: { duration: 6.5, repeat: Infinity, ease: "easeInOut" },
+          }}
+          className="research-core-node absolute z-20"
+          style={{ left: "calc(50% - 87px)", top: "calc(52% - 56px)" }}
+        >
+          <div className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-accent/80">Core</div>
+          <div className="mt-1 text-base font-semibold leading-5 text-foreground">AI Systems Lab</div>
+          <div className="mt-1 text-[0.68rem] leading-4 text-muted-foreground">Research directions converge here</div>
+        </motion.div>
+
         {researchNavItems.map((item, index) => (
           <motion.div
             key={item.title}
-            initial={{ opacity: 0, y: 14, scale: 0.98 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ delay: 0.34 + index * 0.05, duration: 0.38, ease: "easeOut" }}
+            initial={{ opacity: 0, scale: 0.88, y: 12 }}
+            animate={{ opacity: 1, scale: 1, y: [0, index % 2 === 0 ? -5 : 5, 0] }}
+            transition={{
+              opacity: { delay: 0.36 + index * 0.06, duration: 0.36 },
+              scale: { delay: 0.36 + index * 0.06, duration: 0.36 },
+              y: { duration: 6.4 + index * 0.32, delay: index * 0.16, repeat: Infinity, ease: "easeInOut" },
+            }}
+            className="absolute z-30"
+            style={{
+              left: `${item.x}%`,
+              top: `${item.y}%`,
+              marginLeft: item.size === "wide" ? "-77px" : "-67px",
+              marginTop: "-48px",
+            }}
           >
             <Link
               href={item.href}
               target={item.external ? "_blank" : undefined}
               rel={item.external ? "noreferrer" : undefined}
-              className="focus-ring group/item flex min-h-[126px] flex-col justify-between rounded-[24px] border border-white/10 bg-surface/25 p-4 shadow-sm backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:bg-surface/40 hover:shadow-material-sm"
+              title={item.body}
+              aria-label={`${item.title}: ${item.body}`}
+              className={[
+                "research-nav-node focus-ring group/item block rounded-full px-4 py-3 text-center transition duration-300 hover:-translate-y-1",
+                item.size === "wide" ? "w-[154px]" : "w-[134px]",
+              ].join(" ")}
             >
-              <span className="flex items-center justify-between gap-3">
-                <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-accent">
-                  <item.icon className="h-4 w-4" />
-                  {item.number}
-                </span>
-                <ArrowUpRight className="h-3.5 w-3.5 text-accent/70 transition group-hover/item:translate-x-0.5 group-hover/item:-translate-y-0.5 group-hover/item:text-accent" />
+              <span className="mx-auto grid h-8 w-8 place-items-center rounded-full bg-surface/25 text-accent shadow-sm transition group-hover/item:bg-surface/40">
+                <item.icon className="h-4 w-4" />
               </span>
-              <span>
-                <span className="block text-sm font-semibold leading-5 text-foreground">{item.title}</span>
-                <span className="mt-2 block text-xs leading-5 text-muted-foreground">{item.body}</span>
-              </span>
+              <span className="mt-2 block text-sm font-semibold leading-5 text-foreground">{item.title}</span>
+              <span className="mt-1 block text-[0.66rem] font-medium uppercase tracking-[0.16em] text-accent/70">{item.number}</span>
             </Link>
           </motion.div>
         ))}

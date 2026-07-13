@@ -93,7 +93,7 @@ export function ResearchProjectModules() {
                       {isOpen ? "Collapse module" : "Expand module"}
                     </div>
                     <div className="mt-1 text-sm text-muted-foreground">
-                      Click to view detailed project evidence
+                      Open research contribution evidence
                     </div>
                   </div>
                   <ChevronDown
@@ -152,7 +152,7 @@ function ProjectDetail({ project, index }: { project: ResearchProject; index: nu
         <div className="flex flex-wrap items-center gap-2">
           <div className="inline-flex items-center gap-2 rounded-full bg-accent-soft px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-accent">
             <Sparkles className="h-3.5 w-3.5" />
-            Project
+            Research contribution
           </div>
           {project.github ? (
             <Link
@@ -170,9 +170,10 @@ function ProjectDetail({ project, index }: { project: ResearchProject; index: nu
         <h4 className="mt-4 text-2xl font-semibold tracking-normal text-foreground">{project.name}</h4>
         <p className="mt-3 text-sm leading-7 text-muted-foreground">{project.description}</p>
 
-        <div className="mt-5 grid gap-3 md:grid-cols-2">
-          <InfoBlock label="Platform role" value={project.platformRole} />
-          <InfoBlock label="Research impact" value={project.impact} />
+        <div className="mt-5 grid gap-3 lg:grid-cols-3">
+          <InfoBlock label="Research question" value={project.platformRole} />
+          <InfoBlock label="Technical approach" value={project.keywords.join(" / ")} />
+          <InfoBlock label="Key contribution" value={project.impact} />
         </div>
 
         <div className="mt-5 flex flex-wrap gap-2">

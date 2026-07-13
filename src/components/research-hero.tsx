@@ -16,104 +16,196 @@ import {
   Sparkles,
   UsersRound,
 } from "lucide-react";
-import { aiEvolution } from "@/data/portfolio";
 
 const researchNavItems = [
   {
     number: "01",
-    title: "Research Projects",
-    body: "AI systems and experimental projects",
+    title: "Research",
+    body: "Explore research directions",
+    href: "#research-vision",
+    icon: Sparkles,
+    external: false,
+  },
+  {
+    number: "02",
+    title: "Projects",
+    body: "Open-source AI systems",
     href: "#research-projects",
     icon: Layers3,
     external: false,
   },
   {
-    number: "02",
-    title: "Agent Systems",
-    body: "LLM Agents, Multi-Agent Collaboration, Deep Search",
+    number: "03",
+    title: "Agents",
+    body: "LLM agents and autonomous systems",
     href: "/agent-hub",
     icon: Bot,
     external: false,
   },
   {
-    number: "03",
-    title: "Knowledge Intelligence",
-    body: "RAG, GraphRAG, Knowledge Graph",
-    href: "/research-map",
+    number: "04",
+    title: "Knowledge",
+    body: "RAG and graph intelligence",
+    href: "#research-map",
     icon: Network,
     external: false,
   },
   {
-    number: "04",
-    title: "AI for Science",
-    body: "Scientific Discovery and Material Intelligence",
+    number: "05",
+    title: "Science",
+    body: "AI for scientific discovery",
     href: "#research-projects",
     icon: FlaskConical,
     external: false,
   },
   {
-    number: "05",
+    number: "06",
     title: "Publications",
     body: "Research notes and technical explorations",
     href: "/papers",
     icon: BookOpen,
     external: false,
   },
-  {
-    number: "06",
-    title: "GitHub",
-    body: "Open-source implementations",
-    href: "https://github.com/SuleynanAuir",
-    icon: Github,
-    external: true,
-  },
 ] as const;
 
 const timelineIcons = [Cpu, Database, Layers3, Bot, UsersRound, FlaskConical] as const;
 
-const evolutionDetails = [
+const evolutionStages = [
   {
-    description: "Optimization, features, probabilistic baselines",
-    role: "Algorithmic foundation",
+    title: "Machine Learning",
+    description: "Learning patterns from data",
+    role: "Optimization, features, probabilistic baselines",
   },
   {
-    description: "Representation learning and neural architectures",
-    role: "Scalable perception",
+    title: "Deep Learning",
+    description: "Representation learning",
+    role: "Neural architectures and scalable perception",
   },
   {
-    description: "Pretraining, adaptation, alignment, evaluation",
-    role: "General model layer",
+    title: "Foundation Models",
+    description: "Large-scale general intelligence",
+    role: "Pretraining, adaptation, alignment, evaluation",
   },
   {
-    description: "Planning, tool use, memory, deep search",
-    role: "Autonomous reasoning",
+    title: "AI Agents",
+    description: "Reasoning and tool usage",
+    role: "Planning, memory, tool use, deep search",
   },
   {
-    description: "Coordination, reflection, simulation, feedback",
-    role: "Collective intelligence",
+    title: "Multi-Agent Systems",
+    description: "Collaborative intelligence",
+    role: "Coordination, reflection, simulation, feedback",
   },
   {
-    description: "Evidence graphs, discovery, material intelligence",
-    role: "Research automation",
+    title: "Scientific AI",
+    description: "Knowledge discovery",
+    role: "Evidence graphs, discovery, material intelligence",
   },
 ] as const;
 
 const researchMapNodes = [
-  { id: "ai", label: "Artificial Intelligence", x: 50, y: 50, size: "large", tone: "border-accent/45 bg-surface/58 text-foreground" },
-  { id: "foundation", label: "Foundation Models", x: 50, y: 18, size: "medium", tone: "border-amber/45 bg-amber/10 text-foreground" },
-  { id: "agents", label: "Agents", x: 24, y: 50, size: "medium", tone: "border-green/45 bg-green/10 text-foreground" },
-  { id: "rag", label: "RAG", x: 50, y: 68, size: "small", tone: "border-cyan/40 bg-cyan/10 text-foreground" },
-  { id: "kg", label: "Knowledge Graph", x: 76, y: 50, size: "medium", tone: "border-violet/40 bg-violet/10 text-foreground" },
-  { id: "science", label: "Scientific AI", x: 50, y: 88, size: "medium", tone: "border-amber/45 bg-accent-soft/55 text-foreground" },
+  {
+    id: "ai",
+    label: "Artificial Intelligence",
+    description: "System-level research trajectory",
+    x: 50,
+    y: 46,
+    size: "large",
+    tone: "border-accent/45 bg-surface/58 text-foreground",
+  },
+  {
+    id: "foundation",
+    label: "Foundation Models",
+    description: "Pretraining, adaptation, alignment",
+    x: 50,
+    y: 13,
+    size: "medium",
+    tone: "border-amber/45 bg-amber/10 text-foreground",
+  },
+  {
+    id: "agents",
+    label: "LLM Agents",
+    description: "Planning, tools, memory, search",
+    x: 50,
+    y: 30,
+    size: "medium",
+    tone: "border-green/45 bg-green/10 text-foreground",
+  },
+  {
+    id: "multi",
+    label: "Multi-Agent Systems",
+    description: "Collaboration and reflection",
+    x: 50,
+    y: 64,
+    size: "medium",
+    tone: "border-green/45 bg-accent-soft/55 text-foreground",
+  },
+  {
+    id: "knowledge",
+    label: "Knowledge Intelligence",
+    description: "Retrieval, evidence, memory",
+    x: 30,
+    y: 56,
+    size: "medium",
+    tone: "border-cyan/40 bg-cyan/10 text-foreground",
+  },
+  {
+    id: "graphrag",
+    label: "GraphRAG",
+    description: "Graph-grounded reasoning",
+    x: 31,
+    y: 76,
+    size: "small",
+    tone: "border-cyan/45 bg-surface/48 text-foreground",
+  },
+  {
+    id: "science",
+    label: "AI for Science",
+    description: "Scientific discovery systems",
+    x: 50,
+    y: 88,
+    size: "medium",
+    tone: "border-amber/45 bg-accent-soft/55 text-foreground",
+  },
+  {
+    id: "ml",
+    label: "Machine Learning",
+    description: "Classical learning foundations",
+    x: 22,
+    y: 24,
+    size: "small",
+    tone: "border-border/55 bg-surface/40 text-foreground",
+  },
+  {
+    id: "cv",
+    label: "Computer Vision",
+    description: "Visual-language understanding",
+    x: 78,
+    y: 28,
+    size: "small",
+    tone: "border-violet/40 bg-violet/10 text-foreground",
+  },
+  {
+    id: "rl",
+    label: "Reinforcement Learning",
+    description: "Reward-driven behavior",
+    x: 78,
+    y: 70,
+    size: "small",
+    tone: "border-amber/40 bg-amber/10 text-foreground",
+  },
 ] as const;
 
 const researchMapEdges = [
-  ["foundation", "ai"],
-  ["ai", "agents"],
-  ["ai", "kg"],
-  ["agents", "rag"],
-  ["rag", "kg"],
-  ["rag", "science"],
+  ["ai", "foundation"],
+  ["foundation", "agents"],
+  ["agents", "multi"],
+  ["multi", "knowledge"],
+  ["knowledge", "graphrag"],
+  ["graphrag", "science"],
+  ["ai", "ml"],
+  ["ai", "cv"],
+  ["ai", "rl"],
 ] as const;
 
 const particles = [
@@ -136,18 +228,21 @@ export function ResearchHero() {
             className="inline-flex h-10 items-center gap-2 rounded-2xl border border-border/45 bg-surface/34 px-4 text-sm font-medium text-accent shadow-material-sm backdrop-blur-xl"
           >
             <Sparkles className="h-4 w-4" />
-            Personal AI Research Institute
+            AI Systems Research Laboratory
           </motion.div>
 
           <motion.h1
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.62, delay: 0.08, ease: "easeOut" }}
-            className="mt-8 max-w-[720px] text-[clamp(2rem,3.05vw,3.15rem)] font-semibold leading-[1.16] tracking-normal text-foreground"
+            className="mt-8 max-w-[760px] text-[clamp(2.15rem,3.35vw,3.75rem)] font-semibold leading-[1.06] tracking-normal text-foreground"
           >
-            <span className="block">AI Systems Research</span>
-            <span className="block text-[0.92em]">
-              <span className="gradient-text">Foundation Models</span> to <span className="text-accent">Agentic AI</span>
+            <span className="block text-[0.68em] leading-[1.18] text-foreground/92">Building Intelligent Systems</span>
+            <span className="mt-2 block">
+              From <span className="gradient-text">Foundation Models</span>
+            </span>
+            <span className="block">
+              to <span className="text-accent">Autonomous AI Agents</span>
             </span>
           </motion.h1>
 
@@ -157,16 +252,23 @@ export function ResearchHero() {
             transition={{ duration: 0.62, delay: 0.16, ease: "easeOut" }}
             className="mt-7 max-w-2xl text-base leading-8 text-muted-foreground md:text-lg"
           >
-            Exploring Machine Learning, Large Language Models, Agentic AI, Knowledge Intelligence, and AI for Science.
+            Exploring the evolution of artificial intelligence from learning algorithms to autonomous reasoning systems.
           </motion.p>
 
           <motion.div
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.56, delay: 0.22, ease: "easeOut" }}
-            className="mt-5 inline-flex max-w-full rounded-2xl border border-border/45 bg-surface/30 px-4 py-2 text-xs font-medium uppercase tracking-[0.14em] text-muted-foreground shadow-material-sm backdrop-blur-xl"
+            className="mt-5 flex max-w-full flex-wrap gap-2"
           >
-            AI Systems Research | Foundation Models | Autonomous Agents
+            {["LLM Agents", "GraphRAG", "AI for Science"].map((tag) => (
+              <span
+                key={tag}
+                className="rounded-2xl border border-border/45 bg-surface/30 px-4 py-2 text-xs font-medium uppercase tracking-[0.14em] text-muted-foreground shadow-material-sm backdrop-blur-xl"
+              >
+                {tag}
+              </span>
+            ))}
           </motion.div>
 
           <motion.div
@@ -221,7 +323,7 @@ function ResearchNavigation() {
     <div className="material-card video-fused-panel overflow-hidden rounded-[32px] p-5 md:p-6">
       <div className="flex items-start justify-between gap-5">
         <div>
-          <div className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">Research Navigation</div>
+          <div className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">Research Laboratory Index</div>
           <h2 className="mt-3 text-3xl font-semibold tracking-normal text-foreground">Research Laboratory</h2>
           <p className="mt-2 max-w-md text-sm leading-6 text-muted-foreground">
             Explore projects, methods, and research directions.
@@ -272,10 +374,10 @@ function EvolutionTimeline() {
         <div>
           <div className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">Evolution of Intelligence</div>
           <h2 className="mt-3 text-2xl font-semibold tracking-normal text-foreground md:text-3xl">Evolution of Intelligence</h2>
-          <p className="mt-2 text-sm leading-6 text-muted-foreground">From algorithms to autonomous scientific agents</p>
+          <p className="mt-2 text-sm leading-6 text-muted-foreground">From algorithms to autonomous scientific systems</p>
         </div>
         <div className="inline-flex w-fit rounded-2xl border border-border/45 bg-surface/34 px-3 py-1.5 text-xs font-medium text-accent shadow-material-sm backdrop-blur-xl">
-          Current focus: Agents + Scientific AI
+          Current focus: AI Agents + Scientific AI
         </div>
       </div>
 
@@ -291,14 +393,13 @@ function EvolutionTimeline() {
         </div>
 
         <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
-          {aiEvolution.map((stage, index) => {
+          {evolutionStages.map((stage, index) => {
             const Icon = timelineIcons[index] ?? Sparkles;
-            const detail = evolutionDetails[index];
-            const active = stage === "LLM Agents" || stage === "Scientific AI";
+            const active = stage.title === "AI Agents" || stage.title === "Scientific AI";
 
             return (
               <motion.div
-                key={stage}
+                key={stage.title}
                 initial={{ opacity: 0, y: 14 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.52 + index * 0.07, duration: 0.42, ease: "easeOut" }}
@@ -327,13 +428,13 @@ function EvolutionTimeline() {
                   </div>
 
                   <div className="mt-4 text-sm font-semibold leading-5 tracking-normal text-foreground">
-                    {stage}
+                    {stage.title}
                   </div>
                   <p className="mt-2 text-xs leading-5 text-muted-foreground">
-                    {detail.description}
+                    {stage.description}
                   </p>
-                  <div className="mt-auto pt-3 text-[0.68rem] font-semibold uppercase tracking-[0.12em] text-accent">
-                    {detail.role}
+                  <div className="mt-auto pt-3 text-[0.68rem] font-semibold uppercase tracking-[0.12em] text-accent/90">
+                    {active ? "Current focus" : stage.role}
                   </div>
                 </div>
               </motion.div>
@@ -347,7 +448,7 @@ function EvolutionTimeline() {
 
 export function ResearchMapSection() {
   return (
-    <section className="border-b border-border/45 bg-surface/14 backdrop-blur-sm">
+    <section id="research-map" className="border-b border-border/45 bg-surface/14 backdrop-blur-sm">
       <div className="mx-auto grid max-w-7xl gap-10 px-6 py-20 lg:grid-cols-[0.36fr_0.64fr] lg:items-center lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -362,7 +463,7 @@ export function ResearchMapSection() {
             A connected map of intelligent systems research.
           </h2>
           <p className="mt-5 max-w-md text-sm leading-7 text-muted-foreground md:text-base">
-            The portfolio is organized around a single research trajectory: models become agents, agents use retrieval and graphs, and scientific AI turns evidence into reusable knowledge.
+            The map links foundation models, LLM agents, multi-agent systems, GraphRAG, and scientific AI into one evolving knowledge system.
           </p>
         </motion.div>
 
@@ -371,9 +472,9 @@ export function ResearchMapSection() {
           whileInView={{ opacity: 1, scale: 1, y: 0 }}
           viewport={{ once: true, amount: 0.18 }}
           transition={{ duration: 0.66, ease: [0.22, 1, 0.36, 1] }}
-          className="material-card video-fused-panel relative min-h-[500px] overflow-hidden rounded-[36px] p-4 md:p-6"
+          className="material-card video-fused-panel relative min-h-[560px] overflow-hidden rounded-[36px] p-4 md:p-6"
         >
-          <div className="graph-stage relative h-[450px] overflow-hidden rounded-[30px] border">
+          <div className="graph-stage relative h-[520px] overflow-hidden rounded-[30px] border">
             {particles.map((particle) => (
               <motion.span
                 key={`${particle.left}-${particle.top}`}
@@ -439,11 +540,15 @@ export function ResearchMapSection() {
                 <div
                   className={[
                     "luminous-node grid place-items-center rounded-[28px] border px-4 text-center shadow-material-md backdrop-blur-xl",
-                    node.size === "large" ? "min-h-24 w-44" : node.size === "medium" ? "min-h-20 w-36" : "min-h-16 w-28",
+                    "group transition duration-300 hover:-translate-y-1 hover:border-accent/55 hover:bg-surface/62",
+                    node.size === "large" ? "min-h-24 w-48" : node.size === "medium" ? "min-h-20 w-40" : "min-h-16 w-32",
                     node.tone,
                   ].join(" ")}
                 >
                   <div className="text-xs font-semibold leading-4">{node.label}</div>
+                  <div className="mt-1 max-h-0 overflow-hidden text-[0.62rem] leading-4 text-muted-foreground opacity-0 transition-all duration-300 group-hover:max-h-12 group-hover:opacity-100">
+                    {node.description}
+                  </div>
                 </div>
               </motion.div>
             ))}

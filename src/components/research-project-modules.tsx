@@ -34,43 +34,48 @@ export function ResearchProjectModules() {
             <button
               type="button"
               onClick={() => setOpenIndex(isOpen ? null : index)}
-              className="focus-ring group grid w-full gap-6 p-5 text-left transition md:p-6 lg:grid-cols-[minmax(0,0.42fr)_minmax(360px,0.58fr)] lg:items-center"
+              className="focus-ring group w-full p-5 text-left transition md:p-6"
               aria-expanded={isOpen}
             >
-              <div>
-                <div className="flex flex-wrap items-center gap-3">
-                  <div className="inline-flex rounded-full border border-border/35 bg-accent-soft/58 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-accent">
-                    {String(index + 1).padStart(2, "0")}
-                  </div>
-                  <div className="inline-flex items-center gap-2 rounded-full border border-border/45 bg-surface/36 px-3 py-1 text-xs font-medium text-muted-foreground">
-                    <Layers3 className="h-3.5 w-3.5 text-accent" />
-                    {category.projects.length} projects
-                  </div>
-                </div>
-
-                <h3 className="mt-5 text-3xl font-semibold tracking-normal text-foreground md:text-4xl">
-                  {category.title}
-                </h3>
-                <p className="mt-3 max-w-3xl text-sm leading-7 text-muted-foreground">
-                  {category.description}
-                </p>
-              </div>
-
-              <div className="grid gap-4">
-                <div className="flex flex-wrap items-center justify-start gap-3 lg:justify-end">
+              {previewImages.length > 0 ? (
+                <div className="mb-7 flex flex-wrap items-start justify-start gap-3 md:gap-4">
                   {previewImages.map((image, imageIndex) => (
                     <img
                       key={image}
                       src={image}
                       alt={`${category.title} project preview ${imageIndex + 1}`}
-                      className="h-[clamp(8.5rem,11vw,10rem)] w-auto max-w-full min-w-0 rounded-2xl border border-border/45 object-contain shadow-material-sm transition duration-500 group-hover:scale-[1.02]"
+                      className="h-[clamp(8rem,12vw,11.5rem)] w-auto max-w-full min-w-0 rounded-2xl border border-border/45 object-contain shadow-material-sm transition duration-500 group-hover:scale-[1.02]"
                     />
                   ))}
-                  {category.signal.split(", ").map((item) => (
-                    <span key={item} className={topicChipClass}>
-                      {item}
-                    </span>
-                  ))}
+                </div>
+              ) : null}
+
+              <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(280px,0.34fr)] lg:items-end">
+                <div>
+                  <div className="flex flex-wrap items-center gap-3">
+                    <div className="inline-flex rounded-full border border-border/35 bg-accent-soft/58 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-accent">
+                      {String(index + 1).padStart(2, "0")}
+                    </div>
+                    <div className="inline-flex items-center gap-2 rounded-full border border-border/45 bg-surface/36 px-3 py-1 text-xs font-medium text-muted-foreground">
+                      <Layers3 className="h-3.5 w-3.5 text-accent" />
+                      {category.projects.length} projects
+                    </div>
+                  </div>
+
+                  <h3 className="mt-5 text-[clamp(2rem,5vw,3.9rem)] font-semibold leading-[1.08] tracking-normal text-foreground">
+                    {category.title}
+                  </h3>
+                  <p className="mt-3 max-w-4xl text-sm leading-7 text-muted-foreground md:text-base">
+                    {category.description}
+                  </p>
+
+                  <div className="mt-6 flex flex-wrap items-center justify-start gap-2.5">
+                    {category.signal.split(", ").map((item) => (
+                      <span key={item} className={topicChipClass}>
+                        {item}
+                      </span>
+                    ))}
+                  </div>
                 </div>
 
                 <div className="flex items-center justify-between rounded-3xl border border-border/45 bg-surface/34 px-4 py-3 shadow-material-sm backdrop-blur-xl">

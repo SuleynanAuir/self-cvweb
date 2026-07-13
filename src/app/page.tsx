@@ -1,47 +1,16 @@
 import Link from "next/link";
-import { ArrowUpRight, Github, Microscope, Network, Sparkles } from "lucide-react";
-import { ResearchHero } from "@/components/research-hero";
+import { ArrowUpRight, Github } from "lucide-react";
+import { ResearchHero, ResearchMapSection } from "@/components/research-hero";
 import { ResearchProjectModules } from "@/components/research-project-modules";
 import { ScrollReveal } from "@/components/scroll-reveal";
 import { SectionHeading } from "@/components/section-heading";
 import { technicalSkills } from "@/data/portfolio";
 
-const labPrinciples = [
-  {
-    icon: Sparkles,
-    title: "Foundation model engineering",
-    body: "Adapt, evaluate, and align large models so they become reliable components in larger intelligent systems.",
-  },
-  {
-    icon: Network,
-    title: "Agentic system design",
-    body: "Build agents that can plan, retrieve, call tools, coordinate with other agents, and improve through feedback.",
-  },
-  {
-    icon: Microscope,
-    title: "AI for scientific reasoning",
-    body: "Connect knowledge graphs, RAG, and scientific workflows to make research answers traceable and useful.",
-  },
-] as const;
-
 export default function HomePage() {
   return (
     <>
       <ResearchHero />
-
-      <section className="border-b border-border/45 bg-surface/18 backdrop-blur-sm">
-        <div className="mx-auto grid max-w-7xl gap-4 px-6 py-8 md:grid-cols-3 lg:px-8">
-          {labPrinciples.map((item, index) => (
-            <ScrollReveal as="article" key={item.title} className="material-card interactive-lift p-6" delay={index * 0.08}>
-              <div className="mb-5 grid h-11 w-11 place-items-center rounded-2xl bg-accent-soft text-accent ring-1 ring-border/60">
-                <item.icon className="h-5 w-5" strokeWidth={1.9} />
-              </div>
-              <h2 className="text-lg font-semibold tracking-normal text-foreground">{item.title}</h2>
-              <p className="mt-3 max-w-sm text-sm leading-6 text-muted-foreground">{item.body}</p>
-            </ScrollReveal>
-          ))}
-        </div>
-      </section>
+      <ResearchMapSection />
 
       <section id="research-projects" className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
         <ScrollReveal>

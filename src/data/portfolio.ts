@@ -1,10 +1,10 @@
 export const aiEvolution = [
-  "ML",
-  "DL",
-  "FM",
-  "Agents",
-  "MAS",
-  "Sci AI",
+  "Machine Learning",
+  "Deep Learning",
+  "Foundation Models",
+  "LLM Agents",
+  "Multi-Agent Systems",
+  "Scientific AI",
 ] as const;
 
 export type ResearchProject = {

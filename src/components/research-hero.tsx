@@ -2,127 +2,69 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight, Atom, CheckCircle2, Database, FileText, Github, Search, Sparkles, type LucideIcon } from "lucide-react";
-
-const promptChips = ["Bandgap prediction", "Synthesis route", "Polymer electrolyte", "Microstructure QA"];
-
-const reasoningSteps = [
-  { label: "Literature retrieval", detail: "128 papers indexed", progress: 86, color: "bg-accent" },
-  { label: "Graph construction", detail: "42 entities linked", progress: 72, color: "bg-cyan" },
-  { label: "Scientific reasoning", detail: "6 hypotheses ranked", progress: 64, color: "bg-green" },
-  { label: "Report synthesis", detail: "Evidence trace ready", progress: 58, color: "bg-amber" },
-];
+import { ArrowDown, ArrowRight, Github, Network, Sparkles } from "lucide-react";
+import { aiEvolution } from "@/data/portfolio";
 
 const graphNodes = [
-  { label: "Question", meta: "QA", x: 50, y: 18, size: "lg", color: "border-accent bg-accent-soft text-accent" },
-  { label: "Li-ion", meta: "Material", x: 22, y: 36, size: "md", color: "border-cyan/40 bg-cyan/10 text-cyan" },
-  { label: "Paper", meta: "Corpus", x: 76, y: 36, size: "md", color: "border-violet/40 bg-violet/10 text-violet" },
-  { label: "Bandgap", meta: "Property", x: 36, y: 66, size: "sm", color: "border-green/40 bg-green/10 text-green" },
-  { label: "Synthesis", meta: "Route", x: 66, y: 68, size: "sm", color: "border-amber/50 bg-amber/10 text-amber" },
-];
+  { id: "Foundation Models", x: 50, y: 16, color: "text-blue-600", tone: "bg-blue-50 border-blue-200" },
+  { id: "Agents", x: 24, y: 48, color: "text-emerald-600", tone: "bg-emerald-50 border-emerald-200" },
+  { id: "RAG", x: 50, y: 48, color: "text-sky-600", tone: "bg-sky-50 border-sky-200" },
+  { id: "Knowledge Graph", x: 76, y: 48, color: "text-violet-600", tone: "bg-violet-50 border-violet-200" },
+  { id: "Scientific AI", x: 50, y: 82, color: "text-amber-600", tone: "bg-amber-50 border-amber-200" },
+] as const;
 
 const graphEdges = [
   [0, 1],
   [0, 2],
-  [1, 3],
+  [0, 3],
+  [1, 2],
   [2, 3],
+  [1, 4],
   [2, 4],
-  [4, 1],
-];
+  [3, 4],
+] as const;
 
 export function ResearchHero() {
   return (
-    <section className="relative overflow-hidden border-b border-border/70">
-      <div className="mx-auto grid min-h-[680px] max-w-7xl gap-8 px-6 py-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(430px,0.75fr)] lg:items-center lg:px-8">
+    <section className="relative overflow-hidden border-b border-border/55">
+      <div className="mx-auto grid min-h-[720px] max-w-7xl gap-10 px-6 py-16 lg:grid-cols-[minmax(0,0.95fr)_minmax(420px,0.72fr)] lg:items-center lg:px-8">
         <div className="relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
-            className="inline-flex h-10 items-center gap-2 rounded-full border border-border/50 bg-surface/38 px-4 text-sm font-medium text-muted-foreground shadow-material-sm backdrop-blur-2xl"
+            className="inline-flex h-10 items-center gap-2 rounded-full border border-blue-200/70 bg-white/72 px-4 text-sm font-medium text-blue-700 shadow-material-sm backdrop-blur-xl"
           >
-            <Sparkles className="h-4 w-4 text-accent" />
-            Materials GraphRAG Agent
+            <Sparkles className="h-4 w-4" />
+            AI Research Laboratory
           </motion.div>
 
           <motion.h1
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.58, delay: 0.08, ease: "easeOut" }}
-            className="mt-7 max-w-4xl text-5xl font-semibold tracking-normal text-balance md:text-7xl"
+            transition={{ duration: 0.62, delay: 0.08, ease: "easeOut" }}
+            className="mt-7 max-w-5xl text-5xl font-semibold tracking-normal text-balance text-slate-950 md:text-7xl"
           >
-            Scientific AI assistant for <span className="gradient-text">materials reasoning</span>.
+            Building Intelligent Systems from <span className="gradient-text">Foundation Models</span> to Autonomous AI Agents
           </motion.h1>
 
           <motion.p
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.58, delay: 0.16, ease: "easeOut" }}
-            className="mt-6 max-w-2xl text-lg leading-8 text-muted-foreground"
+            transition={{ duration: 0.62, delay: 0.16, ease: "easeOut" }}
+            className="mt-6 max-w-3xl text-lg leading-8 text-slate-600"
           >
-            A light GraphRAG QA workspace for literature retrieval, material knowledge graphs, hypothesis ranking, and evidence-backed research reports.
+            Exploring Machine Learning, Large Language Models, Agentic AI, Knowledge Intelligence, and AI for Science.
           </motion.p>
 
           <motion.div
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.58, delay: 0.24, ease: "easeOut" }}
-            className="material-card video-fused-panel hero-query-panel mt-8 p-4"
-          >
-            <div className="hero-input-surface flex min-h-14 items-center gap-3 rounded-2xl px-4">
-              <Search className="h-5 w-5 shrink-0 text-accent" />
-              <div className="min-w-0 flex-1 text-sm text-foreground">
-                Find solid-state electrolyte candidates with high ionic conductivity and stable synthesis routes
-              </div>
-              <button
-                type="button"
-                className="material-button focus-ring hidden h-10 items-center gap-2 rounded-full bg-accent px-4 text-sm font-medium text-accent-foreground sm:inline-flex"
-              >
-                Analyze
-                <ArrowRight className="h-4 w-4" />
-              </button>
-            </div>
-
-            <div className="mt-4 flex flex-wrap gap-2">
-              {promptChips.map((chip) => (
-                <span key={chip} className="soft-chip rounded-full px-3 py-1.5 text-xs font-medium text-muted-foreground">
-                  {chip}
-                </span>
-              ))}
-            </div>
-
-            <div className="mt-5 grid gap-3">
-              {reasoningSteps.map((step, index) => (
-                <motion.div
-                  key={step.label}
-                  initial={{ opacity: 0, x: -12 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.36 + index * 0.08, duration: 0.42 }}
-                  className="grid gap-2"
-                >
-                  <div className="flex items-center justify-between gap-3 text-xs">
-                    <div className="flex items-center gap-2 font-medium text-foreground">
-                      <span className="h-2 w-2 rounded-full bg-accent animate-soft-pulse" />
-                      {step.label}
-                    </div>
-                    <span className="text-muted-foreground">{step.detail}</span>
-                  </div>
-                  <div className="analysis-line h-2 overflow-hidden rounded-full bg-muted">
-                    <div className={`h-full rounded-full ${step.color}`} style={{ width: `${step.progress}%` }} />
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.58, delay: 0.34, ease: "easeOut" }}
-            className="mt-6 flex flex-col gap-3 sm:flex-row"
+            transition={{ duration: 0.62, delay: 0.24, ease: "easeOut" }}
+            className="mt-8 flex flex-col gap-3 sm:flex-row"
           >
             <Link
-              href="/projects"
+              href="#research-projects"
               className="material-button focus-ring inline-flex h-12 items-center justify-center gap-2 rounded-full bg-accent px-6 text-sm font-medium text-accent-foreground"
             >
               Explore research projects
@@ -132,48 +74,95 @@ export function ResearchHero() {
               href="https://github.com/SuleynanAuir"
               target="_blank"
               rel="noreferrer"
-              className="focus-ring inline-flex h-12 items-center justify-center gap-2 rounded-full border border-border/45 bg-surface/34 px-6 text-sm font-medium text-foreground shadow-material-sm backdrop-blur-xl transition hover:-translate-y-0.5 hover:border-accent hover:text-accent"
+              className="focus-ring inline-flex h-12 items-center justify-center gap-2 rounded-full border border-border/60 bg-white/64 px-6 text-sm font-medium text-slate-800 shadow-material-sm backdrop-blur-xl transition hover:-translate-y-0.5 hover:border-blue-300 hover:text-blue-700"
             >
               <Github className="h-4 w-4" />
               GitHub
             </Link>
           </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.62, delay: 0.34, ease: "easeOut" }}
+            className="material-card video-fused-panel mt-10 p-4 md:p-5"
+          >
+            <div className="mb-4 flex items-center justify-between gap-4">
+              <div>
+                <div className="text-xs font-semibold uppercase tracking-[0.18em] text-blue-700">AI Evolution</div>
+                <div className="mt-1 text-sm text-muted-foreground">From algorithms to autonomous scientific intelligence</div>
+              </div>
+              <div className="hidden rounded-full border border-blue-200/70 bg-blue-50/70 px-3 py-1 text-xs font-medium text-blue-700 sm:block">
+                Research Path
+              </div>
+            </div>
+            <EvolutionTimeline />
+          </motion.div>
         </div>
 
         <motion.div
-          initial={{ opacity: 0, scale: 0.97, y: 12 }}
+          initial={{ opacity: 0, scale: 0.985, y: 14 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
+          transition={{ duration: 0.72, delay: 0.18, ease: "easeOut" }}
           className="relative z-10"
         >
-          <KnowledgeGraph />
+          <ResearchNetwork />
         </motion.div>
       </div>
     </section>
   );
 }
 
-function KnowledgeGraph() {
+function EvolutionTimeline() {
   return (
-    <div className="material-card video-fused-panel knowledge-panel overflow-hidden p-5">
-      <div className="flex items-center justify-between gap-4">
-        <div>
-          <div className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">Live Knowledge Graph</div>
-          <div className="mt-2 text-xl font-semibold tracking-normal">GraphRAG evidence trace</div>
+    <div className="grid gap-2 md:grid-cols-6 md:gap-3">
+      {aiEvolution.map((step, index) => (
+        <div key={step} className="relative">
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.46 + index * 0.06, duration: 0.38, ease: "easeOut" }}
+            className="group min-h-20 rounded-2xl border border-border/55 bg-white/52 p-3 shadow-material-sm backdrop-blur-xl transition hover:-translate-y-1 hover:border-blue-300 hover:bg-white/78"
+          >
+            <div className="flex h-7 w-7 items-center justify-center rounded-full bg-blue-50 text-xs font-semibold text-blue-700 ring-1 ring-blue-100">
+              {index + 1}
+            </div>
+            <div className="mt-3 text-sm font-semibold leading-5 text-slate-900">{step}</div>
+          </motion.div>
+          {index < aiEvolution.length - 1 ? (
+            <div className="flex justify-center py-1 text-blue-400 md:absolute md:-right-3 md:top-9 md:z-10 md:py-0">
+              <ArrowDown className="h-4 w-4 md:-rotate-90" />
+            </div>
+          ) : null}
         </div>
-        <div className="inline-flex items-center gap-2 rounded-full bg-accent-soft px-3 py-1.5 text-xs font-medium text-accent">
-          <span className="h-2 w-2 rounded-full bg-accent animate-soft-pulse" />
-          Building
+      ))}
+    </div>
+  );
+}
+
+function ResearchNetwork() {
+  return (
+    <div className="material-card video-fused-panel knowledge-panel overflow-hidden p-5 md:p-6">
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <div className="inline-flex items-center gap-2 rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-blue-700 ring-1 ring-blue-100">
+            <Network className="h-3.5 w-3.5" />
+            Interactive System Map
+          </div>
+          <h2 className="mt-4 text-2xl font-semibold tracking-normal text-slate-950">Connected research directions</h2>
+          <p className="mt-2 max-w-md text-sm leading-6 text-slate-600">
+            Foundation models become useful research systems when connected with agents, retrieval, graphs, and scientific feedback loops.
+          </p>
         </div>
       </div>
 
-      <div className="graph-stage relative mt-5 h-[390px] overflow-hidden rounded-3xl border">
+      <div className="graph-stage relative mt-6 h-[430px] overflow-hidden rounded-[28px] border">
         <svg className="absolute inset-0 h-full w-full" viewBox="0 0 100 100" role="presentation">
           <defs>
-            <linearGradient id="materialEdgeGradient" x1="0%" x2="100%" y1="0%" y2="100%">
-              <stop offset="0%" stopColor="hsl(var(--accent))" stopOpacity="0.58" />
-              <stop offset="55%" stopColor="hsl(var(--amber))" stopOpacity="0.45" />
-              <stop offset="100%" stopColor="hsl(var(--green))" stopOpacity="0.44" />
+            <linearGradient id="portfolioEdgeGradient" x1="0%" x2="100%" y1="0%" y2="100%">
+              <stop offset="0%" stopColor="#2563eb" stopOpacity="0.55" />
+              <stop offset="50%" stopColor="#06b6d4" stopOpacity="0.42" />
+              <stop offset="100%" stopColor="#10b981" stopOpacity="0.48" />
             </linearGradient>
           </defs>
           {graphEdges.map(([from, to], index) => {
@@ -182,18 +171,18 @@ function KnowledgeGraph() {
 
             return (
               <motion.line
-                key={`${from}-${to}`}
+                key={`${start.id}-${end.id}`}
                 x1={start.x}
                 y1={start.y}
                 x2={end.x}
                 y2={end.y}
-                stroke="url(#materialEdgeGradient)"
-                strokeWidth="0.55"
+                stroke="url(#portfolioEdgeGradient)"
+                strokeWidth="0.62"
                 strokeLinecap="round"
-                strokeDasharray="5 6"
+                strokeDasharray="6 7"
                 initial={{ opacity: 0, pathLength: 0 }}
                 animate={{ opacity: 1, pathLength: 1 }}
-                transition={{ delay: 0.42 + index * 0.08, duration: 0.7, ease: "easeOut" }}
+                transition={{ delay: 0.46 + index * 0.06, duration: 0.7, ease: "easeOut" }}
                 className="animate-edge-flow"
               />
             );
@@ -201,54 +190,35 @@ function KnowledgeGraph() {
         </svg>
 
         {graphNodes.map((node, index) => (
-          <div
-            key={node.label}
+          <motion.div
+            key={node.id}
+            initial={{ opacity: 0, scale: 0.9, y: 10 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ delay: 0.32 + index * 0.08, duration: 0.42, ease: "easeOut" }}
             className="absolute"
             style={{ left: `${node.x}%`, top: `${node.y}%`, transform: "translate(-50%, -50%)" }}
           >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.88, y: 10 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              transition={{ delay: 0.26 + index * 0.1, duration: 0.42, ease: "easeOut" }}
+            <div
+              className={[
+                "luminous-node grid min-h-20 w-28 place-items-center rounded-3xl border px-3 text-center shadow-material-md transition hover:-translate-y-1 hover:scale-[1.03]",
+                node.tone,
+                node.color,
+                index === 0 ? "animate-node-pulse" : "",
+              ].join(" ")}
             >
-              <div
-                className={[
-                  "luminous-node grid place-items-center rounded-full border bg-surface text-center shadow-material-md",
-                  node.size === "lg" ? "h-28 w-28" : node.size === "md" ? "h-24 w-24" : "h-20 w-20",
-                  node.color,
-                  index === 0 ? "animate-node-pulse" : "",
-                ].join(" ")}
-              >
-                <div>
-                  <div className="text-sm font-semibold">{node.label}</div>
-                  <div className="mt-1 text-[11px] font-medium opacity-75">{node.meta}</div>
-                </div>
-              </div>
-            </motion.div>
-          </div>
+              <div className="text-xs font-semibold leading-4">{node.id}</div>
+            </div>
+          </motion.div>
         ))}
 
-        <div className="graph-report-panel absolute bottom-4 left-4 right-4 grid gap-3 rounded-3xl p-4">
-          <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
-            <CheckCircle2 className="h-4 w-4 text-green" />
-            Candidate report module
-          </div>
-          <div className="grid gap-2 text-xs text-muted-foreground">
-            <ReportRow icon={Database} text="Evidence clusters resolved from graph neighborhoods" />
-            <ReportRow icon={Atom} text="Material-property relationships scored by confidence" />
-            <ReportRow icon={FileText} text="Answer draft linked to citations and project notes" />
-          </div>
+      </div>
+
+      <div className="graph-report-panel mt-4 rounded-3xl p-4">
+        <div className="text-sm font-semibold text-slate-950">Research system principle</div>
+        <div className="mt-2 text-xs leading-5 text-slate-600">
+          Intelligent systems should understand knowledge, reason over evidence, act with tools, and continuously improve through feedback.
         </div>
       </div>
-    </div>
-  );
-}
-
-function ReportRow({ icon: Icon, text }: { icon: LucideIcon; text: string }) {
-  return (
-    <div className="flex items-center gap-2">
-      <Icon className="h-3.5 w-3.5 text-accent" />
-      <span>{text}</span>
     </div>
   );
 }

@@ -6,15 +6,18 @@ export function SiteFooter() {
     <footer className="border-t border-border/40 bg-surface/26 backdrop-blur-xl">
       <div className="mx-auto flex max-w-7xl flex-col gap-6 px-6 py-8 text-sm text-muted-foreground md:flex-row md:items-center md:justify-between lg:px-8">
         <div>
-          <div className="font-semibold text-foreground">Materials AI Research Assistant</div>
-          <div className="mt-1">GraphRAG QA, knowledge maps, project notes, and scientific reasoning workflows.</div>
+          <div className="font-semibold text-foreground">AI Research Laboratory Portfolio</div>
+          <div className="mt-1">Foundation models, autonomous agents, knowledge intelligence, and AI for science.</div>
         </div>
         <div className="flex items-center gap-4">
           <Link href="/projects" className="transition hover:text-accent">
-            Projects
+            Research Projects
           </Link>
-          <Link href="/research-map" className="transition hover:text-accent">
-            Research Map
+          <Link href="/papers" className="transition hover:text-accent">
+            Publications
+          </Link>
+          <Link href="/#contact" className="transition hover:text-accent">
+            Contact
           </Link>
           <Link
             href="https://github.com/SuleynanAuir"

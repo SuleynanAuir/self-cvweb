@@ -1,11 +1,11 @@
 export const navigation = [
   { label: "Home", href: "/" },
-  { label: "Research Map", href: "/research-map" },
   { label: "Projects", href: "/projects" },
-  { label: "Agent Hub", href: "/agent-hub" },
-  { label: "Papers", href: "/papers" },
-  { label: "Roadmap", href: "/roadmap" },
+  { label: "Research Map", href: "/research-map" },
+  { label: "Agent Systems", href: "/agent-hub" },
+  { label: "Publications", href: "/papers" },
   { label: "Notes", href: "/notes" },
+  { label: "Contact", href: "/#contact" },
 ] as const;
 
 export const focusAreas = [
@@ -62,7 +62,7 @@ export const researchTimeline = [
   },
   {
     year: "2026",
-    title: "Autonomous Materials AI Agent",
+    title: "Autonomous Scientific AI Agent",
     description: "Coordinate planning, retrieval, scientific reasoning, report generation, and project knowledge reuse.",
     tags: ["Agent", "Reasoning", "Report", "Automation"],
   },

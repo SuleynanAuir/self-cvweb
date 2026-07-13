@@ -1,12 +1,11 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import { BackgroundVideo } from "@/components/background-video";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 
-const siteTitle = "Materials AI Research Assistant";
+const siteTitle = "AI Research Laboratory Portfolio";
 const siteDescription =
-  "A light, Material-inspired AI Agent and GraphRAG workspace for materials science research, project exploration, and knowledge analysis.";
+  "A modern AI research portfolio for foundation models, autonomous AI agents, knowledge intelligence, machine learning, and AI for science.";
 
 export const metadata: Metadata = {
   title: {
@@ -42,7 +41,6 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <div className="site-video-backdrop" aria-hidden="true">
-          <BackgroundVideo />
           <div className="site-video-scrim" />
         </div>
         <div className="site-page-shell">

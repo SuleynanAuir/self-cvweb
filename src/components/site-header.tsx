@@ -20,13 +20,13 @@ export function SiteHeader() {
       <div className="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-6 lg:px-8">
         <Link href="/" className="focus-ring flex items-center gap-3 rounded-2xl">
           <span className="grid h-10 w-10 place-items-center rounded-2xl bg-surface/38 shadow-material-sm ring-1 ring-border/45 backdrop-blur-xl">
-            <span className="brand-mark grid h-7 w-7 place-items-center rounded-xl bg-[linear-gradient(135deg,#d08a2f,#687d45)] text-xs font-semibold text-white">
-              M
+            <span className="brand-mark grid h-7 w-7 place-items-center rounded-xl bg-[linear-gradient(135deg,#2563eb,#06b6d4,#10b981)] text-xs font-semibold text-white">
+              AI
             </span>
           </span>
           <span className="hidden sm:block">
-            <span className="block text-sm font-semibold tracking-normal text-foreground">Materials AI</span>
-            <span className="block text-xs text-muted-foreground">GraphRAG Research Workspace</span>
+            <span className="block text-sm font-semibold tracking-normal text-foreground">AI Research Lab</span>
+            <span className="block text-xs text-muted-foreground">Agents, Knowledge, AI for Science</span>
           </span>
         </Link>
 
@@ -50,7 +50,7 @@ export function SiteHeader() {
         <div className="flex items-center gap-2">
           <div className="hidden h-10 items-center gap-2 rounded-full border border-border/45 bg-surface/36 px-3 text-xs font-medium text-muted-foreground shadow-material-sm backdrop-blur-xl md:inline-flex">
             <Sparkles className="h-3.5 w-3.5 text-accent" />
-            Live Agent
+            Research Agent
           </div>
           <Link
             href="https://github.com/SuleynanAuir"

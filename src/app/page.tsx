@@ -1,107 +1,176 @@
 import Link from "next/link";
-import { ArrowRight, BrainCircuit, FileSearch, Layers3 } from "lucide-react";
-import { FeaturedProjects } from "@/components/featured-projects";
+import { ArrowUpRight, Github, Microscope, Network, Sparkles } from "lucide-react";
 import { ResearchHero } from "@/components/research-hero";
-import { ResearchTimeline } from "@/components/research-timeline";
-import { SectionHeading } from "@/components/section-heading";
 import { ScrollReveal } from "@/components/scroll-reveal";
-import { focusAreas } from "@/data/research";
-import { getAllProjects } from "@/lib/content/projects";
+import { SectionHeading } from "@/components/section-heading";
+import { researchCategories, technicalSkills } from "@/data/portfolio";
+
+const labPrinciples = [
+  {
+    icon: Sparkles,
+    title: "Foundation model engineering",
+    body: "Adapt, evaluate, and align large models so they become reliable components in larger intelligent systems.",
+  },
+  {
+    icon: Network,
+    title: "Agentic system design",
+    body: "Build agents that can plan, retrieve, call tools, coordinate with other agents, and improve through feedback.",
+  },
+  {
+    icon: Microscope,
+    title: "AI for scientific reasoning",
+    body: "Connect knowledge graphs, RAG, and scientific workflows to make research answers traceable and useful.",
+  },
+] as const;
 
 export default function HomePage() {
-  const projects = getAllProjects();
-  const featuredProjects = projects.filter((project) => project.featured).slice(0, 4);
-
   return (
     <>
       <ResearchHero />
 
-      <section className="bg-surface/14 backdrop-blur-[2px]">
+      <section className="border-b border-border/45 bg-white/32 backdrop-blur-sm">
         <div className="mx-auto grid max-w-7xl gap-4 px-6 py-8 md:grid-cols-3 lg:px-8">
-          {[
-            {
-              icon: BrainCircuit,
-              title: "Reasoning Agent",
-              body: "Plans multi-step material analysis, checks evidence conflict, and keeps hypotheses traceable.",
-            },
-            {
-              icon: FileSearch,
-              title: "GraphRAG Retrieval",
-              body: "Searches literature chunks, graph entities, figures, and project notes with source-aware ranking.",
-            },
-            {
-              icon: Layers3,
-              title: "Report Workspace",
-              body: "Turns retrieved evidence into structured summaries, project pages, and reusable research artifacts.",
-            },
-          ].map((item, index) => (
-            <ScrollReveal
-              as="article"
-              key={item.title}
-              className="material-card interactive-lift p-6"
-              delay={index * 0.08}
-            >
-              <div className="mb-5 grid h-11 w-11 place-items-center rounded-2xl bg-accent-soft text-accent">
+          {labPrinciples.map((item, index) => (
+            <ScrollReveal as="article" key={item.title} className="material-card interactive-lift p-6" delay={index * 0.08}>
+              <div className="mb-5 grid h-11 w-11 place-items-center rounded-2xl bg-blue-50 text-blue-700 ring-1 ring-blue-100">
                 <item.icon className="h-5 w-5" strokeWidth={1.9} />
               </div>
-              <h2 className="text-lg font-semibold tracking-normal">{item.title}</h2>
-              <p className="mt-3 max-w-sm text-sm leading-6 text-muted-foreground">{item.body}</p>
+              <h2 className="text-lg font-semibold tracking-normal text-slate-950">{item.title}</h2>
+              <p className="mt-3 max-w-sm text-sm leading-6 text-slate-600">{item.body}</p>
             </ScrollReveal>
           ))}
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
+      <section id="research-projects" className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
         <ScrollReveal>
           <SectionHeading
-            eyebrow="Research Focus"
-            title="Materials science intelligence, organized as usable agent modules."
-            description="The platform frames literature, properties, experiments, visual evidence, and project notes as connected objects for scientific question answering."
+            eyebrow="Research Projects"
+            title="Projects organized by research direction, not chronology."
+            description="The portfolio maps a path from classical machine learning foundations to foundation models, autonomous agents, knowledge intelligence, multimodal systems, and AI for science."
           />
         </ScrollReveal>
-        <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {focusAreas.map((area, index) => (
+
+        <div className="mt-12 grid gap-5">
+          {researchCategories.map((category, categoryIndex) => (
             <ScrollReveal
-              as="article"
-              key={area.title}
-              className="material-card interactive-lift min-h-48 p-6"
-              delay={index * 0.055}
+              as="section"
+              key={category.title}
+              className="material-card p-5 md:p-6"
+              delay={categoryIndex * 0.035}
+              amount={0.05}
             >
-              <div className="inline-flex rounded-full bg-muted px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-accent">{area.code}</div>
-              <h3 className="mt-5 text-xl font-semibold tracking-normal">{area.title}</h3>
-              <p className="mt-3 text-sm leading-6 text-muted-foreground">{area.description}</p>
-              <div className="mt-5 flex flex-wrap gap-2">
-                {area.tags.map((tag) => (
-                  <span key={tag} className="rounded-full border border-border bg-surface px-3 py-1 text-xs text-muted-foreground shadow-sm">
-                    {tag}
-                  </span>
-                ))}
+              <div className="grid gap-6 lg:grid-cols-[0.28fr_1fr]">
+                <div>
+                  <div className="inline-flex rounded-full border border-blue-200/70 bg-blue-50/70 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-blue-700">
+                    {String(categoryIndex + 1).padStart(2, "0")}
+                  </div>
+                  <h3 className="mt-4 text-2xl font-semibold tracking-normal text-slate-950">{category.title}</h3>
+                  <p className="mt-3 text-sm leading-6 text-slate-600">{category.description}</p>
+                </div>
+
+                <div className="grid gap-3 md:grid-cols-2">
+                  {category.projects.map((project) => (
+                    <article key={project.name} className="project-card rounded-3xl p-5">
+                      <div className="flex items-start justify-between gap-4">
+                        <div>
+                          <h4 className="text-lg font-semibold tracking-normal text-slate-950">{project.name}</h4>
+                          <p className="mt-3 text-sm leading-6 text-slate-600">{project.description}</p>
+                        </div>
+                        <Link
+                          href={project.github}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="focus-ring inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-border/70 bg-white/62 text-slate-600 shadow-material-sm backdrop-blur-xl transition hover:-translate-y-0.5 hover:border-blue-300 hover:text-blue-700"
+                          aria-label={`${project.name} GitHub link`}
+                        >
+                          <Github className="h-4 w-4" />
+                        </Link>
+                      </div>
+
+                      <div className="mt-5 flex flex-wrap gap-2">
+                        {project.keywords.map((keyword) => (
+                          <span key={keyword} className="rounded-full border border-border/60 bg-white/58 px-3 py-1 text-xs font-medium text-slate-600">
+                            {keyword}
+                          </span>
+                        ))}
+                      </div>
+
+                      <div className="mt-5 rounded-2xl border border-blue-100/80 bg-blue-50/48 p-3">
+                        <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-blue-700">
+                          <ArrowUpRight className="h-3.5 w-3.5" />
+                          Research impact
+                        </div>
+                        <p className="mt-2 text-xs leading-5 text-slate-600">{project.impact}</p>
+                      </div>
+                    </article>
+                  ))}
+                </div>
               </div>
             </ScrollReveal>
           ))}
         </div>
       </section>
 
-      <ResearchTimeline />
+      <section className="border-y border-border/45 bg-white/38 backdrop-blur-sm">
+        <div className="mx-auto grid max-w-7xl gap-8 px-6 py-20 lg:grid-cols-[0.72fr_0.28fr] lg:items-center lg:px-8">
+          <ScrollReveal>
+            <div className="max-w-4xl">
+              <div className="inline-flex rounded-full border border-blue-200/70 bg-blue-50/70 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-blue-700">
+                Research Philosophy
+              </div>
+              <blockquote className="mt-6 text-3xl font-semibold leading-tight tracking-normal text-balance text-slate-950 md:text-5xl">
+                From algorithms to intelligent systems: building AI that can understand, reason, act, and continuously improve.
+              </blockquote>
+              <p className="mt-6 max-w-2xl text-base leading-8 text-slate-600">
+                The research direction is system-first: foundation models are treated as building blocks for agents, knowledge engines, scientific QA systems, and autonomous research workflows.
+              </p>
+            </div>
+          </ScrollReveal>
 
-      <section className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
-        <ScrollReveal>
-          <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
-            <SectionHeading
-              eyebrow="Project System"
-              title="Research projects as reusable knowledge artifacts."
-              description="Each project is stored as Markdown metadata and opens into a concise project page with summary, focus, stack, and source links."
-            />
+          <ScrollReveal className="material-card p-5" delay={0.08} variant="scale">
+            <div className="text-xs font-semibold uppercase tracking-[0.18em] text-blue-700">Technical Skills</div>
+            <div className="mt-5 flex flex-wrap gap-2">
+              {technicalSkills.map((skill) => (
+                <span key={skill} className="rounded-full border border-border/65 bg-white/62 px-3 py-1.5 text-sm font-medium text-slate-700 shadow-sm">
+                  {skill}
+                </span>
+              ))}
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      <section id="contact" className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
+        <ScrollReveal className="material-card grid gap-8 p-8 md:grid-cols-[1fr_auto] md:items-center md:p-10" variant="scale">
+          <div>
+            <div className="inline-flex rounded-full border border-blue-200/70 bg-blue-50/70 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-blue-700">
+              Contact
+            </div>
+            <h2 className="mt-5 text-3xl font-semibold tracking-normal text-slate-950 md:text-4xl">Research projects, publications, and collaboration notes.</h2>
+            <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-600">
+              The portfolio is organized around open research systems. GitHub is the primary place to inspect repositories, project evolution, and implementation artifacts.
+            </p>
+          </div>
+          <div className="flex flex-col gap-3 sm:flex-row md:flex-col">
             <Link
-              href="/projects"
+              href="https://github.com/SuleynanAuir"
+              target="_blank"
+              rel="noreferrer"
               className="material-button focus-ring inline-flex h-11 items-center justify-center gap-2 rounded-full bg-accent px-5 text-sm font-medium text-accent-foreground"
             >
-              Explore projects
-              <ArrowRight className="h-4 w-4" />
+              <Github className="h-4 w-4" />
+              GitHub
+            </Link>
+            <Link
+              href="/papers"
+              className="focus-ring inline-flex h-11 items-center justify-center gap-2 rounded-full border border-border/65 bg-white/62 px-5 text-sm font-medium text-slate-700 shadow-material-sm backdrop-blur-xl transition hover:-translate-y-0.5 hover:border-blue-300 hover:text-blue-700"
+            >
+              Publications
+              <ArrowUpRight className="h-4 w-4" />
             </Link>
           </div>
         </ScrollReveal>
-        <FeaturedProjects projects={featuredProjects} />
       </section>
     </>
   );

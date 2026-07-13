@@ -7,6 +7,9 @@ import { ChevronDown, Github, Layers3, Sparkles } from "lucide-react";
 import { researchCategories, type ResearchProject } from "@/data/portfolio";
 import { cn } from "@/lib/utils";
 
+const topicChipClass =
+  "max-w-full rounded-full border border-border/55 bg-surface/36 px-3 py-1 text-[clamp(0.62rem,1.15vw,0.75rem)] font-medium leading-tight text-muted-foreground";
+
 export function ResearchProjectModules() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
@@ -31,7 +34,7 @@ export function ResearchProjectModules() {
             <button
               type="button"
               onClick={() => setOpenIndex(isOpen ? null : index)}
-              className="focus-ring group grid w-full gap-6 p-5 text-left transition md:p-6 lg:grid-cols-[minmax(0,0.58fr)_minmax(300px,0.42fr)] lg:items-center"
+              className="focus-ring group grid w-full gap-6 p-5 text-left transition md:p-6 lg:grid-cols-[minmax(0,0.5fr)_minmax(360px,0.5fr)] lg:items-center"
               aria-expanded={isOpen}
             >
               <div>
@@ -45,7 +48,7 @@ export function ResearchProjectModules() {
                   </div>
                 </div>
 
-                <h3 className="mt-5 text-3xl font-semibold tracking-normal text-foreground md:text-4xl">
+                <h3 className="mt-5 text-[clamp(2rem,4vw,3.25rem)] font-semibold leading-tight tracking-normal text-foreground">
                   {category.title}
                 </h3>
                 <p className="mt-3 max-w-3xl text-sm leading-7 text-muted-foreground">
@@ -54,7 +57,7 @@ export function ResearchProjectModules() {
 
                 <div className="mt-5 flex flex-wrap gap-2">
                   {category.signal.split(", ").map((item) => (
-                    <span key={item} className="rounded-full border border-border/55 bg-surface/36 px-3 py-1 text-xs font-medium text-muted-foreground">
+                    <span key={item} className={topicChipClass}>
                       {item}
                     </span>
                   ))}
@@ -63,13 +66,22 @@ export function ResearchProjectModules() {
 
               <div className="grid gap-4">
                 {previewImages.length > 0 ? (
-                  <div className="flex h-44 items-center gap-3 overflow-x-auto pb-1">
+                  <div
+                    className={cn(
+                      "grid gap-3",
+                      previewImages.length === 1
+                        ? "grid-cols-1"
+                        : previewImages.length === 2
+                          ? "grid-cols-2"
+                          : "grid-cols-2 md:grid-cols-3 xl:grid-cols-4",
+                    )}
+                  >
                     {previewImages.map((image, imageIndex) => (
-                      <div key={image} className="h-full shrink-0 overflow-hidden rounded-2xl border border-border/45 bg-surface/35 px-2 py-2 shadow-material-sm">
+                      <div key={image} className="flex h-48 items-center justify-center overflow-hidden rounded-2xl border border-border/45 bg-surface/35 p-2 shadow-material-sm md:h-52">
                         <img
                           src={image}
                           alt={`${category.title} project preview ${imageIndex + 1}`}
-                          className="h-full w-auto max-w-none object-contain transition duration-500 group-hover:scale-[1.02]"
+                          className="max-h-full max-w-full object-contain transition duration-500 group-hover:scale-[1.02]"
                         />
                       </div>
                     ))}
@@ -166,7 +178,7 @@ function ProjectDetail({ project, index }: { project: ResearchProject; index: nu
 
         <div className="mt-5 flex flex-wrap gap-2">
           {project.keywords.map((keyword) => (
-            <span key={keyword} className="rounded-full border border-border/60 bg-surface/42 px-3 py-1 text-xs font-medium text-muted-foreground">
+            <span key={keyword} className={cn(topicChipClass, "bg-surface/42")}>
               {keyword}
             </span>
           ))}
@@ -180,13 +192,13 @@ function ProjectVisual({ name, images }: { name: string; images: readonly string
   return (
     <>
       <div className="flex h-72 items-center justify-center overflow-hidden rounded-3xl border border-border/45 bg-surface/30 p-3 shadow-material-sm">
-        <img src={images[0]} alt={`${name} screenshot`} className="h-full w-auto max-w-full object-contain" />
+        <img src={images[0]} alt={`${name} screenshot`} className="max-h-full max-w-full object-contain" />
       </div>
       {images.length > 1 ? (
-        <div className="flex h-36 items-center gap-3 overflow-x-auto pb-1">
+        <div className="grid gap-3 sm:grid-cols-2">
           {images.slice(1, 3).map((image, index) => (
-            <div key={image} className="h-full shrink-0 overflow-hidden rounded-2xl border border-border/45 bg-surface/30 p-2 shadow-material-sm">
-              <img src={image} alt={`${name} supporting screenshot ${index + 1}`} className="h-full w-auto max-w-none object-contain" />
+            <div key={image} className="flex h-40 items-center justify-center overflow-hidden rounded-2xl border border-border/45 bg-surface/30 p-2 shadow-material-sm">
+              <img src={image} alt={`${name} supporting screenshot ${index + 1}`} className="max-h-full max-w-full object-contain" />
             </div>
           ))}
         </div>

@@ -67,9 +67,9 @@ export function ResearchHero() {
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.58, delay: 0.24, ease: "easeOut" }}
-            className="material-card mt-8 p-4"
+            className="material-card video-fused-panel hero-query-panel mt-8 p-4"
           >
-            <div className="flex min-h-14 items-center gap-3 rounded-2xl border border-border/45 bg-surface/30 px-4 shadow-inner backdrop-blur-2xl">
+            <div className="hero-input-surface flex min-h-14 items-center gap-3 rounded-2xl px-4">
               <Search className="h-5 w-5 shrink-0 text-accent" />
               <div className="min-w-0 flex-1 text-sm text-foreground">
                 Find solid-state electrolyte candidates with high ionic conductivity and stable synthesis routes
@@ -85,7 +85,7 @@ export function ResearchHero() {
 
             <div className="mt-4 flex flex-wrap gap-2">
               {promptChips.map((chip) => (
-                <span key={chip} className="rounded-full border border-border/45 bg-surface/36 px-3 py-1.5 text-xs font-medium text-muted-foreground shadow-sm backdrop-blur-xl">
+                <span key={chip} className="soft-chip rounded-full px-3 py-1.5 text-xs font-medium text-muted-foreground">
                   {chip}
                 </span>
               ))}
@@ -155,7 +155,7 @@ export function ResearchHero() {
 
 function KnowledgeGraph() {
   return (
-    <div className="material-card overflow-hidden p-5">
+    <div className="material-card video-fused-panel knowledge-panel overflow-hidden p-5">
       <div className="flex items-center justify-between gap-4">
         <div>
           <div className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">Live Knowledge Graph</div>
@@ -167,7 +167,7 @@ function KnowledgeGraph() {
         </div>
       </div>
 
-      <div className="graph-stage relative mt-5 h-[390px] overflow-hidden rounded-3xl border border-border/42">
+      <div className="graph-stage relative mt-5 h-[390px] overflow-hidden rounded-3xl border">
         <svg className="absolute inset-0 h-full w-full" viewBox="0 0 100 100" role="presentation">
           <defs>
             <linearGradient id="materialEdgeGradient" x1="0%" x2="100%" y1="0%" y2="100%">
@@ -228,7 +228,7 @@ function KnowledgeGraph() {
           </div>
         ))}
 
-        <div className="absolute bottom-4 left-4 right-4 grid gap-3 rounded-3xl border border-border/45 bg-surface/44 p-4 shadow-material-sm backdrop-blur-2xl">
+        <div className="graph-report-panel absolute bottom-4 left-4 right-4 grid gap-3 rounded-3xl p-4">
           <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
             <CheckCircle2 className="h-4 w-4 text-green" />
             Candidate report module

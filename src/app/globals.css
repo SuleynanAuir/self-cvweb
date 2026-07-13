@@ -192,18 +192,18 @@ a {
 .material-card {
   position: relative;
   overflow: hidden;
-  border: 1px solid hsl(var(--border) / 0.46);
+  border: 1px solid hsl(var(--border) / 0.30);
   border-radius: 24px;
   background:
-    radial-gradient(circle at 18% 0%, hsl(var(--lume-gold) / 0.16), transparent 34%),
-    linear-gradient(145deg, hsl(var(--surface) / 0.40), hsl(var(--lume-mist) / 0.18)),
-    hsl(var(--surface) / 0.30);
+    radial-gradient(circle at 18% 0%, hsl(var(--lume-gold) / 0.11), transparent 36%),
+    linear-gradient(145deg, hsl(var(--surface) / 0.28), hsl(var(--lume-mist) / 0.12)),
+    hsl(var(--surface) / 0.18);
   box-shadow:
-    0 1px 2px rgba(72, 56, 31, 0.06),
-    0 18px 54px rgba(72, 56, 31, 0.12),
-    0 0 64px hsl(var(--lume-green) / 0.06),
-    inset 0 1px 0 hsl(0 0% 100% / 0.28);
-  backdrop-filter: blur(24px) saturate(1.22);
+    0 1px 2px rgba(72, 56, 31, 0.04),
+    0 16px 48px rgba(72, 56, 31, 0.08),
+    0 0 76px hsl(var(--lume-green) / 0.045),
+    inset 0 1px 0 hsl(0 0% 100% / 0.22);
+  backdrop-filter: blur(18px) saturate(1.16);
 }
 
 .material-card::before {
@@ -213,9 +213,9 @@ a {
   z-index: 0;
   pointer-events: none;
   background:
-    linear-gradient(124deg, hsl(var(--lume-gold) / 0.12), transparent 34%, hsl(var(--lume-green) / 0.08) 72%, transparent),
-    linear-gradient(90deg, transparent, hsl(var(--surface) / 0.24), transparent);
-  opacity: 0.40;
+    linear-gradient(124deg, hsl(var(--lume-gold) / 0.08), transparent 34%, hsl(var(--lume-green) / 0.06) 72%, transparent),
+    linear-gradient(90deg, transparent, hsl(var(--surface) / 0.16), transparent);
+  opacity: 0.30;
   animation: glass-lume-breathe 7.2s ease-in-out infinite;
 }
 
@@ -224,14 +224,84 @@ a {
   z-index: 1;
 }
 
-.graph-stage {
+.video-fused-panel {
+  border-color: hsl(var(--border) / 0.20);
   background:
-    radial-gradient(circle at 50% 8%, hsl(var(--surface) / 0.50), transparent 42%),
-    linear-gradient(180deg, hsl(var(--surface) / 0.34), hsl(var(--lume-mist) / 0.16));
+    radial-gradient(circle at 16% 0%, hsl(var(--lume-gold) / 0.13), transparent 34%),
+    radial-gradient(circle at 84% 100%, hsl(var(--lume-green) / 0.11), transparent 38%),
+    linear-gradient(135deg, hsl(var(--surface) / 0.24), hsl(var(--lume-mist) / 0.10) 58%, hsl(var(--green) / 0.045)),
+    hsl(var(--surface) / 0.12);
   box-shadow:
-    inset 0 1px 0 hsl(0 0% 100% / 0.28),
-    inset 0 -42px 96px hsl(var(--green) / 0.08);
-  backdrop-filter: blur(18px) saturate(1.12);
+    0 1px 0 hsl(0 0% 100% / 0.18),
+    0 22px 72px rgba(72, 56, 31, 0.08),
+    0 0 86px hsl(var(--lume-gold) / 0.05),
+    inset 0 1px 0 hsl(0 0% 100% / 0.18),
+    inset 0 -42px 90px hsl(var(--green) / 0.045);
+  backdrop-filter: blur(14px) saturate(1.08);
+}
+
+.video-fused-panel::before {
+  opacity: 0.22;
+}
+
+.video-fused-panel::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background:
+    linear-gradient(180deg, hsl(0 0% 100% / 0.16), transparent 30%, transparent 70%, hsl(var(--lume-mist) / 0.08)),
+    radial-gradient(circle at 50% -12%, hsl(var(--surface) / 0.22), transparent 38%);
+  opacity: 0.62;
+}
+
+.hero-query-panel {
+  max-width: 640px;
+}
+
+.hero-input-surface {
+  border: 1px solid hsl(var(--border) / 0.24);
+  background:
+    linear-gradient(135deg, hsl(var(--surface) / 0.36), hsl(var(--lume-mist) / 0.12)),
+    hsl(var(--surface) / 0.14);
+  box-shadow:
+    inset 0 1px 0 hsl(0 0% 100% / 0.26),
+    0 8px 24px rgba(72, 56, 31, 0.055);
+  backdrop-filter: blur(12px) saturate(1.08);
+}
+
+.soft-chip {
+  border: 1px solid hsl(var(--border) / 0.28);
+  background:
+    linear-gradient(135deg, hsl(var(--surface) / 0.28), hsl(var(--lume-mist) / 0.10)),
+    hsl(var(--surface) / 0.12);
+  box-shadow:
+    inset 0 1px 0 hsl(0 0% 100% / 0.20),
+    0 6px 16px rgba(72, 56, 31, 0.04);
+  backdrop-filter: blur(10px) saturate(1.04);
+}
+
+.knowledge-panel {
+  box-shadow:
+    0 1px 0 hsl(0 0% 100% / 0.16),
+    0 26px 90px rgba(72, 56, 31, 0.09),
+    0 0 92px hsl(var(--lume-green) / 0.06),
+    inset 0 1px 0 hsl(0 0% 100% / 0.16);
+}
+
+.graph-stage {
+  isolation: isolate;
+  border-color: hsl(var(--border) / 0.18);
+  background:
+    radial-gradient(circle at 50% 8%, hsl(var(--surface) / 0.28), transparent 42%),
+    radial-gradient(circle at 82% 58%, hsl(var(--lume-gold) / 0.10), transparent 34%),
+    linear-gradient(180deg, hsl(var(--surface) / 0.18), hsl(var(--lume-mist) / 0.08));
+  box-shadow:
+    inset 0 1px 0 hsl(0 0% 100% / 0.16),
+    inset 0 -42px 96px hsl(var(--green) / 0.055);
+  backdrop-filter: blur(12px) saturate(1.06);
 }
 
 .graph-stage::before {
@@ -239,10 +309,37 @@ a {
   position: absolute;
   inset: 0;
   pointer-events: none;
+  z-index: 0;
   background:
-    radial-gradient(circle at 20% 30%, hsl(var(--cyan) / 0.08), transparent 26%),
-    radial-gradient(circle at 78% 26%, hsl(var(--amber) / 0.11), transparent 28%),
-    linear-gradient(180deg, hsl(0 0% 100% / 0.10), transparent);
+    radial-gradient(circle at 20% 30%, hsl(var(--cyan) / 0.07), transparent 26%),
+    radial-gradient(circle at 78% 26%, hsl(var(--amber) / 0.09), transparent 28%),
+    linear-gradient(180deg, hsl(0 0% 100% / 0.08), transparent);
+}
+
+.graph-stage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    linear-gradient(180deg, transparent 48%, hsl(var(--lume-mist) / 0.08) 100%),
+    radial-gradient(circle at 50% 84%, hsl(var(--surface) / 0.16), transparent 34%);
+}
+
+.graph-stage > * {
+  z-index: 1;
+}
+
+.graph-report-panel {
+  border: 1px solid hsl(var(--border) / 0.24);
+  background:
+    linear-gradient(135deg, hsl(var(--surface) / 0.34), hsl(var(--lume-mist) / 0.15)),
+    hsl(var(--surface) / 0.14);
+  box-shadow:
+    0 10px 28px rgba(72, 56, 31, 0.06),
+    inset 0 1px 0 hsl(0 0% 100% / 0.24);
+  backdrop-filter: blur(14px) saturate(1.08);
 }
 
 .interactive-lift {

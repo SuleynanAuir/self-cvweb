@@ -24,7 +24,7 @@ export function ScrollReveal({
   children,
   className,
   delay = 0,
-  amount = 0.18,
+  amount = 0.08,
   variant = "lift",
 }: ScrollRevealProps) {
   const reduceMotion = useReducedMotion();
@@ -34,9 +34,8 @@ export function ScrollReveal({
     ? { opacity: 0 }
     : {
         opacity: 0,
-        y: variant === "lift" ? 34 : 0,
-        scale: variant === "scale" ? 0.97 : 1,
-        filter: "blur(10px)",
+        y: variant === "lift" ? 28 : 0,
+        scale: variant === "scale" ? 0.985 : 1,
       };
 
   const visible = reduceMotion
@@ -45,15 +44,14 @@ export function ScrollReveal({
         opacity: 1,
         y: 0,
         scale: 1,
-        filter: "blur(0px)",
       };
 
   return (
     <MotionComponent
       initial={hidden}
       whileInView={visible}
-      viewport={{ once: true, amount, margin: "0px 0px -80px 0px" }}
-      transition={{ duration: 0.72, delay, ease: [0.22, 1, 0.36, 1] }}
+      viewport={{ once: true, amount, margin: "0px 0px 120px 0px" }}
+      transition={{ duration: 0.62, delay, ease: [0.22, 1, 0.36, 1] }}
       className={className}
     >
       {children}

@@ -47,9 +47,9 @@ export function ProjectExplorer({ projects }: ProjectExplorerProps) {
   return (
     <section className="mt-14">
       <motion.div
-        initial={{ opacity: 0, y: 24, filter: "blur(8px)" }}
-        whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-        viewport={{ once: true, amount: 0.35, margin: "0px 0px -80px 0px" }}
+        initial={{ opacity: 0, y: 22 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.08, margin: "0px 0px 120px 0px" }}
         transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
         className="material-card flex flex-col gap-4 p-4 lg:flex-row lg:items-center lg:justify-between"
       >
@@ -86,9 +86,9 @@ export function ProjectExplorer({ projects }: ProjectExplorerProps) {
         {filteredProjects.map((project, index) => (
           <motion.article
             key={project.slug}
-            initial={{ opacity: 0, y: 32, scale: 0.985, filter: "blur(8px)" }}
-            whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
-            viewport={{ once: true, amount: 0.2, margin: "0px 0px -80px 0px" }}
+            initial={{ opacity: 0, y: 28, scale: 0.992 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: true, amount: 0.08, margin: "0px 0px 120px 0px" }}
             transition={{ delay: index * 0.035, duration: 0.58, ease: [0.22, 1, 0.36, 1] }}
             className="material-card interactive-lift grid gap-6 p-6 lg:grid-cols-[0.28fr_1fr_0.26fr_auto] lg:items-start"
           >

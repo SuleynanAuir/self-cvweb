@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
-import { ChevronDown, Github, ImageIcon, Layers3, Sparkles } from "lucide-react";
+import { ChevronDown, Github, Layers3, Sparkles } from "lucide-react";
 import { researchCategories, type ResearchProject } from "@/data/portfolio";
 import { cn } from "@/lib/utils";
 
@@ -62,25 +62,19 @@ export function ResearchProjectModules() {
               </div>
 
               <div className="grid gap-4">
-                <div className="grid grid-cols-4 gap-2">
-                  {previewImages.map((image, imageIndex) => (
-                    <div key={image} className="overflow-hidden rounded-2xl border border-border/45 bg-surface/35 shadow-material-sm">
-                      <img
-                        src={image}
-                        alt={`${category.title} project preview ${imageIndex + 1}`}
-                        className="aspect-[0.9] h-full w-full object-cover transition duration-500 group-hover:scale-[1.04]"
-                      />
-                    </div>
-                  ))}
-                  {Array.from({ length: Math.max(0, 4 - previewImages.length) }).map((_, placeholderIndex) => (
-                    <div
-                      key={`placeholder-${placeholderIndex}`}
-                      className="grid aspect-[0.9] place-items-center rounded-2xl border border-border/45 bg-accent-soft/40 text-accent shadow-material-sm"
-                    >
-                      <ImageIcon className="h-5 w-5" />
-                    </div>
-                  ))}
-                </div>
+                {previewImages.length > 0 ? (
+                  <div className="flex h-44 items-center gap-3 overflow-x-auto pb-1">
+                    {previewImages.map((image, imageIndex) => (
+                      <div key={image} className="h-full shrink-0 overflow-hidden rounded-2xl border border-border/45 bg-surface/35 px-2 py-2 shadow-material-sm">
+                        <img
+                          src={image}
+                          alt={`${category.title} project preview ${imageIndex + 1}`}
+                          className="h-full w-auto max-w-none object-contain transition duration-500 group-hover:scale-[1.02]"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                ) : null}
 
                 <div className="flex items-center justify-between rounded-3xl border border-border/45 bg-surface/34 px-4 py-3 shadow-material-sm backdrop-blur-xl">
                   <div>
@@ -132,11 +126,16 @@ function ProjectDetail({ project, index }: { project: ResearchProject; index: nu
       initial={{ opacity: 0, y: 18 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.045, duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
-      className="grid gap-5 rounded-[28px] border border-border/45 bg-surface/34 p-4 shadow-material-sm backdrop-blur-xl lg:grid-cols-[minmax(220px,0.34fr)_minmax(0,1fr)] lg:items-start"
+      className={cn(
+        "grid gap-5 rounded-[28px] border border-border/45 bg-surface/34 p-4 shadow-material-sm backdrop-blur-xl lg:items-start",
+        images.length > 0 ? "lg:grid-cols-[minmax(220px,0.34fr)_minmax(0,1fr)]" : "",
+      )}
     >
-      <div className="grid gap-3">
-        <ProjectVisual name={project.name} images={images} />
-      </div>
+      {images.length > 0 ? (
+        <div className="grid gap-3">
+          <ProjectVisual name={project.name} images={images} />
+        </div>
+      ) : null}
 
       <div>
         <div className="flex flex-wrap items-center gap-2">
@@ -178,32 +177,16 @@ function ProjectDetail({ project, index }: { project: ResearchProject; index: nu
 }
 
 function ProjectVisual({ name, images }: { name: string; images: readonly string[] }) {
-  if (images.length === 0) {
-    return (
-      <div className="grid min-h-[220px] place-items-center rounded-3xl border border-border/45 bg-accent-soft/42 p-5 text-center">
-        <div>
-          <div className="mx-auto grid h-12 w-12 place-items-center rounded-2xl bg-surface/52 text-accent ring-1 ring-border/60">
-            <ImageIcon className="h-5 w-5" />
-          </div>
-          <div className="mt-4 text-xs font-semibold uppercase tracking-[0.16em] text-accent">
-            Text-only evidence
-          </div>
-          <div className="mt-2 text-sm font-semibold leading-5 text-foreground">{name}</div>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <>
-      <div className="overflow-hidden rounded-3xl border border-border/45 bg-surface/30 shadow-material-sm">
-        <img src={images[0]} alt={`${name} screenshot`} className="aspect-[1.28] h-full w-full object-cover" />
+      <div className="flex h-72 items-center justify-center overflow-hidden rounded-3xl border border-border/45 bg-surface/30 p-3 shadow-material-sm">
+        <img src={images[0]} alt={`${name} screenshot`} className="h-full w-auto max-w-full object-contain" />
       </div>
       {images.length > 1 ? (
-        <div className="grid grid-cols-2 gap-3">
+        <div className="flex h-36 items-center gap-3 overflow-x-auto pb-1">
           {images.slice(1, 3).map((image, index) => (
-            <div key={image} className="overflow-hidden rounded-2xl border border-border/45 bg-surface/30 shadow-material-sm">
-              <img src={image} alt={`${name} supporting screenshot ${index + 1}`} className="aspect-[1.25] h-full w-full object-cover" />
+            <div key={image} className="h-full shrink-0 overflow-hidden rounded-2xl border border-border/45 bg-surface/30 p-2 shadow-material-sm">
+              <img src={image} alt={`${name} supporting screenshot ${index + 1}`} className="h-full w-auto max-w-none object-contain" />
             </div>
           ))}
         </div>

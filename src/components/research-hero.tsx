@@ -116,14 +116,12 @@ export function ResearchHero() {
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.62, delay: 0.08, ease: "easeOut" }}
-            className="mt-8 max-w-5xl text-[clamp(2.55rem,4.65vw,4.85rem)] font-semibold leading-[1.12] tracking-normal text-foreground"
+            className="mt-8 max-w-4xl text-[clamp(2.15rem,3.45vw,3.65rem)] font-semibold leading-[1.18] tracking-normal text-foreground"
           >
-            <span className="block">Building Intelligent Systems</span>
-            <span className="block text-[0.9em]">
-              from <span className="gradient-text">Foundation Models</span>
-            </span>
-            <span className="block text-[0.94em] text-foreground">
-              to <span className="text-accent">Autonomous AI Agents</span>
+            <span className="block md:whitespace-nowrap">Intelligent Systems Research</span>
+            <span className="block text-[0.92em] md:whitespace-nowrap">
+              <span className="gradient-text">Foundation Models</span> to{" "}
+              <span className="text-accent">Autonomous AI Agents</span>
             </span>
           </motion.h1>
 

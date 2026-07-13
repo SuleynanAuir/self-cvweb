@@ -1,7 +1,8 @@
 "use client";
 
+import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import {
   ArrowRight,
   BookOpen,
@@ -92,6 +93,32 @@ const researchNavItems = [
 ] as const;
 
 const researchNavCore = { x: 50, y: 52 } as const;
+
+type ResearchNavItemId = (typeof researchNavItems)[number]["id"];
+type ResearchNavBodyId = ResearchNavItemId | "core";
+
+type ResearchNavBody = {
+  id: ResearchNavBodyId;
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  radius: number;
+};
+
+const initialResearchNavBodies: ResearchNavBody[] = [
+  { id: "core", x: researchNavCore.x, y: researchNavCore.y, vx: 0.026, vy: -0.032, radius: 14.6 },
+  { id: "research", x: 29, y: 23, vx: 0.052, vy: 0.034, radius: 12.3 },
+  { id: "projects", x: 72, y: 24, vx: -0.048, vy: 0.041, radius: 11.8 },
+  { id: "agents", x: 22, y: 57, vx: 0.044, vy: -0.047, radius: 11.8 },
+  { id: "knowledge", x: 79, y: 54, vx: -0.043, vy: -0.052, radius: 12.3 },
+  { id: "science", x: 39, y: 83, vx: 0.05, vy: -0.028, radius: 11.8 },
+  { id: "publications", x: 70, y: 78, vx: -0.051, vy: -0.034, radius: 12.3 },
+];
+
+const initialResearchNavBodyMap = new Map<ResearchNavBodyId, ResearchNavBody>(
+  initialResearchNavBodies.map((body) => [body.id, body]),
+);
 
 const researchNavRelations = [
   ["research", "projects"],
@@ -353,6 +380,135 @@ export function ResearchHero() {
 }
 
 function ResearchNavigation() {
+  const reduceMotion = useReducedMotion();
+  const [navBodies, setNavBodies] = useState<ResearchNavBody[]>(initialResearchNavBodies);
+  const navBodiesRef = useRef(navBodies);
+
+  useEffect(() => {
+    navBodiesRef.current = navBodies;
+  }, [navBodies]);
+
+  useEffect(() => {
+    if (reduceMotion) {
+      return;
+    }
+
+    let frameId = 0;
+    let lastTime = performance.now();
+
+    const tick = (time: number) => {
+      const delta = Math.min((time - lastTime) / 16.67, 2.2);
+      lastTime = time;
+
+      const next = navBodiesRef.current.map((body, index) => {
+        const jitterX = Math.sin(time * 0.0011 + index * 1.7) * 0.00065;
+        const jitterY = Math.cos(time * 0.0009 + index * 1.3) * 0.00065;
+        const moved = {
+          ...body,
+          vx: body.vx + jitterX,
+          vy: body.vy + jitterY,
+          x: body.x + body.vx * delta,
+          y: body.y + body.vy * delta,
+        };
+
+        if (moved.x < moved.radius) {
+          moved.x = moved.radius;
+          moved.vx = Math.abs(moved.vx);
+        } else if (moved.x > 100 - moved.radius) {
+          moved.x = 100 - moved.radius;
+          moved.vx = -Math.abs(moved.vx);
+        }
+
+        if (moved.y < moved.radius) {
+          moved.y = moved.radius;
+          moved.vy = Math.abs(moved.vy);
+        } else if (moved.y > 100 - moved.radius) {
+          moved.y = 100 - moved.radius;
+          moved.vy = -Math.abs(moved.vy);
+        }
+
+        return moved;
+      });
+
+      for (let i = 0; i < next.length; i += 1) {
+        for (let j = i + 1; j < next.length; j += 1) {
+          const first = next[i];
+          const second = next[j];
+          const dx = second.x - first.x;
+          const dy = second.y - first.y;
+          const distance = Math.max(Math.hypot(dx, dy), 0.001);
+          const minDistance = first.radius + second.radius + 1.2;
+
+          if (distance >= minDistance) {
+            continue;
+          }
+
+          const normalX = dx / distance;
+          const normalY = dy / distance;
+          const overlap = minDistance - distance;
+          const firstWeight = second.radius / (first.radius + second.radius);
+          const secondWeight = first.radius / (first.radius + second.radius);
+
+          first.x -= normalX * overlap * firstWeight;
+          first.y -= normalY * overlap * firstWeight;
+          second.x += normalX * overlap * secondWeight;
+          second.y += normalY * overlap * secondWeight;
+
+          const relativeVelocityX = second.vx - first.vx;
+          const relativeVelocityY = second.vy - first.vy;
+          const velocityAlongNormal = relativeVelocityX * normalX + relativeVelocityY * normalY;
+
+          if (velocityAlongNormal < 0) {
+            const impulse = (-(1 + 0.88) * velocityAlongNormal) / 2;
+            first.vx -= impulse * normalX;
+            first.vy -= impulse * normalY;
+            second.vx += impulse * normalX;
+            second.vy += impulse * normalY;
+          }
+        }
+      }
+
+      const bounded = next.map((body) => {
+        const speed = Math.hypot(body.vx, body.vy);
+        const maxSpeed = 0.078;
+        const minSpeed = 0.028;
+        let vx = body.vx;
+        let vy = body.vy;
+
+        if (speed > maxSpeed) {
+          vx = (vx / speed) * maxSpeed;
+          vy = (vy / speed) * maxSpeed;
+        } else if (speed < minSpeed) {
+          const fallback = speed || 1;
+          vx = (vx / fallback) * minSpeed;
+          vy = (vy / fallback) * minSpeed;
+        }
+
+        return {
+          ...body,
+          vx,
+          vy,
+          x: Math.min(Math.max(body.x, body.radius), 100 - body.radius),
+          y: Math.min(Math.max(body.y, body.radius), 100 - body.radius),
+        };
+      });
+
+      navBodiesRef.current = bounded;
+      setNavBodies(bounded);
+      frameId = requestAnimationFrame(tick);
+    };
+
+    frameId = requestAnimationFrame(tick);
+
+    return () => {
+      cancelAnimationFrame(frameId);
+    };
+  }, [reduceMotion]);
+
+  const navBodyMap = useMemo(() => new Map<ResearchNavBodyId, ResearchNavBody>(navBodies.map((body) => [body.id, body])), [navBodies]);
+  const getNavBody = (id: ResearchNavBodyId) => navBodyMap.get(id) ?? initialResearchNavBodyMap.get(id)!;
+  const coreBody = getNavBody("core");
+
   return (
     <div className="research-landscape-panel min-h-[540px] p-5 md:p-6">
       <div className="relative z-20 flex items-start justify-between gap-5">
@@ -379,34 +535,32 @@ function ResearchNavigation() {
             </linearGradient>
           </defs>
 
-          {researchNavItems.map((item, index) => (
-            <motion.line
-              key={`core-${item.id}`}
-              x1={researchNavCore.x}
-              y1={researchNavCore.y}
-              x2={item.x}
-              y2={item.y}
-              stroke="url(#researchNavLandscapeGradient)"
-              strokeWidth="0.45"
-              strokeLinecap="round"
-              strokeDasharray="3 8"
-              initial={{ opacity: 0, pathLength: 0 }}
-              animate={{ opacity: 1, pathLength: 1 }}
-              transition={{ delay: 0.42 + index * 0.05, duration: 0.7, ease: "easeOut" }}
-              className="animate-edge-flow"
-            />
-          ))}
-
-          {researchNavRelations.map(([from, to], index) => {
-            const start = researchNavItems.find((item) => item.id === from);
-            const end = researchNavItems.find((item) => item.id === to);
-
-            if (!start || !end) {
-              return null;
-            }
+          {researchNavItems.map((item) => {
+            const body = getNavBody(item.id);
 
             return (
-              <motion.line
+              <line
+                key={`core-${item.id}`}
+                x1={coreBody.x}
+                y1={coreBody.y}
+                x2={body.x}
+                y2={body.y}
+                stroke="url(#researchNavLandscapeGradient)"
+                strokeWidth="0.45"
+                strokeLinecap="round"
+                strokeDasharray="3 8"
+                opacity="0.78"
+                className="animate-edge-flow"
+              />
+            );
+          })}
+
+          {researchNavRelations.map(([from, to]) => {
+            const start = getNavBody(from);
+            const end = getNavBody(to);
+
+            return (
+              <line
                 key={`${from}-${to}`}
                 x1={start.x}
                 y1={start.y}
@@ -416,67 +570,54 @@ function ResearchNavigation() {
                 strokeWidth="0.32"
                 strokeLinecap="round"
                 strokeDasharray="2 7"
-                initial={{ opacity: 0, pathLength: 0 }}
-                animate={{ opacity: 0.72, pathLength: 1 }}
-                transition={{ delay: 0.62 + index * 0.06, duration: 0.7, ease: "easeOut" }}
+                opacity="0.56"
               />
             );
           })}
         </svg>
 
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9, y: 10 }}
-          animate={{ opacity: 1, scale: 1, y: [0, -4, 0] }}
-          transition={{
-            opacity: { duration: 0.42, delay: 0.28 },
-            scale: { duration: 0.42, delay: 0.28 },
-            y: { duration: 6.5, repeat: Infinity, ease: "easeInOut" },
-          }}
+        <div
           className="research-core-node absolute z-20"
-          style={{ left: "calc(50% - 87px)", top: "calc(52% - 56px)" }}
+          style={{ left: `${coreBody.x}%`, top: `${coreBody.y}%`, transform: "translate(-50%, -50%)" }}
         >
           <div className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-accent/80">Core</div>
           <div className="mt-1 text-base font-semibold leading-5 text-foreground">AI Systems Lab</div>
           <div className="mt-1 text-[0.68rem] leading-4 text-muted-foreground">Research directions converge here</div>
-        </motion.div>
+        </div>
 
-        {researchNavItems.map((item, index) => (
-          <motion.div
-            key={item.title}
-            initial={{ opacity: 0, scale: 0.88, y: 12 }}
-            animate={{ opacity: 1, scale: 1, y: [0, index % 2 === 0 ? -5 : 5, 0] }}
-            transition={{
-              opacity: { delay: 0.36 + index * 0.06, duration: 0.36 },
-              scale: { delay: 0.36 + index * 0.06, duration: 0.36 },
-              y: { duration: 6.4 + index * 0.32, delay: index * 0.16, repeat: Infinity, ease: "easeInOut" },
-            }}
-            className="absolute z-30"
-            style={{
-              left: `${item.x}%`,
-              top: `${item.y}%`,
-              marginLeft: item.size === "wide" ? "-77px" : "-67px",
-              marginTop: "-48px",
-            }}
-          >
-            <Link
-              href={item.href}
-              target={item.external ? "_blank" : undefined}
-              rel={item.external ? "noreferrer" : undefined}
-              title={item.body}
-              aria-label={`${item.title}: ${item.body}`}
-              className={[
-                "research-nav-node focus-ring group/item block rounded-full px-4 py-3 text-center transition duration-300 hover:-translate-y-1",
-                item.size === "wide" ? "w-[154px]" : "w-[134px]",
-              ].join(" ")}
+        {researchNavItems.map((item) => {
+          const body = getNavBody(item.id);
+
+          return (
+            <div
+              key={item.title}
+              className="absolute z-30"
+              style={{
+                left: `${body.x}%`,
+                top: `${body.y}%`,
+                transform: "translate(-50%, -50%)",
+              }}
             >
-              <span className="mx-auto grid h-8 w-8 place-items-center rounded-full bg-surface/25 text-accent shadow-sm transition group-hover/item:bg-surface/40">
-                <item.icon className="h-4 w-4" />
-              </span>
-              <span className="mt-2 block text-sm font-semibold leading-5 text-foreground">{item.title}</span>
-              <span className="mt-1 block text-[0.66rem] font-medium uppercase tracking-[0.16em] text-accent/70">{item.number}</span>
-            </Link>
-          </motion.div>
-        ))}
+              <Link
+                href={item.href}
+                target={item.external ? "_blank" : undefined}
+                rel={item.external ? "noreferrer" : undefined}
+                title={item.body}
+                aria-label={`${item.title}: ${item.body}`}
+                className={[
+                  "research-nav-node focus-ring group/item flex flex-col items-center justify-center rounded-full px-4 py-3 text-center transition duration-300 hover:-translate-y-1",
+                  item.size === "wide" ? "h-[136px] w-[136px]" : "h-[126px] w-[126px]",
+                ].join(" ")}
+              >
+                <span className="mx-auto grid h-8 w-8 place-items-center rounded-full bg-surface/25 text-accent shadow-sm transition group-hover/item:bg-surface/40">
+                  <item.icon className="h-4 w-4" />
+                </span>
+                <span className="mt-2 block text-sm font-semibold leading-5 text-foreground">{item.title}</span>
+                <span className="mt-1 block text-[0.66rem] font-medium uppercase tracking-[0.16em] text-accent/70">{item.number}</span>
+              </Link>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

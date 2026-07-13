@@ -3,7 +3,7 @@ import { SectionHeading } from "@/components/section-heading";
 
 export function ResearchTimeline() {
   return (
-    <section className="border-y border-border/70 bg-surface/76">
+    <section className="border-y border-border/50 bg-surface/24 backdrop-blur-sm">
       <div className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
         <SectionHeading
           eyebrow="Agent Pipeline"

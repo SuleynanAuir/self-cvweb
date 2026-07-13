@@ -15,7 +15,7 @@ export default function HomePage() {
     <>
       <ResearchHero />
 
-      <section className="bg-surface/70">
+      <section className="bg-surface/18 backdrop-blur-[2px]">
         <div className="mx-auto grid max-w-7xl gap-4 px-6 py-8 md:grid-cols-3 lg:px-8">
           {[
             {

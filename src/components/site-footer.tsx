@@ -3,7 +3,7 @@ import { Github } from "lucide-react";
 
 export function SiteFooter() {
   return (
-    <footer className="border-t border-border/70 bg-surface/80">
+    <footer className="border-t border-border/50 bg-surface/34 backdrop-blur-xl">
       <div className="mx-auto flex max-w-7xl flex-col gap-6 px-6 py-8 text-sm text-muted-foreground md:flex-row md:items-center md:justify-between lg:px-8">
         <div>
           <div className="font-semibold text-foreground">Materials AI Research Assistant</div>

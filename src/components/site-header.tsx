@@ -16,7 +16,7 @@ export function SiteHeader() {
   }, [pathname]);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-border/70 bg-background/88 backdrop-blur-xl">
+    <header className="sticky top-0 z-50 border-b border-border/60 bg-background/48 backdrop-blur-2xl">
       <div className="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-6 lg:px-8">
         <Link href="/" className="focus-ring flex items-center gap-3 rounded-2xl">
           <span className="grid h-10 w-10 place-items-center rounded-2xl bg-surface shadow-material-sm ring-1 ring-border">
@@ -73,7 +73,7 @@ export function SiteHeader() {
       </div>
 
       {open ? (
-        <div className="border-t border-border bg-background/96 shadow-material-sm lg:hidden">
+        <div className="border-t border-border bg-background/62 shadow-material-sm backdrop-blur-2xl lg:hidden">
           <nav className="mx-auto grid max-w-7xl gap-1 px-6 py-4" aria-label="Mobile navigation">
             {navigation.map((item) => (
               <Link

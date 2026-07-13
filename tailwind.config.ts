@@ -26,10 +26,10 @@ const config = {
         amber: "hsl(var(--amber))",
       },
       boxShadow: {
-        soft: "0 18px 70px rgba(26, 115, 232, 0.08)",
-        "material-sm": "0 1px 2px rgba(60, 64, 67, 0.12), 0 1px 3px rgba(60, 64, 67, 0.10)",
-        "material-md": "0 4px 14px rgba(60, 64, 67, 0.12), 0 1px 4px rgba(60, 64, 67, 0.08)",
-        "material-lg": "0 18px 44px rgba(60, 64, 67, 0.14), 0 4px 12px rgba(60, 64, 67, 0.08)",
+        soft: "0 18px 70px rgba(72, 56, 31, 0.08)",
+        "material-sm": "0 1px 2px rgba(72, 56, 31, 0.12), 0 1px 3px rgba(72, 56, 31, 0.10)",
+        "material-md": "0 4px 14px rgba(72, 56, 31, 0.12), 0 1px 4px rgba(72, 56, 31, 0.08)",
+        "material-lg": "0 18px 44px rgba(72, 56, 31, 0.14), 0 4px 12px rgba(72, 56, 31, 0.08)",
       },
       keyframes: {
         "edge-flow": {
@@ -57,8 +57,8 @@ const config = {
           "100%": { transform: "translateX(220%)" },
         },
         "node-pulse": {
-          "0%, 100%": { boxShadow: "0 0 0 0 rgba(26, 115, 232, 0.20)" },
-          "50%": { boxShadow: "0 0 0 12px rgba(26, 115, 232, 0)" },
+          "0%, 100%": { boxShadow: "0 0 0 0 rgba(104, 125, 69, 0.20)" },
+          "50%": { boxShadow: "0 0 0 12px rgba(104, 125, 69, 0)" },
         },
       },
       animation: {

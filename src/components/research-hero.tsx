@@ -168,13 +168,13 @@ function KnowledgeGraph() {
         </div>
       </div>
 
-      <div className="relative mt-5 h-[390px] overflow-hidden rounded-3xl border border-border bg-[linear-gradient(180deg,#ffffff,#f7fbff)]">
+      <div className="relative mt-5 h-[390px] overflow-hidden rounded-3xl border border-border bg-[linear-gradient(180deg,#fffdf8,#f0f4e7)]">
         <svg className="absolute inset-0 h-full w-full" viewBox="0 0 100 100" role="presentation">
           <defs>
             <linearGradient id="materialEdgeGradient" x1="0%" x2="100%" y1="0%" y2="100%">
               <stop offset="0%" stopColor="hsl(var(--accent))" stopOpacity="0.58" />
-              <stop offset="55%" stopColor="hsl(var(--cyan))" stopOpacity="0.45" />
-              <stop offset="100%" stopColor="hsl(var(--green))" stopOpacity="0.42" />
+              <stop offset="55%" stopColor="hsl(var(--amber))" stopOpacity="0.45" />
+              <stop offset="100%" stopColor="hsl(var(--green))" stopOpacity="0.44" />
             </linearGradient>
           </defs>
           {graphEdges.map(([from, to], index) => {
@@ -214,7 +214,7 @@ function KnowledgeGraph() {
             >
               <div
                 className={[
-                  "grid place-items-center rounded-full border bg-surface text-center shadow-material-md",
+                  "luminous-node grid place-items-center rounded-full border bg-surface text-center shadow-material-md",
                   node.size === "lg" ? "h-28 w-28" : node.size === "md" ? "h-24 w-24" : "h-20 w-20",
                   node.color,
                   index === 0 ? "animate-node-pulse" : "",

@@ -20,7 +20,7 @@ export function SiteHeader() {
       <div className="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-6 lg:px-8">
         <Link href="/" className="focus-ring flex items-center gap-3 rounded-2xl">
           <span className="grid h-10 w-10 place-items-center rounded-2xl bg-surface shadow-material-sm ring-1 ring-border">
-            <span className="grid h-7 w-7 place-items-center rounded-xl bg-[linear-gradient(135deg,#4285f4,#34a853)] text-xs font-semibold text-white">
+            <span className="brand-mark grid h-7 w-7 place-items-center rounded-xl bg-[linear-gradient(135deg,#d08a2f,#687d45)] text-xs font-semibold text-white">
               M
             </span>
           </span>

@@ -71,6 +71,33 @@ const researchNavItems = [
 
 const timelineIcons = [Cpu, Database, Layers3, Bot, UsersRound, FlaskConical] as const;
 
+const evolutionDetails = [
+  {
+    description: "Optimization, features, probabilistic baselines",
+    role: "Algorithmic foundation",
+  },
+  {
+    description: "Representation learning and neural architectures",
+    role: "Scalable perception",
+  },
+  {
+    description: "Pretraining, adaptation, alignment, evaluation",
+    role: "General model layer",
+  },
+  {
+    description: "Planning, tool use, memory, deep search",
+    role: "Autonomous reasoning",
+  },
+  {
+    description: "Coordination, reflection, simulation, feedback",
+    role: "Collective intelligence",
+  },
+  {
+    description: "Evidence graphs, discovery, material intelligence",
+    role: "Research automation",
+  },
+] as const;
+
 const researchMapNodes = [
   { id: "ai", label: "Artificial Intelligence", x: 50, y: 50, size: "large", tone: "border-accent/45 bg-surface/58 text-foreground" },
   { id: "foundation", label: "Foundation Models", x: 50, y: 18, size: "medium", tone: "border-amber/45 bg-amber/10 text-foreground" },
@@ -116,12 +143,11 @@ export function ResearchHero() {
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.62, delay: 0.08, ease: "easeOut" }}
-            className="mt-8 max-w-4xl text-[clamp(2.15rem,3.45vw,3.65rem)] font-semibold leading-[1.18] tracking-normal text-foreground"
+            className="mt-8 max-w-[720px] text-[clamp(2rem,3.05vw,3.15rem)] font-semibold leading-[1.16] tracking-normal text-foreground"
           >
-            <span className="block md:whitespace-nowrap">Intelligent Systems Research</span>
-            <span className="block text-[0.92em] md:whitespace-nowrap">
-              <span className="gradient-text">Foundation Models</span> to{" "}
-              <span className="text-accent">Autonomous AI Agents</span>
+            <span className="block">AI Systems Research</span>
+            <span className="block text-[0.92em]">
+              <span className="gradient-text">Foundation Models</span> to <span className="text-accent">Agentic AI</span>
             </span>
           </motion.h1>
 
@@ -267,6 +293,7 @@ function EvolutionTimeline() {
         <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
           {aiEvolution.map((stage, index) => {
             const Icon = timelineIcons[index] ?? Sparkles;
+            const detail = evolutionDetails[index];
             const active = stage === "LLM Agents" || stage === "Scientific AI";
 
             return (
@@ -279,22 +306,34 @@ function EvolutionTimeline() {
               >
                 <div
                   className={[
-                    "group flex min-h-[104px] flex-col items-center justify-center rounded-[24px] border bg-surface/34 px-3 py-4 text-center shadow-material-sm backdrop-blur-xl transition duration-300 hover:-translate-y-1",
+                    "group flex min-h-[174px] flex-col rounded-[24px] border bg-surface/34 p-4 text-left shadow-material-sm backdrop-blur-xl transition duration-300 hover:-translate-y-1",
                     active
                       ? "border-accent/55 bg-accent-soft/48 text-accent shadow-material-md"
                       : "border-border/45 text-muted-foreground hover:border-accent/35 hover:bg-surface/50",
                   ].join(" ")}
                 >
-                  <div
-                    className={[
-                      "grid h-12 w-12 place-items-center rounded-2xl border bg-surface/54 shadow-material-sm",
-                      active ? "border-accent/40 text-accent animate-node-pulse" : "border-border/45 text-muted-foreground",
-                    ].join(" ")}
-                  >
-                    <Icon className="h-5 w-5" />
+                  <div className="flex items-center justify-between gap-3">
+                    <div
+                      className={[
+                        "grid h-11 w-11 shrink-0 place-items-center rounded-2xl border bg-surface/54 shadow-material-sm",
+                        active ? "border-accent/40 text-accent animate-node-pulse" : "border-border/45 text-muted-foreground",
+                      ].join(" ")}
+                    >
+                      <Icon className="h-5 w-5" />
+                    </div>
+                    <div className="rounded-full border border-border/45 bg-surface/36 px-2.5 py-1 text-[0.62rem] font-semibold uppercase tracking-[0.12em] text-accent">
+                      {String(index + 1).padStart(2, "0")}
+                    </div>
                   </div>
-                  <div className="mt-3 whitespace-nowrap text-[0.72rem] font-semibold leading-none tracking-normal text-foreground xl:text-xs">
+
+                  <div className="mt-4 text-sm font-semibold leading-5 tracking-normal text-foreground">
                     {stage}
+                  </div>
+                  <p className="mt-2 text-xs leading-5 text-muted-foreground">
+                    {detail.description}
+                  </p>
+                  <div className="mt-auto pt-3 text-[0.68rem] font-semibold uppercase tracking-[0.12em] text-accent">
+                    {detail.role}
                   </div>
                 </div>
               </motion.div>

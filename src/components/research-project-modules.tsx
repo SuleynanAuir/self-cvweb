@@ -34,7 +34,7 @@ export function ResearchProjectModules() {
             <button
               type="button"
               onClick={() => setOpenIndex(isOpen ? null : index)}
-              className="focus-ring group grid w-full gap-6 p-5 text-left transition md:p-6 lg:grid-cols-[minmax(0,0.5fr)_minmax(360px,0.5fr)] lg:items-center"
+              className="focus-ring group grid w-full gap-6 p-5 text-left transition md:p-6 lg:grid-cols-[minmax(0,0.42fr)_minmax(360px,0.58fr)] lg:items-center"
               aria-expanded={isOpen}
             >
               <div>
@@ -48,45 +48,30 @@ export function ResearchProjectModules() {
                   </div>
                 </div>
 
-                <h3 className="mt-5 text-[clamp(2rem,4vw,3.25rem)] font-semibold leading-tight tracking-normal text-foreground">
+                <h3 className="mt-5 text-3xl font-semibold tracking-normal text-foreground md:text-4xl">
                   {category.title}
                 </h3>
                 <p className="mt-3 max-w-3xl text-sm leading-7 text-muted-foreground">
                   {category.description}
                 </p>
+              </div>
 
-                <div className="mt-5 flex flex-wrap gap-2">
+              <div className="grid gap-4">
+                <div className="flex flex-wrap items-center justify-start gap-3 lg:justify-end">
+                  {previewImages.map((image, imageIndex) => (
+                    <img
+                      key={image}
+                      src={image}
+                      alt={`${category.title} project preview ${imageIndex + 1}`}
+                      className="h-[clamp(8.5rem,11vw,10rem)] w-auto max-w-full min-w-0 rounded-2xl border border-border/45 object-contain shadow-material-sm transition duration-500 group-hover:scale-[1.02]"
+                    />
+                  ))}
                   {category.signal.split(", ").map((item) => (
                     <span key={item} className={topicChipClass}>
                       {item}
                     </span>
                   ))}
                 </div>
-              </div>
-
-              <div className="grid gap-4">
-                {previewImages.length > 0 ? (
-                  <div
-                    className={cn(
-                      "grid gap-3",
-                      previewImages.length === 1
-                        ? "grid-cols-1"
-                        : previewImages.length === 2
-                          ? "grid-cols-2"
-                          : "grid-cols-2 md:grid-cols-3 xl:grid-cols-4",
-                    )}
-                  >
-                    {previewImages.map((image, imageIndex) => (
-                      <div key={image} className="flex h-48 items-center justify-center overflow-hidden rounded-2xl border border-border/45 bg-surface/35 p-2 shadow-material-sm md:h-52">
-                        <img
-                          src={image}
-                          alt={`${category.title} project preview ${imageIndex + 1}`}
-                          className="max-h-full max-w-full object-contain transition duration-500 group-hover:scale-[1.02]"
-                        />
-                      </div>
-                    ))}
-                  </div>
-                ) : null}
 
                 <div className="flex items-center justify-between rounded-3xl border border-border/45 bg-surface/34 px-4 py-3 shadow-material-sm backdrop-blur-xl">
                   <div>
@@ -178,7 +163,7 @@ function ProjectDetail({ project, index }: { project: ResearchProject; index: nu
 
         <div className="mt-5 flex flex-wrap gap-2">
           {project.keywords.map((keyword) => (
-            <span key={keyword} className={cn(topicChipClass, "bg-surface/42")}>
+            <span key={keyword} className="rounded-full border border-border/60 bg-surface/42 px-3 py-1 text-xs font-medium text-muted-foreground">
               {keyword}
             </span>
           ))}
@@ -191,15 +176,20 @@ function ProjectDetail({ project, index }: { project: ResearchProject; index: nu
 function ProjectVisual({ name, images }: { name: string; images: readonly string[] }) {
   return (
     <>
-      <div className="flex h-72 items-center justify-center overflow-hidden rounded-3xl border border-border/45 bg-surface/30 p-3 shadow-material-sm">
-        <img src={images[0]} alt={`${name} screenshot`} className="max-h-full max-w-full object-contain" />
-      </div>
+      <img
+        src={images[0]}
+        alt={`${name} screenshot`}
+        className="h-72 w-auto max-w-full rounded-3xl border border-border/45 object-contain shadow-material-sm"
+      />
       {images.length > 1 ? (
-        <div className="grid gap-3 sm:grid-cols-2">
+        <div className="flex flex-wrap items-center gap-3">
           {images.slice(1, 3).map((image, index) => (
-            <div key={image} className="flex h-40 items-center justify-center overflow-hidden rounded-2xl border border-border/45 bg-surface/30 p-2 shadow-material-sm">
-              <img src={image} alt={`${name} supporting screenshot ${index + 1}`} className="max-h-full max-w-full object-contain" />
-            </div>
+            <img
+              key={image}
+              src={image}
+              alt={`${name} supporting screenshot ${index + 1}`}
+              className="h-36 w-auto max-w-full rounded-2xl border border-border/45 object-contain shadow-material-sm"
+            />
           ))}
         </div>
       ) : null}

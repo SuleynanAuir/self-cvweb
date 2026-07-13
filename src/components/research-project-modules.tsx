@@ -8,7 +8,7 @@ import { researchCategories, type ResearchProject } from "@/data/portfolio";
 import { cn } from "@/lib/utils";
 
 const topicChipClass =
-  "max-w-full rounded-full border border-border/55 bg-surface/42 px-3.5 py-1.5 text-[clamp(0.64rem,1vw,0.75rem)] font-medium leading-tight text-muted-foreground shadow-sm backdrop-blur-xl";
+  "max-w-full rounded-full border border-white/10 bg-surface/25 px-3.5 py-1.5 text-[clamp(0.64rem,1vw,0.75rem)] font-medium leading-tight text-muted-foreground shadow-sm backdrop-blur-xl";
 
 export function ResearchProjectModules() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -29,7 +29,7 @@ export function ResearchProjectModules() {
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
             viewport={{ once: true, amount: 0.08, margin: "0px 0px 120px 0px" }}
             transition={{ delay: index * 0.045, duration: 0.58, ease: [0.22, 1, 0.36, 1] }}
-            className={cn("material-card overflow-hidden", isOpen ? "border-accent/35" : "")}
+            className={cn("material-card overflow-hidden", isOpen ? "bg-surface/30" : "")}
           >
             <button
               type="button"
@@ -52,7 +52,7 @@ export function ResearchProjectModules() {
                         key={image}
                         src={image}
                         alt={`${category.title} project preview ${imageIndex + 1}`}
-                        className="h-[clamp(7rem,9.4vw,9.75rem)] w-auto max-w-full min-w-0 rounded-2xl border border-border/45 object-contain shadow-material-sm transition duration-500 group-hover:-translate-y-1 group-hover:scale-[1.015]"
+                        className="h-[clamp(7rem,9.4vw,9.75rem)] w-auto max-w-full min-w-0 rounded-2xl object-contain shadow-material-sm transition duration-500 group-hover:-translate-y-1 group-hover:scale-[1.015]"
                       />
                     ))}
                   </div>
@@ -70,10 +70,10 @@ export function ResearchProjectModules() {
               <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(250px,0.25fr)] lg:items-end">
                 <div className="min-w-0">
                   <div className="flex flex-wrap items-center gap-3">
-                    <div className="inline-flex rounded-full border border-border/35 bg-accent-soft/58 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-accent">
+                    <div className="inline-flex rounded-full border border-white/10 bg-accent-soft/40 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-accent">
                       {String(index + 1).padStart(2, "0")}
                     </div>
-                    <div className="inline-flex items-center gap-2 rounded-full border border-border/45 bg-surface/36 px-3 py-1 text-xs font-medium text-muted-foreground">
+                    <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-surface/25 px-3 py-1 text-xs font-medium text-muted-foreground">
                       <Layers3 className="h-3.5 w-3.5 text-accent" />
                       {category.projects.length} projects
                     </div>
@@ -87,7 +87,7 @@ export function ResearchProjectModules() {
                   </p>
                 </div>
 
-                <div className="flex items-center justify-between rounded-3xl border border-border/45 bg-surface/38 px-4 py-3 shadow-material-sm backdrop-blur-xl transition duration-300 group-hover:-translate-y-0.5 group-hover:border-accent/45 group-hover:bg-surface/50">
+                <div className="flex items-center justify-between rounded-3xl border border-white/10 bg-surface/25 px-4 py-3 shadow-sm backdrop-blur-xl transition duration-300 group-hover:-translate-y-0.5 group-hover:bg-surface/40 group-hover:shadow-material-sm">
                   <div>
                     <div className="text-xs font-semibold uppercase tracking-[0.16em] text-accent">
                       {isOpen ? "Collapse module" : "Expand module"}
@@ -112,7 +112,7 @@ export function ResearchProjectModules() {
                   transition={{ duration: 0.36, ease: [0.22, 1, 0.36, 1] }}
                   className="overflow-hidden"
                 >
-                  <div className="border-t border-border/40 p-5 md:p-6">
+                  <div className="border-t border-white/10 p-5 md:p-6">
                     <div className="grid gap-4">
                       {category.projects.map((project, projectIndex) => (
                         <ProjectDetail key={project.name} project={project} index={projectIndex} />
@@ -138,7 +138,7 @@ function ProjectDetail({ project, index }: { project: ResearchProject; index: nu
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.045, duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
       className={cn(
-        "grid gap-5 rounded-[28px] border border-border/45 bg-surface/34 p-4 shadow-material-sm backdrop-blur-xl lg:items-start",
+        "grid gap-5 rounded-[28px] border border-white/10 bg-surface/25 p-4 shadow-sm backdrop-blur-xl lg:items-start",
         images.length > 0 ? "lg:grid-cols-[minmax(220px,0.34fr)_minmax(0,1fr)]" : "",
       )}
     >
@@ -159,7 +159,7 @@ function ProjectDetail({ project, index }: { project: ResearchProject; index: nu
               href={project.github}
               target="_blank"
               rel="noreferrer"
-              className="focus-ring inline-flex h-8 items-center gap-2 rounded-full border border-border/65 bg-surface/42 px-3 text-xs font-medium text-muted-foreground transition hover:-translate-y-0.5 hover:border-accent hover:text-accent"
+              className="focus-ring inline-flex h-8 items-center gap-2 rounded-full border border-white/10 bg-surface/25 px-3 text-xs font-medium text-muted-foreground transition hover:-translate-y-0.5 hover:bg-surface/40 hover:text-accent"
             >
               <Github className="h-3.5 w-3.5" />
               GitHub
@@ -178,7 +178,7 @@ function ProjectDetail({ project, index }: { project: ResearchProject; index: nu
 
         <div className="mt-5 flex flex-wrap gap-2">
           {project.keywords.map((keyword) => (
-            <span key={keyword} className="rounded-full border border-border/60 bg-surface/42 px-3 py-1 text-xs font-medium text-muted-foreground">
+            <span key={keyword} className="rounded-full border border-white/10 bg-surface/25 px-3 py-1 text-xs font-medium text-muted-foreground">
               {keyword}
             </span>
           ))}
@@ -194,7 +194,7 @@ function ProjectVisual({ name, images }: { name: string; images: readonly string
       <img
         src={images[0]}
         alt={`${name} screenshot`}
-        className="h-72 w-auto max-w-full rounded-3xl border border-border/45 object-contain shadow-material-sm"
+        className="h-72 w-auto max-w-full rounded-3xl object-contain shadow-material-sm"
       />
       {images.length > 1 ? (
         <div className="flex flex-wrap items-center gap-3">
@@ -203,7 +203,7 @@ function ProjectVisual({ name, images }: { name: string; images: readonly string
               key={image}
               src={image}
               alt={`${name} supporting screenshot ${index + 1}`}
-              className="h-36 w-auto max-w-full rounded-2xl border border-border/45 object-contain shadow-material-sm"
+              className="h-36 w-auto max-w-full rounded-2xl object-contain shadow-material-sm"
             />
           ))}
         </div>
@@ -214,7 +214,7 @@ function ProjectVisual({ name, images }: { name: string; images: readonly string
 
 function InfoBlock({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-2xl border border-border/45 bg-accent-soft/32 p-4">
+    <div className="rounded-2xl border border-white/10 bg-accent-soft/25 p-4">
       <div className="text-xs font-semibold uppercase tracking-[0.16em] text-accent">{label}</div>
       <p className="mt-2 text-xs leading-5 text-muted-foreground">{value}</p>
     </div>

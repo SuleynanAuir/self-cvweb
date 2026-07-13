@@ -170,7 +170,7 @@ a {
 }
 
 .gradient-text {
-  background: linear-gradient(90deg, hsl(var(--amber)), hsl(var(--violet)), hsl(var(--green)));
+  background: linear-gradient(90deg, hsl(var(--amber) / 0.92), hsl(var(--green) / 0.96));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -192,18 +192,17 @@ a {
 .material-card {
   position: relative;
   overflow: hidden;
-  border: 1px solid hsl(var(--border) / 0.30);
+  border: 1px solid hsl(0 0% 100% / 0.12);
   border-radius: 24px;
   background:
-    radial-gradient(circle at 18% 0%, hsl(var(--lume-gold) / 0.12), transparent 36%),
-    linear-gradient(145deg, hsl(var(--surface) / 0.40), hsl(var(--lume-mist) / 0.18)),
-    hsl(var(--surface) / 0.25);
+    radial-gradient(circle at 18% 0%, hsl(var(--lume-gold) / 0.075), transparent 40%),
+    linear-gradient(145deg, hsl(var(--surface) / 0.34), hsl(var(--lume-mist) / 0.12)),
+    hsl(var(--surface) / 0.20);
   box-shadow:
-    0 1px 2px rgba(72, 56, 31, 0.04),
-    0 16px 48px rgba(72, 56, 31, 0.09),
-    0 0 76px hsl(var(--lume-green) / 0.045),
-    inset 0 1px 0 hsl(0 0% 100% / 0.22);
-  backdrop-filter: blur(18px) saturate(1.16);
+    0 22px 58px rgba(72, 56, 31, 0.075),
+    inset 0 1px 0 hsl(0 0% 100% / 0.20),
+    inset 0 -1px 0 hsl(var(--foreground) / 0.035);
+  backdrop-filter: blur(18px) saturate(1.08);
 }
 
 .material-card::before {
@@ -213,10 +212,10 @@ a {
   z-index: 0;
   pointer-events: none;
   background:
-    linear-gradient(124deg, hsl(var(--lume-gold) / 0.08), transparent 34%, hsl(var(--lume-green) / 0.06) 72%, transparent),
-    linear-gradient(90deg, transparent, hsl(var(--surface) / 0.16), transparent);
-  opacity: 0.30;
-  animation: glass-lume-breathe 7.2s ease-in-out infinite;
+    linear-gradient(124deg, hsl(var(--lume-gold) / 0.045), transparent 34%, hsl(var(--lume-green) / 0.035) 72%, transparent),
+    linear-gradient(90deg, transparent, hsl(var(--surface) / 0.12), transparent);
+  opacity: 0.22;
+  animation: glass-lume-breathe 10s ease-in-out infinite;
 }
 
 .material-card > * {
@@ -225,23 +224,21 @@ a {
 }
 
 .video-fused-panel {
-  border-color: hsl(var(--border) / 0.20);
+  border-color: hsl(0 0% 100% / 0.10);
   background:
-    radial-gradient(circle at 16% 0%, hsl(var(--lume-gold) / 0.13), transparent 34%),
-    radial-gradient(circle at 84% 100%, hsl(var(--lume-green) / 0.11), transparent 38%),
-    linear-gradient(135deg, hsl(var(--surface) / 0.50), hsl(var(--lume-mist) / 0.22) 58%, hsl(var(--green) / 0.035)),
-    hsl(var(--surface) / 0.28);
+    radial-gradient(circle at 16% 0%, hsl(var(--lume-gold) / 0.08), transparent 38%),
+    radial-gradient(circle at 84% 100%, hsl(var(--lume-green) / 0.07), transparent 42%),
+    linear-gradient(135deg, hsl(var(--surface) / 0.44), hsl(var(--lume-mist) / 0.16) 58%, hsl(var(--green) / 0.025)),
+    hsl(var(--surface) / 0.22);
   box-shadow:
-    0 1px 0 hsl(0 0% 100% / 0.18),
-    0 22px 72px rgba(72, 56, 31, 0.08),
-    0 0 86px hsl(var(--lume-gold) / 0.05),
-    inset 0 1px 0 hsl(0 0% 100% / 0.18),
-    inset 0 -42px 90px hsl(var(--green) / 0.045);
-  backdrop-filter: blur(14px) saturate(1.08);
+    0 24px 70px rgba(72, 56, 31, 0.07),
+    inset 0 1px 0 hsl(0 0% 100% / 0.16),
+    inset 0 -34px 80px hsl(var(--green) / 0.025);
+  backdrop-filter: blur(16px) saturate(1.04);
 }
 
 .video-fused-panel::before {
-  opacity: 0.22;
+  opacity: 0.16;
 }
 
 .video-fused-panel::after {
@@ -252,9 +249,9 @@ a {
   pointer-events: none;
   border-radius: inherit;
   background:
-    linear-gradient(180deg, hsl(0 0% 100% / 0.16), transparent 30%, transparent 70%, hsl(var(--lume-mist) / 0.08)),
-    radial-gradient(circle at 50% -12%, hsl(var(--surface) / 0.22), transparent 38%);
-  opacity: 0.62;
+    linear-gradient(180deg, hsl(0 0% 100% / 0.10), transparent 32%, transparent 70%, hsl(var(--lume-mist) / 0.05)),
+    radial-gradient(circle at 50% -12%, hsl(var(--surface) / 0.16), transparent 42%);
+  opacity: 0.48;
 }
 
 .hero-query-panel {
@@ -293,15 +290,15 @@ a {
 
 .graph-stage {
   isolation: isolate;
-  border-color: hsl(var(--border) / 0.18);
+  border-color: hsl(0 0% 100% / 0.08);
   background:
-    radial-gradient(circle at 50% 8%, hsl(var(--surface) / 0.28), transparent 42%),
-    radial-gradient(circle at 82% 58%, hsl(var(--lume-gold) / 0.10), transparent 34%),
-    linear-gradient(180deg, hsl(var(--surface) / 0.18), hsl(var(--lume-mist) / 0.08));
+    radial-gradient(circle at 50% 8%, hsl(var(--surface) / 0.22), transparent 46%),
+    radial-gradient(circle at 82% 58%, hsl(var(--lume-gold) / 0.055), transparent 36%),
+    linear-gradient(180deg, hsl(var(--surface) / 0.13), hsl(var(--lume-mist) / 0.055));
   box-shadow:
-    inset 0 1px 0 hsl(0 0% 100% / 0.16),
-    inset 0 -42px 96px hsl(var(--green) / 0.055);
-  backdrop-filter: blur(12px) saturate(1.06);
+    inset 0 1px 0 hsl(0 0% 100% / 0.12),
+    inset 0 -42px 96px hsl(var(--green) / 0.03);
+  backdrop-filter: blur(14px) saturate(1.02);
 }
 
 .graph-stage::before {
@@ -343,15 +340,15 @@ a {
 }
 
 .project-card {
-  border: 1px solid hsl(var(--border) / 0.42);
+  border: 1px solid hsl(0 0% 100% / 0.10);
   background:
-    radial-gradient(circle at 0% 0%, hsl(var(--lume-gold) / 0.075), transparent 30%),
-    linear-gradient(145deg, hsl(var(--surface) / 0.64), hsl(var(--lume-mist) / 0.18)),
-    hsl(var(--surface) / 0.40);
+    radial-gradient(circle at 0% 0%, hsl(var(--lume-gold) / 0.048), transparent 34%),
+    linear-gradient(145deg, hsl(var(--surface) / 0.48), hsl(var(--lume-mist) / 0.12)),
+    hsl(var(--surface) / 0.30);
   box-shadow:
-    0 10px 30px rgba(72, 56, 31, 0.045),
-    inset 0 1px 0 hsl(0 0% 100% / 0.30);
-  backdrop-filter: blur(12px) saturate(1.06);
+    0 18px 42px rgba(72, 56, 31, 0.06),
+    inset 0 1px 0 hsl(0 0% 100% / 0.22);
+  backdrop-filter: blur(13px) saturate(1.03);
   transition:
     transform 180ms ease,
     border-color 180ms ease,
@@ -361,11 +358,10 @@ a {
 
 .project-card:hover {
   transform: translateY(-3px);
-  border-color: hsl(var(--accent) / 0.36);
+  border-color: hsl(0 0% 100% / 0.18);
   box-shadow:
-    0 16px 42px rgba(72, 56, 31, 0.08),
-    0 0 34px hsl(var(--lume-gold) / 0.10),
-    inset 0 1px 0 hsl(0 0% 100% / 0.34);
+    0 24px 54px rgba(72, 56, 31, 0.075),
+    inset 0 1px 0 hsl(0 0% 100% / 0.28);
 }
 
 .interactive-lift {
@@ -389,14 +385,13 @@ a {
   position: relative;
   overflow: hidden;
   isolation: isolate;
-  border: 1px solid hsl(var(--lume-gold) / 0.34);
+  border: 1px solid hsl(0 0% 100% / 0.14);
   background:
-    linear-gradient(135deg, hsl(var(--green)), hsl(var(--amber)) 54%, hsl(var(--violet)));
+    linear-gradient(135deg, hsl(var(--green) / 0.96), hsl(var(--amber) / 0.92));
   box-shadow:
-    0 10px 26px hsl(var(--amber) / 0.24),
-    0 0 0 1px hsl(var(--lume-gold) / 0.16),
-    inset 0 1px 0 hsl(0 0% 100% / 0.28);
-  text-shadow: 0 1px 10px hsl(var(--lume-mist) / 0.28);
+    0 14px 30px rgba(72, 56, 31, 0.14),
+    inset 0 1px 0 hsl(0 0% 100% / 0.22);
+  text-shadow: none;
   transition:
     transform 160ms ease,
     box-shadow 160ms ease,
@@ -409,10 +404,10 @@ a {
   position: absolute;
   inset: -2px;
   border-radius: inherit;
-  background: linear-gradient(115deg, hsl(var(--lume-gold) / 0.72), hsl(var(--lume-green) / 0.48), hsl(var(--lume-gold) / 0.10));
-  opacity: 0.58;
-  filter: blur(10px);
-  animation: button-aura 3.4s ease-in-out infinite;
+  background: linear-gradient(115deg, hsl(var(--lume-gold) / 0.22), hsl(var(--lume-green) / 0.12), transparent);
+  opacity: 0.24;
+  filter: blur(12px);
+  animation: none;
 }
 
 .material-button::after {
@@ -421,9 +416,9 @@ a {
   inset: 0;
   z-index: 0;
   background:
-    linear-gradient(95deg, transparent 8%, hsl(var(--lume-mist) / 0.42) 42%, hsl(var(--lume-gold) / 0.34) 50%, transparent 62%),
-    linear-gradient(180deg, hsl(0 0% 100% / 0.20), transparent 48%);
-  opacity: 0.30;
+    linear-gradient(95deg, transparent 16%, hsl(var(--lume-mist) / 0.24) 46%, transparent 70%),
+    linear-gradient(180deg, hsl(0 0% 100% / 0.14), transparent 52%);
+  opacity: 0.18;
   transform: translateX(-100%);
   transition:
     opacity 180ms ease,
@@ -439,10 +434,8 @@ a {
 .material-button:hover {
   transform: translateY(-2px);
   box-shadow:
-    0 14px 28px hsl(var(--amber) / 0.28),
-    0 0 22px hsl(var(--lume-gold) / 0.32),
-    0 0 38px hsl(var(--lume-green) / 0.18),
-    inset 0 1px 0 hsl(0 0% 100% / 0.36);
+    0 18px 34px rgba(72, 56, 31, 0.16),
+    inset 0 1px 0 hsl(0 0% 100% / 0.28);
 }
 
 .material-button:hover::after {
@@ -464,27 +457,27 @@ a {
   position: absolute;
   inset: 0;
   width: 38%;
-  background: linear-gradient(90deg, transparent, hsl(var(--lume-gold) / 0.38), hsl(var(--lume-green) / 0.30), transparent);
-  animation: progress-sweep 2.4s ease-in-out infinite;
+  background: linear-gradient(90deg, transparent, hsl(var(--lume-gold) / 0.22), hsl(var(--lume-green) / 0.16), transparent);
+  animation: progress-sweep 3.8s ease-in-out infinite;
 }
 
 .brand-mark {
   box-shadow:
-    0 0 14px hsl(var(--lume-gold) / 0.28),
-    inset 0 1px 0 hsl(0 0% 100% / 0.34);
-  animation: brand-lume-flicker 4.6s ease-in-out infinite;
+    0 8px 20px rgba(72, 56, 31, 0.12),
+    inset 0 1px 0 hsl(0 0% 100% / 0.30);
+  animation: none;
 }
 
 .luminous-node {
+  border-color: hsl(0 0% 100% / 0.12);
   background:
-    radial-gradient(circle at 35% 18%, hsl(0 0% 100% / 0.62), transparent 46%),
-    hsl(var(--surface) / 0.44);
+    radial-gradient(circle at 35% 18%, hsl(0 0% 100% / 0.50), transparent 50%),
+    hsl(var(--surface) / 0.38);
   box-shadow:
-    0 6px 18px rgba(72, 56, 31, 0.10),
-    0 0 22px hsl(var(--lume-gold) / 0.13),
-    inset 0 1px 0 hsl(0 0% 100% / 0.52);
-  backdrop-filter: blur(16px) saturate(1.18);
-  animation: node-lume-flicker 5.6s ease-in-out infinite;
+    0 14px 34px rgba(72, 56, 31, 0.095),
+    inset 0 1px 0 hsl(0 0% 100% / 0.36);
+  backdrop-filter: blur(16px) saturate(1.06);
+  animation: none;
 }
 
 .site-page-shell :where(a, button).focus-ring:not(.material-button):is(.rounded-full, .rounded-2xl) {
@@ -503,7 +496,7 @@ a {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: linear-gradient(105deg, transparent 22%, hsl(var(--lume-gold) / 0.20) 48%, transparent 72%);
+  background: linear-gradient(105deg, transparent 28%, hsl(var(--surface) / 0.20) 52%, transparent 74%);
   opacity: 0;
   transform: translateX(-120%);
   transition:
@@ -513,8 +506,7 @@ a {
 
 .site-page-shell :where(a, button).focus-ring:not(.material-button):is(.rounded-full, .rounded-2xl):hover {
   box-shadow:
-    0 8px 22px rgba(72, 56, 31, 0.10),
-    0 0 16px hsl(var(--lume-gold) / 0.18);
+    0 10px 24px rgba(72, 56, 31, 0.085);
 }
 
 .site-page-shell :where(a, button).focus-ring:not(.material-button):is(.rounded-full, .rounded-2xl):hover::after {

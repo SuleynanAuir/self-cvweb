@@ -111,7 +111,7 @@ const researchMapNodes = [
     x: 50,
     y: 46,
     size: "large",
-    tone: "border-accent/45 bg-surface/58 text-foreground",
+    tone: "bg-surface/50 text-foreground",
   },
   {
     id: "foundation",
@@ -120,7 +120,7 @@ const researchMapNodes = [
     x: 50,
     y: 13,
     size: "medium",
-    tone: "border-amber/45 bg-amber/10 text-foreground",
+    tone: "bg-amber/10 text-foreground",
   },
   {
     id: "agents",
@@ -129,7 +129,7 @@ const researchMapNodes = [
     x: 50,
     y: 30,
     size: "medium",
-    tone: "border-green/45 bg-green/10 text-foreground",
+    tone: "bg-green/10 text-foreground",
   },
   {
     id: "multi",
@@ -138,7 +138,7 @@ const researchMapNodes = [
     x: 50,
     y: 64,
     size: "medium",
-    tone: "border-green/45 bg-accent-soft/55 text-foreground",
+    tone: "bg-accent-soft/40 text-foreground",
   },
   {
     id: "knowledge",
@@ -147,7 +147,7 @@ const researchMapNodes = [
     x: 30,
     y: 56,
     size: "medium",
-    tone: "border-cyan/40 bg-cyan/10 text-foreground",
+    tone: "bg-cyan/10 text-foreground",
   },
   {
     id: "graphrag",
@@ -156,7 +156,7 @@ const researchMapNodes = [
     x: 31,
     y: 76,
     size: "small",
-    tone: "border-cyan/45 bg-surface/48 text-foreground",
+    tone: "bg-surface/40 text-foreground",
   },
   {
     id: "science",
@@ -165,7 +165,7 @@ const researchMapNodes = [
     x: 50,
     y: 88,
     size: "medium",
-    tone: "border-amber/45 bg-accent-soft/55 text-foreground",
+    tone: "bg-accent-soft/40 text-foreground",
   },
   {
     id: "ml",
@@ -174,7 +174,7 @@ const researchMapNodes = [
     x: 22,
     y: 24,
     size: "small",
-    tone: "border-border/55 bg-surface/40 text-foreground",
+    tone: "bg-surface/40 text-foreground",
   },
   {
     id: "cv",
@@ -183,7 +183,7 @@ const researchMapNodes = [
     x: 78,
     y: 28,
     size: "small",
-    tone: "border-violet/40 bg-violet/10 text-foreground",
+    tone: "bg-violet/10 text-foreground",
   },
   {
     id: "rl",
@@ -192,7 +192,7 @@ const researchMapNodes = [
     x: 78,
     y: 70,
     size: "small",
-    tone: "border-amber/40 bg-amber/10 text-foreground",
+    tone: "bg-amber/10 text-foreground",
   },
 ] as const;
 
@@ -218,14 +218,14 @@ const particles = [
 
 export function ResearchHero() {
   return (
-    <section className="relative overflow-hidden border-b border-border/45 bg-background/12">
+    <section className="relative overflow-hidden border-b border-white/10 bg-background/10">
       <div className="mx-auto grid max-w-7xl gap-12 px-6 pb-16 pt-16 lg:grid-cols-[minmax(0,0.55fr)_minmax(380px,0.45fr)] lg:px-8 lg:pb-20 lg:pt-20">
         <div className="relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
-            className="inline-flex h-10 items-center gap-2 rounded-2xl border border-border/45 bg-surface/34 px-4 text-sm font-medium text-accent shadow-material-sm backdrop-blur-xl"
+            className="inline-flex h-10 items-center gap-2 rounded-2xl border border-white/10 bg-surface/25 px-4 text-sm font-medium text-accent shadow-sm backdrop-blur-xl"
           >
             <Sparkles className="h-4 w-4" />
             AI Systems Research Laboratory
@@ -264,7 +264,7 @@ export function ResearchHero() {
             {["LLM Agents", "GraphRAG", "AI for Science"].map((tag) => (
               <span
                 key={tag}
-                className="rounded-2xl border border-border/45 bg-surface/30 px-4 py-2 text-xs font-medium uppercase tracking-[0.14em] text-muted-foreground shadow-material-sm backdrop-blur-xl"
+                className="rounded-2xl border border-white/10 bg-surface/25 px-4 py-2 text-xs font-medium uppercase tracking-[0.14em] text-muted-foreground shadow-sm backdrop-blur-xl"
               >
                 {tag}
               </span>
@@ -279,7 +279,7 @@ export function ResearchHero() {
           >
             <Link
               href="#research-projects"
-              className="focus-ring inline-flex h-12 items-center justify-center gap-2 rounded-2xl border border-accent/30 bg-[linear-gradient(135deg,hsl(var(--green)),hsl(var(--amber)))] px-6 text-sm font-medium text-white shadow-material-sm transition hover:-translate-y-0.5 hover:shadow-material-md"
+              className="material-button focus-ring inline-flex h-12 items-center justify-center gap-2 rounded-2xl px-6 text-sm font-medium text-white transition hover:-translate-y-0.5"
             >
               Explore Research
               <ArrowRight className="h-4 w-4" />
@@ -288,7 +288,7 @@ export function ResearchHero() {
               href="https://github.com/SuleynanAuir"
               target="_blank"
               rel="noreferrer"
-              className="focus-ring inline-flex h-12 items-center justify-center gap-2 rounded-2xl border border-border/55 bg-surface/34 px-6 text-sm font-medium text-foreground shadow-material-sm backdrop-blur-xl transition hover:-translate-y-0.5 hover:border-accent/55 hover:text-accent"
+              className="focus-ring inline-flex h-12 items-center justify-center gap-2 rounded-2xl border border-white/10 bg-surface/25 px-6 text-sm font-medium text-foreground shadow-sm backdrop-blur-xl transition hover:-translate-y-0.5 hover:bg-surface/40 hover:text-accent"
             >
               <Github className="h-4 w-4" />
               GitHub
@@ -329,7 +329,7 @@ function ResearchNavigation() {
             Explore projects, methods, and research directions.
           </p>
         </div>
-        <div className="hidden rounded-2xl border border-border/45 bg-surface/38 p-3 text-accent shadow-material-sm backdrop-blur-xl sm:block">
+        <div className="hidden rounded-2xl border border-white/10 bg-surface/25 p-3 text-accent shadow-sm backdrop-blur-xl sm:block">
           <Network className="h-5 w-5" />
         </div>
       </div>
@@ -346,7 +346,7 @@ function ResearchNavigation() {
               href={item.href}
               target={item.external ? "_blank" : undefined}
               rel={item.external ? "noreferrer" : undefined}
-              className="focus-ring group/item flex min-h-[126px] flex-col justify-between rounded-[24px] border border-border/40 bg-surface/30 p-4 shadow-material-sm backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:border-accent/45 hover:bg-surface/50"
+              className="focus-ring group/item flex min-h-[126px] flex-col justify-between rounded-[24px] border border-white/10 bg-surface/25 p-4 shadow-sm backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:bg-surface/40 hover:shadow-material-sm"
             >
               <span className="flex items-center justify-between gap-3">
                 <span className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-accent">
@@ -376,13 +376,13 @@ function EvolutionTimeline() {
           <h2 className="mt-3 text-2xl font-semibold tracking-normal text-foreground md:text-3xl">Evolution of Intelligence</h2>
           <p className="mt-2 text-sm leading-6 text-muted-foreground">From algorithms to autonomous scientific systems</p>
         </div>
-        <div className="inline-flex w-fit rounded-2xl border border-border/45 bg-surface/34 px-3 py-1.5 text-xs font-medium text-accent shadow-material-sm backdrop-blur-xl">
+        <div className="inline-flex w-fit rounded-2xl border border-white/10 bg-surface/25 px-3 py-1.5 text-xs font-medium text-accent shadow-sm backdrop-blur-xl">
           Current focus: AI Agents + Scientific AI
         </div>
       </div>
 
       <div className="relative mt-8">
-        <div className="absolute left-[7%] right-[7%] top-[32px] hidden h-px overflow-hidden rounded-full bg-border/55 md:block">
+        <div className="absolute left-[7%] right-[7%] top-[32px] hidden h-px overflow-hidden rounded-full bg-white/20 md:block">
           <motion.div
             initial={{ width: "0%" }}
             animate={{ width: "100%" }}
@@ -407,22 +407,22 @@ function EvolutionTimeline() {
               >
                 <div
                   className={[
-                    "group flex min-h-[174px] flex-col rounded-[24px] border bg-surface/34 p-4 text-left shadow-material-sm backdrop-blur-xl transition duration-300 hover:-translate-y-1",
+                    "group flex min-h-[174px] flex-col rounded-[24px] border bg-surface/25 p-4 text-left shadow-sm backdrop-blur-xl transition duration-300 hover:-translate-y-1",
                     active
-                      ? "border-accent/55 bg-accent-soft/48 text-accent shadow-material-md"
-                      : "border-border/45 text-muted-foreground hover:border-accent/35 hover:bg-surface/50",
+                      ? "border-white/20 bg-accent-soft/30 text-accent shadow-material-sm"
+                      : "border-white/10 text-muted-foreground hover:bg-surface/40 hover:shadow-material-sm",
                   ].join(" ")}
                 >
                   <div className="flex items-center justify-between gap-3">
                     <div
                       className={[
-                        "grid h-11 w-11 shrink-0 place-items-center rounded-2xl border bg-surface/54 shadow-material-sm",
-                        active ? "border-accent/40 text-accent animate-node-pulse" : "border-border/45 text-muted-foreground",
+                        "grid h-11 w-11 shrink-0 place-items-center rounded-2xl border bg-surface/30 shadow-sm",
+                        active ? "border-white/20 text-accent" : "border-white/10 text-muted-foreground",
                       ].join(" ")}
                     >
                       <Icon className="h-5 w-5" />
                     </div>
-                    <div className="rounded-full border border-border/45 bg-surface/36 px-2.5 py-1 text-[0.62rem] font-semibold uppercase tracking-[0.12em] text-accent">
+                    <div className="rounded-full border border-white/10 bg-surface/25 px-2.5 py-1 text-[0.62rem] font-semibold uppercase tracking-[0.12em] text-accent">
                       {String(index + 1).padStart(2, "0")}
                     </div>
                   </div>
@@ -448,7 +448,7 @@ function EvolutionTimeline() {
 
 export function ResearchMapSection() {
   return (
-    <section id="research-map" className="border-b border-border/45 bg-surface/14 backdrop-blur-sm">
+    <section id="research-map" className="border-b border-white/10 bg-surface/10 backdrop-blur-sm">
       <div className="mx-auto grid max-w-7xl gap-10 px-6 py-20 lg:grid-cols-[0.36fr_0.64fr] lg:items-center lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -456,7 +456,7 @@ export function ResearchMapSection() {
           viewport={{ once: true, amount: 0.28 }}
           transition={{ duration: 0.58, ease: [0.22, 1, 0.36, 1] }}
         >
-          <div className="inline-flex rounded-2xl border border-border/35 bg-accent-soft/58 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-accent backdrop-blur-xl">
+          <div className="inline-flex rounded-2xl border border-white/10 bg-accent-soft/40 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-accent backdrop-blur-xl">
             Research Map
           </div>
           <h2 className="mt-5 max-w-md text-3xl font-semibold leading-tight tracking-normal text-foreground md:text-5xl">
@@ -474,11 +474,11 @@ export function ResearchMapSection() {
           transition={{ duration: 0.66, ease: [0.22, 1, 0.36, 1] }}
           className="material-card video-fused-panel relative min-h-[560px] overflow-hidden rounded-[36px] p-4 md:p-6"
         >
-          <div className="graph-stage relative h-[520px] overflow-hidden rounded-[30px] border">
+          <div className="graph-stage relative h-[520px] overflow-hidden rounded-[30px] border border-white/10">
             {particles.map((particle) => (
               <motion.span
                 key={`${particle.left}-${particle.top}`}
-                className="absolute z-10 h-1.5 w-1.5 rounded-full bg-accent/55 shadow-[0_0_18px_hsl(var(--lume-gold)/0.55)]"
+                className="absolute z-10 h-1.5 w-1.5 rounded-full bg-accent/40 shadow-[0_8px_18px_rgba(72,56,31,0.14)]"
                 style={{ left: particle.left, top: particle.top }}
                 animate={{ opacity: [0.25, 0.85, 0.25], y: [0, -10, 0], scale: [1, 1.35, 1] }}
                 transition={{ duration: 4.8, delay: particle.delay, repeat: Infinity, ease: "easeInOut" }}
@@ -539,8 +539,8 @@ export function ResearchMapSection() {
               >
                 <div
                   className={[
-                    "luminous-node grid place-items-center rounded-[28px] border px-4 text-center shadow-material-md backdrop-blur-xl",
-                    "group transition duration-300 hover:-translate-y-1 hover:border-accent/55 hover:bg-surface/62",
+                    "luminous-node grid place-items-center rounded-[28px] border px-4 text-center shadow-sm backdrop-blur-xl",
+                    "group transition duration-300 hover:-translate-y-1 hover:bg-surface/50 hover:shadow-material-sm",
                     node.size === "large" ? "min-h-24 w-48" : node.size === "medium" ? "min-h-20 w-40" : "min-h-16 w-32",
                     node.tone,
                   ].join(" ")}

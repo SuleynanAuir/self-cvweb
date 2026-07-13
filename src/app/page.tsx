@@ -108,11 +108,11 @@ export default function HomePage() {
 
       <LabNotebookSection />
 
-      <section className="border-y border-border/45 bg-surface/20 backdrop-blur-sm">
+      <section className="border-y border-white/10 bg-surface/10 backdrop-blur-sm">
         <div className="mx-auto grid max-w-7xl gap-8 px-6 py-20 lg:grid-cols-[0.72fr_0.28fr] lg:items-center lg:px-8">
           <ScrollReveal>
             <div className="max-w-4xl">
-              <div className="inline-flex rounded-full border border-border/35 bg-accent-soft/58 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-accent">
+              <div className="inline-flex rounded-full border border-white/10 bg-accent-soft/40 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-accent">
                 Research Philosophy
               </div>
               <blockquote className="mt-6 text-3xl font-semibold leading-tight tracking-normal text-balance text-foreground md:text-5xl">
@@ -128,7 +128,7 @@ export default function HomePage() {
             <div className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">Technical Skills</div>
             <div className="mt-5 flex flex-wrap gap-2">
               {technicalSkills.map((skill) => (
-                <span key={skill} className="rounded-full border border-border/65 bg-surface/42 px-3 py-1.5 text-sm font-medium text-muted-foreground shadow-sm">
+                <span key={skill} className="rounded-full border border-white/10 bg-surface/25 px-3 py-1.5 text-sm font-medium text-muted-foreground shadow-sm">
                   {skill}
                 </span>
               ))}
@@ -140,7 +140,7 @@ export default function HomePage() {
       <section id="contact" className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
         <ScrollReveal className="material-card grid gap-8 p-8 md:grid-cols-[1fr_auto] md:items-center md:p-10" variant="scale">
           <div>
-            <div className="inline-flex rounded-full border border-border/35 bg-accent-soft/58 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-accent">
+            <div className="inline-flex rounded-full border border-white/10 bg-accent-soft/40 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-accent">
               Contact
             </div>
             <h2 className="mt-5 text-3xl font-semibold tracking-normal text-foreground md:text-4xl">Research projects, publications, and collaboration notes.</h2>
@@ -160,7 +160,7 @@ export default function HomePage() {
             </Link>
             <Link
               href="/papers"
-              className="focus-ring inline-flex h-11 items-center justify-center gap-2 rounded-full border border-border/65 bg-surface/42 px-5 text-sm font-medium text-foreground shadow-material-sm backdrop-blur-xl transition hover:-translate-y-0.5 hover:border-accent hover:text-accent"
+              className="focus-ring inline-flex h-11 items-center justify-center gap-2 rounded-full border border-white/10 bg-surface/25 px-5 text-sm font-medium text-foreground shadow-sm backdrop-blur-xl transition hover:-translate-y-0.5 hover:bg-surface/40 hover:text-accent"
             >
               Publications
               <ArrowUpRight className="h-4 w-4" />
@@ -192,7 +192,7 @@ function ResearchVisionSection() {
               delay={index * 0.06}
               variant="scale"
             >
-              <div className="inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-border/45 bg-surface/38 text-accent shadow-material-sm backdrop-blur-xl">
+              <div className="inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-white/10 bg-surface/25 text-accent shadow-sm backdrop-blur-xl">
                 <Sparkles className="h-4 w-4" />
               </div>
               <div className="mt-7 text-xs font-semibold uppercase tracking-[0.18em] text-accent">
@@ -210,7 +210,7 @@ function ResearchVisionSection() {
 
 function ResearchAreasSection() {
   return (
-    <section className="border-y border-border/45 bg-surface/16 backdrop-blur-sm">
+    <section className="border-y border-white/10 bg-surface/10 backdrop-blur-sm">
       <div className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
         <ScrollReveal>
           <SectionHeading
@@ -233,7 +233,7 @@ function ResearchAreasSection() {
                 variant="scale"
               >
                 <div className="flex items-start justify-between gap-4">
-                  <div className="grid h-11 w-11 place-items-center rounded-2xl border border-border/45 bg-surface/42 text-accent shadow-material-sm backdrop-blur-xl">
+                  <div className="grid h-11 w-11 place-items-center rounded-2xl border border-white/10 bg-surface/25 text-accent shadow-sm backdrop-blur-xl">
                     <Icon className="h-5 w-5" />
                   </div>
                   <span className="text-xs font-semibold uppercase tracking-[0.16em] text-accent/80">
@@ -256,12 +256,12 @@ function LabNotebookSection() {
     <section className="mx-auto max-w-7xl px-6 pb-20 lg:px-8">
       <div className="grid gap-6 lg:grid-cols-[0.43fr_0.57fr]">
         <ScrollReveal className="material-card video-fused-panel p-6 md:p-8" variant="scale">
-          <div className="inline-flex items-center gap-2 rounded-2xl border border-border/40 bg-surface/36 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-accent">
+          <div className="inline-flex items-center gap-2 rounded-2xl border border-white/10 bg-surface/25 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-accent">
             <BookOpen className="h-4 w-4" />
             Current Exploration
           </div>
           <h2 className="mt-6 text-3xl font-semibold tracking-normal text-foreground md:text-4xl">
-            A living AI laboratory notebook.
+            A living research notebook.
           </h2>
           <p className="mt-4 text-sm leading-7 text-muted-foreground">
             The portfolio is designed as a continuously evolving research surface, where systems, notes, and experiments converge into a long-term AI research program.
@@ -270,7 +270,7 @@ function LabNotebookSection() {
             {currentExploration.map((item) => (
               <div
                 key={item}
-                className="flex items-center justify-between rounded-2xl border border-border/45 bg-surface/34 px-4 py-3 text-sm font-medium text-foreground shadow-material-sm backdrop-blur-xl"
+                className="flex items-center justify-between rounded-2xl border border-white/10 bg-surface/25 px-4 py-3 text-sm font-medium text-foreground shadow-sm backdrop-blur-xl"
               >
                 <span>{item}</span>
                 <ArrowRight className="h-4 w-4 text-accent" />
@@ -297,7 +297,7 @@ function LabNotebookSection() {
               {focusTimeline.map((item) => (
                 <div
                   key={item.time}
-                  className="grid gap-3 rounded-2xl border border-border/45 bg-surface/34 p-4 shadow-material-sm backdrop-blur-xl sm:grid-cols-[88px_1fr]"
+                  className="grid gap-3 rounded-2xl border border-white/10 bg-surface/25 p-4 shadow-sm backdrop-blur-xl sm:grid-cols-[88px_1fr]"
                 >
                   <div className="text-sm font-semibold text-accent">{item.time}</div>
                   <div>

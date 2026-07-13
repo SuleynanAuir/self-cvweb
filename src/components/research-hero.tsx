@@ -2,26 +2,46 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowDown, ArrowRight, Github, Network, Sparkles } from "lucide-react";
+import { ArrowDown, ArrowRight, ArrowUpRight, BookOpen, Bot, FlaskConical, Github, Layers3, Map, Network, Sparkles } from "lucide-react";
 import { aiEvolution } from "@/data/portfolio";
 
-const graphNodes = [
-  { id: "Foundation Models", x: 50, y: 16, color: "text-accent", tone: "bg-accent-soft/75 border-accent/35" },
-  { id: "Agents", x: 24, y: 48, color: "text-green", tone: "bg-green/10 border-green/35" },
-  { id: "RAG", x: 50, y: 48, color: "text-cyan", tone: "bg-cyan/10 border-cyan/35" },
-  { id: "Knowledge Graph", x: 76, y: 48, color: "text-violet", tone: "bg-violet/10 border-violet/35" },
-  { id: "Scientific AI", x: 50, y: 82, color: "text-amber", tone: "bg-amber/10 border-amber/40" },
-] as const;
-
-const graphEdges = [
-  [0, 1],
-  [0, 2],
-  [0, 3],
-  [1, 2],
-  [2, 3],
-  [1, 4],
-  [2, 4],
-  [3, 4],
+const directoryItems = [
+  {
+    title: "Research Projects",
+    body: "Direction-based project modules",
+    href: "#research-projects",
+    icon: Layers3,
+  },
+  {
+    title: "Project Index",
+    body: "Repository pages and demos",
+    href: "/projects",
+    icon: BookOpen,
+  },
+  {
+    title: "Research Map",
+    body: "Concept graph and method routes",
+    href: "/research-map",
+    icon: Map,
+  },
+  {
+    title: "Agent Hub",
+    body: "LLM agents, RAG, GraphRAG",
+    href: "/agent-hub",
+    icon: Bot,
+  },
+  {
+    title: "Publications",
+    body: "Paper notes and reading traces",
+    href: "/papers",
+    icon: FlaskConical,
+  },
+  {
+    title: "Contact",
+    body: "GitHub and collaboration links",
+    href: "#contact",
+    icon: Github,
+  },
 ] as const;
 
 export function ResearchHero() {
@@ -43,9 +63,12 @@ export function ResearchHero() {
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.62, delay: 0.08, ease: "easeOut" }}
-            className="mt-7 max-w-5xl text-5xl font-semibold tracking-normal text-balance text-foreground md:text-7xl"
+            className="mt-7 max-w-5xl text-[clamp(2.35rem,4.35vw,4.65rem)] font-semibold leading-[1.04] tracking-normal text-foreground"
           >
-            Building Intelligent Systems from <span className="gradient-text">Foundation Models</span> to Autonomous AI Agents
+            <span className="block">Building Intelligent Systems from</span>
+            <span className="block">
+              <span className="gradient-text">Foundation Models</span> to Autonomous AI Agents
+            </span>
           </motion.h1>
 
           <motion.p
@@ -90,7 +113,7 @@ export function ResearchHero() {
             <div className="mb-4 flex items-center justify-between gap-4">
               <div>
                 <div className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">AI Evolution</div>
-                <div className="mt-1 text-sm text-muted-foreground">From algorithms to autonomous scientific intelligence</div>
+                <div className="mt-1 text-sm text-muted-foreground">Algorithms to scientific agents</div>
               </div>
               <div className="hidden rounded-full border border-border/45 bg-accent-soft/58 px-3 py-1 text-xs font-medium text-accent sm:block">
                 Research Path
@@ -106,7 +129,7 @@ export function ResearchHero() {
           transition={{ duration: 0.72, delay: 0.18, ease: "easeOut" }}
           className="relative z-10"
         >
-          <ResearchNetwork />
+          <ContentDirectory />
         </motion.div>
       </div>
     </section>
@@ -122,15 +145,15 @@ function EvolutionTimeline() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.46 + index * 0.06, duration: 0.38, ease: "easeOut" }}
-            className="group min-h-20 rounded-2xl border border-border/55 bg-surface/38 p-3 shadow-material-sm backdrop-blur-xl transition hover:-translate-y-1 hover:border-accent hover:bg-surface/58"
+            className="group flex min-h-14 items-center gap-2 rounded-2xl border border-border/55 bg-surface/38 px-3 py-2 shadow-material-sm backdrop-blur-xl transition hover:-translate-y-1 hover:border-accent hover:bg-surface/58"
           >
-            <div className="flex h-7 w-7 items-center justify-center rounded-full bg-accent-soft text-xs font-semibold text-accent ring-1 ring-border/60">
+            <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-accent-soft text-xs font-semibold text-accent ring-1 ring-border/60">
               {index + 1}
             </div>
-            <div className="mt-3 text-sm font-semibold leading-5 text-foreground">{step}</div>
+            <div className="whitespace-nowrap text-sm font-semibold leading-none text-foreground">{step}</div>
           </motion.div>
           {index < aiEvolution.length - 1 ? (
-            <div className="flex justify-center py-1 text-accent/70 md:absolute md:-right-3 md:top-9 md:z-10 md:py-0">
+            <div className="flex justify-center py-1 text-accent/70 md:absolute md:-right-3 md:top-5 md:z-10 md:py-0">
               <ArrowDown className="h-4 w-4 md:-rotate-90" />
             </div>
           ) : null}
@@ -140,83 +163,57 @@ function EvolutionTimeline() {
   );
 }
 
-function ResearchNetwork() {
+function ContentDirectory() {
   return (
     <div className="material-card video-fused-panel knowledge-panel overflow-hidden p-5 md:p-6">
       <div className="flex items-start justify-between gap-4">
         <div>
           <div className="inline-flex items-center gap-2 rounded-full bg-accent-soft/70 px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-accent ring-1 ring-border/60">
             <Network className="h-3.5 w-3.5" />
-            Interactive System Map
+            Content Directory
           </div>
-          <h2 className="mt-4 text-2xl font-semibold tracking-normal text-foreground">Connected research directions</h2>
+          <h2 className="mt-4 text-2xl font-semibold tracking-normal text-foreground">Navigate the research lab</h2>
           <p className="mt-2 max-w-md text-sm leading-6 text-muted-foreground">
-            Foundation models become useful research systems when connected with agents, retrieval, graphs, and scientific feedback loops.
+            A compact table of contents for projects, methods, agent systems, publications, and collaboration entry points.
           </p>
         </div>
       </div>
 
-      <div className="graph-stage relative mt-6 h-[430px] overflow-hidden rounded-[28px] border">
-        <svg className="absolute inset-0 h-full w-full" viewBox="0 0 100 100" role="presentation">
-          <defs>
-            <linearGradient id="portfolioEdgeGradient" x1="0%" x2="100%" y1="0%" y2="100%">
-              <stop offset="0%" stopColor="hsl(var(--accent))" stopOpacity="0.55" />
-              <stop offset="50%" stopColor="hsl(var(--amber))" stopOpacity="0.42" />
-              <stop offset="100%" stopColor="hsl(var(--green))" stopOpacity="0.48" />
-            </linearGradient>
-          </defs>
-          {graphEdges.map(([from, to], index) => {
-            const start = graphNodes[from];
-            const end = graphNodes[to];
-
-            return (
-              <motion.line
-                key={`${start.id}-${end.id}`}
-                x1={start.x}
-                y1={start.y}
-                x2={end.x}
-                y2={end.y}
-                stroke="url(#portfolioEdgeGradient)"
-                strokeWidth="0.62"
-                strokeLinecap="round"
-                strokeDasharray="6 7"
-                initial={{ opacity: 0, pathLength: 0 }}
-                animate={{ opacity: 1, pathLength: 1 }}
-                transition={{ delay: 0.46 + index * 0.06, duration: 0.7, ease: "easeOut" }}
-                className="animate-edge-flow"
-              />
-            );
-          })}
-        </svg>
-
-        {graphNodes.map((node, index) => (
+      <div className="mt-6 grid gap-3 sm:grid-cols-2">
+        {directoryItems.map((item, index) => (
           <motion.div
-            key={node.id}
-            initial={{ opacity: 0, scale: 0.9, y: 10 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ delay: 0.32 + index * 0.08, duration: 0.42, ease: "easeOut" }}
-            className="absolute"
-            style={{ left: `${node.x}%`, top: `${node.y}%`, transform: "translate(-50%, -50%)" }}
+            key={item.title}
+            initial={{ opacity: 0, y: 14, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ delay: 0.34 + index * 0.055, duration: 0.38, ease: "easeOut" }}
           >
-            <div
-              className={[
-                "luminous-node grid min-h-20 w-28 place-items-center rounded-3xl border px-3 text-center shadow-material-md transition hover:-translate-y-1 hover:scale-[1.03]",
-                node.tone,
-                node.color,
-                index === 0 ? "animate-node-pulse" : "",
-              ].join(" ")}
+            <Link
+              href={item.href}
+              className="focus-ring group/item flex min-h-[104px] items-start gap-3 rounded-3xl border border-border/45 bg-surface/36 p-4 shadow-material-sm backdrop-blur-xl transition duration-300 hover:-translate-y-1 hover:border-accent/45 hover:bg-surface/52"
             >
-              <div className="text-xs font-semibold leading-4">{node.id}</div>
-            </div>
+              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-2xl bg-accent-soft text-accent ring-1 ring-border/60">
+                <item.icon className="h-4 w-4" />
+              </span>
+              <span className="min-w-0 flex-1">
+                <span className="flex items-start justify-between gap-2">
+                  <span className="text-sm font-semibold leading-5 text-foreground">{item.title}</span>
+                  <ArrowUpRight className="mt-0.5 h-3.5 w-3.5 shrink-0 text-accent opacity-70 transition group-hover/item:translate-x-0.5 group-hover/item:-translate-y-0.5 group-hover/item:opacity-100" />
+                </span>
+                <span className="mt-2 block text-xs leading-5 text-muted-foreground">{item.body}</span>
+              </span>
+            </Link>
           </motion.div>
         ))}
-
       </div>
 
       <div className="graph-report-panel mt-4 rounded-3xl p-4">
-        <div className="text-sm font-semibold text-foreground">Research system principle</div>
-        <div className="mt-2 text-xs leading-5 text-muted-foreground">
-          Intelligent systems should understand knowledge, reason over evidence, act with tools, and continuously improve through feedback.
+        <div className="text-sm font-semibold text-foreground">Current focus</div>
+        <div className="mt-3 flex flex-wrap gap-2">
+          {["LLM Agents", "GraphRAG", "AI for Science", "Model Alignment"].map((item) => (
+            <span key={item} className="rounded-full border border-border/55 bg-surface/40 px-3 py-1 text-xs font-medium text-muted-foreground">
+              {item}
+            </span>
+          ))}
         </div>
       </div>
     </div>

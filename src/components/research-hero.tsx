@@ -33,14 +33,13 @@ const graphEdges = [
 export function ResearchHero() {
   return (
     <section className="relative overflow-hidden border-b border-border/70">
-      <div className="surface-grid pointer-events-none absolute inset-0 opacity-45" />
       <div className="mx-auto grid min-h-[680px] max-w-7xl gap-8 px-6 py-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(430px,0.75fr)] lg:items-center lg:px-8">
         <div className="relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
-            className="inline-flex h-10 items-center gap-2 rounded-full border border-border bg-surface px-4 text-sm font-medium text-muted-foreground shadow-material-sm"
+            className="inline-flex h-10 items-center gap-2 rounded-full border border-border/50 bg-surface/38 px-4 text-sm font-medium text-muted-foreground shadow-material-sm backdrop-blur-2xl"
           >
             <Sparkles className="h-4 w-4 text-accent" />
             Materials GraphRAG Agent
@@ -70,7 +69,7 @@ export function ResearchHero() {
             transition={{ duration: 0.58, delay: 0.24, ease: "easeOut" }}
             className="material-card mt-8 p-4"
           >
-            <div className="flex min-h-14 items-center gap-3 rounded-2xl border border-border bg-muted/70 px-4">
+            <div className="flex min-h-14 items-center gap-3 rounded-2xl border border-border/45 bg-surface/30 px-4 shadow-inner backdrop-blur-2xl">
               <Search className="h-5 w-5 shrink-0 text-accent" />
               <div className="min-w-0 flex-1 text-sm text-foreground">
                 Find solid-state electrolyte candidates with high ionic conductivity and stable synthesis routes
@@ -86,7 +85,7 @@ export function ResearchHero() {
 
             <div className="mt-4 flex flex-wrap gap-2">
               {promptChips.map((chip) => (
-                <span key={chip} className="rounded-full border border-border bg-surface px-3 py-1.5 text-xs font-medium text-muted-foreground shadow-sm">
+                <span key={chip} className="rounded-full border border-border/45 bg-surface/36 px-3 py-1.5 text-xs font-medium text-muted-foreground shadow-sm backdrop-blur-xl">
                   {chip}
                 </span>
               ))}
@@ -133,7 +132,7 @@ export function ResearchHero() {
               href="https://github.com/SuleynanAuir"
               target="_blank"
               rel="noreferrer"
-              className="focus-ring inline-flex h-12 items-center justify-center gap-2 rounded-full border border-border bg-surface px-6 text-sm font-medium text-foreground shadow-material-sm transition hover:-translate-y-0.5 hover:border-accent hover:text-accent"
+              className="focus-ring inline-flex h-12 items-center justify-center gap-2 rounded-full border border-border/45 bg-surface/34 px-6 text-sm font-medium text-foreground shadow-material-sm backdrop-blur-xl transition hover:-translate-y-0.5 hover:border-accent hover:text-accent"
             >
               <Github className="h-4 w-4" />
               GitHub
@@ -168,7 +167,7 @@ function KnowledgeGraph() {
         </div>
       </div>
 
-      <div className="relative mt-5 h-[390px] overflow-hidden rounded-3xl border border-border bg-[linear-gradient(180deg,#fffdf8,#f0f4e7)]">
+      <div className="graph-stage relative mt-5 h-[390px] overflow-hidden rounded-3xl border border-border/42">
         <svg className="absolute inset-0 h-full w-full" viewBox="0 0 100 100" role="presentation">
           <defs>
             <linearGradient id="materialEdgeGradient" x1="0%" x2="100%" y1="0%" y2="100%">
@@ -229,7 +228,7 @@ function KnowledgeGraph() {
           </div>
         ))}
 
-        <div className="absolute bottom-4 left-4 right-4 grid gap-3 rounded-3xl border border-border bg-surface/92 p-4 shadow-material-sm backdrop-blur">
+        <div className="absolute bottom-4 left-4 right-4 grid gap-3 rounded-3xl border border-border/45 bg-surface/44 p-4 shadow-material-sm backdrop-blur-2xl">
           <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
             <CheckCircle2 className="h-4 w-4 text-green" />
             Candidate report module

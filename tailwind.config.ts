@@ -26,10 +26,10 @@ const config = {
         amber: "hsl(var(--amber))",
       },
       boxShadow: {
-        soft: "0 18px 70px rgba(72, 56, 31, 0.08)",
-        "material-sm": "0 1px 2px rgba(72, 56, 31, 0.12), 0 1px 3px rgba(72, 56, 31, 0.10)",
-        "material-md": "0 4px 14px rgba(72, 56, 31, 0.12), 0 1px 4px rgba(72, 56, 31, 0.08)",
-        "material-lg": "0 18px 44px rgba(72, 56, 31, 0.14), 0 4px 12px rgba(72, 56, 31, 0.08)",
+        soft: "0 24px 90px rgba(72, 56, 31, 0.08)",
+        "material-sm": "0 8px 24px rgba(72, 56, 31, 0.07), inset 0 1px 0 rgba(255, 255, 255, 0.20)",
+        "material-md": "0 16px 42px rgba(72, 56, 31, 0.09), 0 0 34px rgba(104, 125, 69, 0.06)",
+        "material-lg": "0 26px 70px rgba(72, 56, 31, 0.12), 0 0 54px rgba(208, 138, 47, 0.08)",
       },
       keyframes: {
         "edge-flow": {

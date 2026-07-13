@@ -3,7 +3,7 @@ import { Github } from "lucide-react";
 
 export function SiteFooter() {
   return (
-    <footer className="border-t border-border/50 bg-surface/34 backdrop-blur-xl">
+    <footer className="border-t border-border/40 bg-surface/26 backdrop-blur-xl">
       <div className="mx-auto flex max-w-7xl flex-col gap-6 px-6 py-8 text-sm text-muted-foreground md:flex-row md:items-center md:justify-between lg:px-8">
         <div>
           <div className="font-semibold text-foreground">Materials AI Research Assistant</div>
@@ -20,7 +20,7 @@ export function SiteFooter() {
             href="https://github.com/SuleynanAuir"
             target="_blank"
             rel="noreferrer"
-            className="focus-ring inline-flex h-10 w-10 items-center justify-center rounded-full border border-border bg-surface shadow-material-sm transition hover:-translate-y-0.5 hover:border-accent hover:text-accent"
+            className="focus-ring inline-flex h-10 w-10 items-center justify-center rounded-full border border-border/45 bg-surface/36 shadow-material-sm backdrop-blur-xl transition hover:-translate-y-0.5 hover:border-accent hover:text-accent"
             aria-label="GitHub"
           >
             <Github className="h-4 w-4" />

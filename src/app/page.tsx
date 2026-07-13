@@ -28,15 +28,15 @@ export default function HomePage() {
     <>
       <ResearchHero />
 
-      <section className="border-b border-border/45 bg-white/32 backdrop-blur-sm">
+      <section className="border-b border-border/45 bg-surface/18 backdrop-blur-sm">
         <div className="mx-auto grid max-w-7xl gap-4 px-6 py-8 md:grid-cols-3 lg:px-8">
           {labPrinciples.map((item, index) => (
             <ScrollReveal as="article" key={item.title} className="material-card interactive-lift p-6" delay={index * 0.08}>
-              <div className="mb-5 grid h-11 w-11 place-items-center rounded-2xl bg-blue-50 text-blue-700 ring-1 ring-blue-100">
+              <div className="mb-5 grid h-11 w-11 place-items-center rounded-2xl bg-accent-soft text-accent ring-1 ring-border/60">
                 <item.icon className="h-5 w-5" strokeWidth={1.9} />
               </div>
-              <h2 className="text-lg font-semibold tracking-normal text-slate-950">{item.title}</h2>
-              <p className="mt-3 max-w-sm text-sm leading-6 text-slate-600">{item.body}</p>
+              <h2 className="text-lg font-semibold tracking-normal text-foreground">{item.title}</h2>
+              <p className="mt-3 max-w-sm text-sm leading-6 text-muted-foreground">{item.body}</p>
             </ScrollReveal>
           ))}
         </div>
@@ -62,11 +62,11 @@ export default function HomePage() {
             >
               <div className="grid gap-6 lg:grid-cols-[0.28fr_1fr]">
                 <div>
-                  <div className="inline-flex rounded-full border border-blue-200/70 bg-blue-50/70 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-blue-700">
+                  <div className="inline-flex rounded-full border border-border/35 bg-accent-soft/58 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-accent">
                     {String(categoryIndex + 1).padStart(2, "0")}
                   </div>
-                  <h3 className="mt-4 text-2xl font-semibold tracking-normal text-slate-950">{category.title}</h3>
-                  <p className="mt-3 text-sm leading-6 text-slate-600">{category.description}</p>
+                  <h3 className="mt-4 text-2xl font-semibold tracking-normal text-foreground">{category.title}</h3>
+                  <p className="mt-3 text-sm leading-6 text-muted-foreground">{category.description}</p>
                 </div>
 
                 <div className="grid gap-3 md:grid-cols-2">
@@ -74,14 +74,14 @@ export default function HomePage() {
                     <article key={project.name} className="project-card rounded-3xl p-5">
                       <div className="flex items-start justify-between gap-4">
                         <div>
-                          <h4 className="text-lg font-semibold tracking-normal text-slate-950">{project.name}</h4>
-                          <p className="mt-3 text-sm leading-6 text-slate-600">{project.description}</p>
+                          <h4 className="text-lg font-semibold tracking-normal text-foreground">{project.name}</h4>
+                          <p className="mt-3 text-sm leading-6 text-muted-foreground">{project.description}</p>
                         </div>
                         <Link
                           href={project.github}
                           target="_blank"
                           rel="noreferrer"
-                          className="focus-ring inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-border/70 bg-white/62 text-slate-600 shadow-material-sm backdrop-blur-xl transition hover:-translate-y-0.5 hover:border-blue-300 hover:text-blue-700"
+                          className="focus-ring inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-border/70 bg-surface/42 text-muted-foreground shadow-material-sm backdrop-blur-xl transition hover:-translate-y-0.5 hover:border-accent hover:text-accent"
                           aria-label={`${project.name} GitHub link`}
                         >
                           <Github className="h-4 w-4" />
@@ -90,18 +90,18 @@ export default function HomePage() {
 
                       <div className="mt-5 flex flex-wrap gap-2">
                         {project.keywords.map((keyword) => (
-                          <span key={keyword} className="rounded-full border border-border/60 bg-white/58 px-3 py-1 text-xs font-medium text-slate-600">
+                          <span key={keyword} className="rounded-full border border-border/60 bg-surface/40 px-3 py-1 text-xs font-medium text-muted-foreground">
                             {keyword}
                           </span>
                         ))}
                       </div>
 
-                      <div className="mt-5 rounded-2xl border border-blue-100/80 bg-blue-50/48 p-3">
-                        <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-blue-700">
+                      <div className="mt-5 rounded-2xl border border-border/40 bg-accent-soft/38 p-3">
+                        <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-accent">
                           <ArrowUpRight className="h-3.5 w-3.5" />
                           Research impact
                         </div>
-                        <p className="mt-2 text-xs leading-5 text-slate-600">{project.impact}</p>
+                        <p className="mt-2 text-xs leading-5 text-muted-foreground">{project.impact}</p>
                       </div>
                     </article>
                   ))}
@@ -112,27 +112,27 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="border-y border-border/45 bg-white/38 backdrop-blur-sm">
+      <section className="border-y border-border/45 bg-surface/20 backdrop-blur-sm">
         <div className="mx-auto grid max-w-7xl gap-8 px-6 py-20 lg:grid-cols-[0.72fr_0.28fr] lg:items-center lg:px-8">
           <ScrollReveal>
             <div className="max-w-4xl">
-              <div className="inline-flex rounded-full border border-blue-200/70 bg-blue-50/70 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-blue-700">
+              <div className="inline-flex rounded-full border border-border/35 bg-accent-soft/58 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-accent">
                 Research Philosophy
               </div>
-              <blockquote className="mt-6 text-3xl font-semibold leading-tight tracking-normal text-balance text-slate-950 md:text-5xl">
+              <blockquote className="mt-6 text-3xl font-semibold leading-tight tracking-normal text-balance text-foreground md:text-5xl">
                 From algorithms to intelligent systems: building AI that can understand, reason, act, and continuously improve.
               </blockquote>
-              <p className="mt-6 max-w-2xl text-base leading-8 text-slate-600">
+              <p className="mt-6 max-w-2xl text-base leading-8 text-muted-foreground">
                 The research direction is system-first: foundation models are treated as building blocks for agents, knowledge engines, scientific QA systems, and autonomous research workflows.
               </p>
             </div>
           </ScrollReveal>
 
           <ScrollReveal className="material-card p-5" delay={0.08} variant="scale">
-            <div className="text-xs font-semibold uppercase tracking-[0.18em] text-blue-700">Technical Skills</div>
+            <div className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">Technical Skills</div>
             <div className="mt-5 flex flex-wrap gap-2">
               {technicalSkills.map((skill) => (
-                <span key={skill} className="rounded-full border border-border/65 bg-white/62 px-3 py-1.5 text-sm font-medium text-slate-700 shadow-sm">
+                <span key={skill} className="rounded-full border border-border/65 bg-surface/42 px-3 py-1.5 text-sm font-medium text-muted-foreground shadow-sm">
                   {skill}
                 </span>
               ))}
@@ -144,11 +144,11 @@ export default function HomePage() {
       <section id="contact" className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
         <ScrollReveal className="material-card grid gap-8 p-8 md:grid-cols-[1fr_auto] md:items-center md:p-10" variant="scale">
           <div>
-            <div className="inline-flex rounded-full border border-blue-200/70 bg-blue-50/70 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-blue-700">
+            <div className="inline-flex rounded-full border border-border/35 bg-accent-soft/58 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-accent">
               Contact
             </div>
-            <h2 className="mt-5 text-3xl font-semibold tracking-normal text-slate-950 md:text-4xl">Research projects, publications, and collaboration notes.</h2>
-            <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-600">
+            <h2 className="mt-5 text-3xl font-semibold tracking-normal text-foreground md:text-4xl">Research projects, publications, and collaboration notes.</h2>
+            <p className="mt-4 max-w-2xl text-sm leading-7 text-muted-foreground">
               The portfolio is organized around open research systems. GitHub is the primary place to inspect repositories, project evolution, and implementation artifacts.
             </p>
           </div>
@@ -164,7 +164,7 @@ export default function HomePage() {
             </Link>
             <Link
               href="/papers"
-              className="focus-ring inline-flex h-11 items-center justify-center gap-2 rounded-full border border-border/65 bg-white/62 px-5 text-sm font-medium text-slate-700 shadow-material-sm backdrop-blur-xl transition hover:-translate-y-0.5 hover:border-blue-300 hover:text-blue-700"
+              className="focus-ring inline-flex h-11 items-center justify-center gap-2 rounded-full border border-border/65 bg-surface/42 px-5 text-sm font-medium text-foreground shadow-material-sm backdrop-blur-xl transition hover:-translate-y-0.5 hover:border-accent hover:text-accent"
             >
               Publications
               <ArrowUpRight className="h-4 w-4" />

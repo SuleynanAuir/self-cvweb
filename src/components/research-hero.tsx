@@ -6,11 +6,11 @@ import { ArrowDown, ArrowRight, Github, Network, Sparkles } from "lucide-react";
 import { aiEvolution } from "@/data/portfolio";
 
 const graphNodes = [
-  { id: "Foundation Models", x: 50, y: 16, color: "text-blue-600", tone: "bg-blue-50 border-blue-200" },
-  { id: "Agents", x: 24, y: 48, color: "text-emerald-600", tone: "bg-emerald-50 border-emerald-200" },
-  { id: "RAG", x: 50, y: 48, color: "text-sky-600", tone: "bg-sky-50 border-sky-200" },
-  { id: "Knowledge Graph", x: 76, y: 48, color: "text-violet-600", tone: "bg-violet-50 border-violet-200" },
-  { id: "Scientific AI", x: 50, y: 82, color: "text-amber-600", tone: "bg-amber-50 border-amber-200" },
+  { id: "Foundation Models", x: 50, y: 16, color: "text-accent", tone: "bg-accent-soft/75 border-accent/35" },
+  { id: "Agents", x: 24, y: 48, color: "text-green", tone: "bg-green/10 border-green/35" },
+  { id: "RAG", x: 50, y: 48, color: "text-cyan", tone: "bg-cyan/10 border-cyan/35" },
+  { id: "Knowledge Graph", x: 76, y: 48, color: "text-violet", tone: "bg-violet/10 border-violet/35" },
+  { id: "Scientific AI", x: 50, y: 82, color: "text-amber", tone: "bg-amber/10 border-amber/40" },
 ] as const;
 
 const graphEdges = [
@@ -33,7 +33,7 @@ export function ResearchHero() {
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
-            className="inline-flex h-10 items-center gap-2 rounded-full border border-blue-200/70 bg-white/72 px-4 text-sm font-medium text-blue-700 shadow-material-sm backdrop-blur-xl"
+            className="inline-flex h-10 items-center gap-2 rounded-full border border-border/50 bg-surface/40 px-4 text-sm font-medium text-accent shadow-material-sm backdrop-blur-xl"
           >
             <Sparkles className="h-4 w-4" />
             AI Research Laboratory
@@ -43,7 +43,7 @@ export function ResearchHero() {
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.62, delay: 0.08, ease: "easeOut" }}
-            className="mt-7 max-w-5xl text-5xl font-semibold tracking-normal text-balance text-slate-950 md:text-7xl"
+            className="mt-7 max-w-5xl text-5xl font-semibold tracking-normal text-balance text-foreground md:text-7xl"
           >
             Building Intelligent Systems from <span className="gradient-text">Foundation Models</span> to Autonomous AI Agents
           </motion.h1>
@@ -52,7 +52,7 @@ export function ResearchHero() {
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.62, delay: 0.16, ease: "easeOut" }}
-            className="mt-6 max-w-3xl text-lg leading-8 text-slate-600"
+            className="mt-6 max-w-3xl text-lg leading-8 text-muted-foreground"
           >
             Exploring Machine Learning, Large Language Models, Agentic AI, Knowledge Intelligence, and AI for Science.
           </motion.p>
@@ -74,7 +74,7 @@ export function ResearchHero() {
               href="https://github.com/SuleynanAuir"
               target="_blank"
               rel="noreferrer"
-              className="focus-ring inline-flex h-12 items-center justify-center gap-2 rounded-full border border-border/60 bg-white/64 px-6 text-sm font-medium text-slate-800 shadow-material-sm backdrop-blur-xl transition hover:-translate-y-0.5 hover:border-blue-300 hover:text-blue-700"
+              className="focus-ring inline-flex h-12 items-center justify-center gap-2 rounded-full border border-border/60 bg-surface/40 px-6 text-sm font-medium text-foreground shadow-material-sm backdrop-blur-xl transition hover:-translate-y-0.5 hover:border-accent hover:text-accent"
             >
               <Github className="h-4 w-4" />
               GitHub
@@ -89,10 +89,10 @@ export function ResearchHero() {
           >
             <div className="mb-4 flex items-center justify-between gap-4">
               <div>
-                <div className="text-xs font-semibold uppercase tracking-[0.18em] text-blue-700">AI Evolution</div>
+                <div className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">AI Evolution</div>
                 <div className="mt-1 text-sm text-muted-foreground">From algorithms to autonomous scientific intelligence</div>
               </div>
-              <div className="hidden rounded-full border border-blue-200/70 bg-blue-50/70 px-3 py-1 text-xs font-medium text-blue-700 sm:block">
+              <div className="hidden rounded-full border border-border/45 bg-accent-soft/58 px-3 py-1 text-xs font-medium text-accent sm:block">
                 Research Path
               </div>
             </div>
@@ -122,15 +122,15 @@ function EvolutionTimeline() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.46 + index * 0.06, duration: 0.38, ease: "easeOut" }}
-            className="group min-h-20 rounded-2xl border border-border/55 bg-white/52 p-3 shadow-material-sm backdrop-blur-xl transition hover:-translate-y-1 hover:border-blue-300 hover:bg-white/78"
+            className="group min-h-20 rounded-2xl border border-border/55 bg-surface/38 p-3 shadow-material-sm backdrop-blur-xl transition hover:-translate-y-1 hover:border-accent hover:bg-surface/58"
           >
-            <div className="flex h-7 w-7 items-center justify-center rounded-full bg-blue-50 text-xs font-semibold text-blue-700 ring-1 ring-blue-100">
+            <div className="flex h-7 w-7 items-center justify-center rounded-full bg-accent-soft text-xs font-semibold text-accent ring-1 ring-border/60">
               {index + 1}
             </div>
-            <div className="mt-3 text-sm font-semibold leading-5 text-slate-900">{step}</div>
+            <div className="mt-3 text-sm font-semibold leading-5 text-foreground">{step}</div>
           </motion.div>
           {index < aiEvolution.length - 1 ? (
-            <div className="flex justify-center py-1 text-blue-400 md:absolute md:-right-3 md:top-9 md:z-10 md:py-0">
+            <div className="flex justify-center py-1 text-accent/70 md:absolute md:-right-3 md:top-9 md:z-10 md:py-0">
               <ArrowDown className="h-4 w-4 md:-rotate-90" />
             </div>
           ) : null}
@@ -145,12 +145,12 @@ function ResearchNetwork() {
     <div className="material-card video-fused-panel knowledge-panel overflow-hidden p-5 md:p-6">
       <div className="flex items-start justify-between gap-4">
         <div>
-          <div className="inline-flex items-center gap-2 rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-blue-700 ring-1 ring-blue-100">
+          <div className="inline-flex items-center gap-2 rounded-full bg-accent-soft/70 px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-accent ring-1 ring-border/60">
             <Network className="h-3.5 w-3.5" />
             Interactive System Map
           </div>
-          <h2 className="mt-4 text-2xl font-semibold tracking-normal text-slate-950">Connected research directions</h2>
-          <p className="mt-2 max-w-md text-sm leading-6 text-slate-600">
+          <h2 className="mt-4 text-2xl font-semibold tracking-normal text-foreground">Connected research directions</h2>
+          <p className="mt-2 max-w-md text-sm leading-6 text-muted-foreground">
             Foundation models become useful research systems when connected with agents, retrieval, graphs, and scientific feedback loops.
           </p>
         </div>
@@ -160,9 +160,9 @@ function ResearchNetwork() {
         <svg className="absolute inset-0 h-full w-full" viewBox="0 0 100 100" role="presentation">
           <defs>
             <linearGradient id="portfolioEdgeGradient" x1="0%" x2="100%" y1="0%" y2="100%">
-              <stop offset="0%" stopColor="#2563eb" stopOpacity="0.55" />
-              <stop offset="50%" stopColor="#06b6d4" stopOpacity="0.42" />
-              <stop offset="100%" stopColor="#10b981" stopOpacity="0.48" />
+              <stop offset="0%" stopColor="hsl(var(--accent))" stopOpacity="0.55" />
+              <stop offset="50%" stopColor="hsl(var(--amber))" stopOpacity="0.42" />
+              <stop offset="100%" stopColor="hsl(var(--green))" stopOpacity="0.48" />
             </linearGradient>
           </defs>
           {graphEdges.map(([from, to], index) => {
@@ -214,8 +214,8 @@ function ResearchNetwork() {
       </div>
 
       <div className="graph-report-panel mt-4 rounded-3xl p-4">
-        <div className="text-sm font-semibold text-slate-950">Research system principle</div>
-        <div className="mt-2 text-xs leading-5 text-slate-600">
+        <div className="text-sm font-semibold text-foreground">Research system principle</div>
+        <div className="mt-2 text-xs leading-5 text-muted-foreground">
           Intelligent systems should understand knowledge, reason over evidence, act with tools, and continuously improve through feedback.
         </div>
       </div>

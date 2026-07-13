@@ -31,7 +31,7 @@ export const researchCategories: readonly ResearchCategory[] = [
   {
     title: "Autonomous Intelligence",
     description:
-      "Agent systems for planning, tool use, deep search, uncertainty reflection, user-attention modeling, and multi-agent coordination.",
+      "Agentic systems that connect planning, tool invocation, memory, deep search, uncertainty reflection, and multi-agent coordination. This direction focuses on turning LLMs from passive generators into autonomous research workers that can decompose tasks, verify evidence, adapt search depth, and collaborate across simulated information environments.",
     signal: "Agents, deep search, simulation, reflection",
     projects: [
       {
@@ -87,7 +87,7 @@ export const researchCategories: readonly ResearchCategory[] = [
   {
     title: "Foundation Models & Alignment",
     description:
-      "Fine-tuning, model adaptation, domain assistant construction, preference optimization, and compact LLM alignment pipelines.",
+      "End-to-end foundation model adaptation workflows covering SFT, LoRA, QLoRA, DPO, domain data construction, cloud training, evaluation, and local deployment. The emphasis is on building reliable domain assistants that can be aligned with preference data, constrained infrastructure, and downstream agent or QA system requirements.",
     signal: "SFT, LoRA, QLoRA, DPO, deployment",
     projects: [
       {
@@ -132,7 +132,7 @@ export const researchCategories: readonly ResearchCategory[] = [
   {
     title: "AI for Science & Probabilistic Reasoning",
     description:
-      "Time-series foundation models, Bayesian causal inference, geospatial risk analysis, and medical machine learning.",
+      "Scientific intelligence modules for temporal forecasting, Bayesian causal inference, geospatial risk modeling, and medical machine learning. These projects combine foundation-model style prediction with interpretable uncertainty, causal structure, exact and approximate inference, and evidence-backed decision support.",
     signal: "Forecasting, DAGs, MCMC, medical ML",
     projects: [
       {
@@ -174,7 +174,7 @@ export const researchCategories: readonly ResearchCategory[] = [
   {
     title: "Machine Learning Foundations & Analytics",
     description:
-      "From-scratch optimization, Bayesian fusion, intrusion detection, customer analytics, segmentation, and interpretable applied ML.",
+      "Classical machine learning systems built from optimization primitives, probabilistic fusion, structured feature engineering, and interpretable analytics. This direction provides the algorithmic base for modern AI systems through from-scratch training loops, intrusion detection, segmentation, posterior calibration, and applied decision modeling.",
     signal: "Optimization, Bayesian fusion, segmentation",
     projects: [
       {
@@ -207,7 +207,7 @@ export const researchCategories: readonly ResearchCategory[] = [
   {
     title: "Reinforcement Learning & Recommendation",
     description:
-      "Policy learning, value approximation, actor-critic methods, generative recommendation, preference alignment, and reward-driven optimization.",
+      "Reward-driven intelligence for agents and recommendation systems, spanning value approximation, replay-based DQN variants, PPO-style policy optimization, actor-critic learning, and generative recommendation. The projects connect sequential decision making, preference alignment, semantic item representation, and feedback-based behavior improvement.",
     signal: "DQN, PPO, A2C, OneRec, rewards",
     projects: [
       {
@@ -238,7 +238,7 @@ export const researchCategories: readonly ResearchCategory[] = [
   {
     title: "Multimodal Intelligence",
     description:
-      "Video restoration, OCR, document understanding, image-text semantic alignment, multimodal safety, and visual-language reasoning.",
+      "Multimodal reasoning systems for visual restoration, document OCR, image-text semantic alignment, multimodal safety, and visual-language understanding. This direction focuses on converting noisy visual evidence into structured signals, aligning language with perception, and supporting robust crossmodal reasoning for research workflows.",
     signal: "OCR, optical flow, CLIP, VLM",
     projects: [
       {

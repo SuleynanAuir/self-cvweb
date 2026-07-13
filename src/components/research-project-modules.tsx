@@ -8,7 +8,7 @@ import { researchCategories, type ResearchProject } from "@/data/portfolio";
 import { cn } from "@/lib/utils";
 
 const topicChipClass =
-  "max-w-full rounded-full border border-border/55 bg-surface/36 px-3 py-1 text-[clamp(0.62rem,1.15vw,0.75rem)] font-medium leading-tight text-muted-foreground";
+  "max-w-full rounded-full border border-border/55 bg-surface/42 px-3.5 py-1.5 text-[clamp(0.64rem,1vw,0.75rem)] font-medium leading-tight text-muted-foreground shadow-sm backdrop-blur-xl";
 
 export function ResearchProjectModules() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -34,24 +34,41 @@ export function ResearchProjectModules() {
             <button
               type="button"
               onClick={() => setOpenIndex(isOpen ? null : index)}
-              className="focus-ring group w-full p-5 text-left transition md:p-6"
+              className="focus-ring group w-full p-5 text-left transition md:p-7"
               aria-expanded={isOpen}
             >
-              {previewImages.length > 0 ? (
-                <div className="mb-7 flex flex-wrap items-start justify-start gap-3 md:gap-4">
-                  {previewImages.map((image, imageIndex) => (
-                    <img
-                      key={image}
-                      src={image}
-                      alt={`${category.title} project preview ${imageIndex + 1}`}
-                      className="h-[clamp(8rem,12vw,11.5rem)] w-auto max-w-full min-w-0 rounded-2xl border border-border/45 object-contain shadow-material-sm transition duration-500 group-hover:scale-[1.02]"
-                    />
+              <div
+                className={cn(
+                  "mb-7 grid gap-4",
+                  previewImages.length > 0
+                    ? "xl:grid-cols-[minmax(0,1fr)_minmax(220px,0.28fr)] xl:items-start"
+                    : "",
+                )}
+              >
+                {previewImages.length > 0 ? (
+                  <div className="flex flex-wrap items-start justify-start gap-3 md:gap-4">
+                    {previewImages.map((image, imageIndex) => (
+                      <img
+                        key={image}
+                        src={image}
+                        alt={`${category.title} project preview ${imageIndex + 1}`}
+                        className="h-[clamp(7rem,9.4vw,9.75rem)] w-auto max-w-full min-w-0 rounded-2xl border border-border/45 object-contain shadow-material-sm transition duration-500 group-hover:-translate-y-1 group-hover:scale-[1.015]"
+                      />
+                    ))}
+                  </div>
+                ) : null}
+
+                <div className="flex flex-wrap items-start justify-start gap-2.5 xl:justify-end xl:pt-1">
+                  {category.signal.split(", ").map((item) => (
+                    <span key={item} className={topicChipClass}>
+                      {item}
+                    </span>
                   ))}
                 </div>
-              ) : null}
+              </div>
 
-              <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(280px,0.34fr)] lg:items-end">
-                <div>
+              <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(250px,0.25fr)] lg:items-end">
+                <div className="min-w-0">
                   <div className="flex flex-wrap items-center gap-3">
                     <div className="inline-flex rounded-full border border-border/35 bg-accent-soft/58 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-accent">
                       {String(index + 1).padStart(2, "0")}
@@ -62,23 +79,15 @@ export function ResearchProjectModules() {
                     </div>
                   </div>
 
-                  <h3 className="mt-5 text-[clamp(2rem,5vw,3.9rem)] font-semibold leading-[1.08] tracking-normal text-foreground">
+                  <h3 className="mt-5 max-w-full text-[clamp(1.55rem,2.55vw,2.45rem)] font-semibold leading-[1.08] tracking-normal text-foreground md:whitespace-nowrap">
                     {category.title}
                   </h3>
-                  <p className="mt-3 max-w-4xl text-sm leading-7 text-muted-foreground md:text-base">
+                  <p className="mt-4 max-w-5xl text-sm leading-7 text-muted-foreground md:text-[0.96rem]">
                     {category.description}
                   </p>
-
-                  <div className="mt-6 flex flex-wrap items-center justify-start gap-2.5">
-                    {category.signal.split(", ").map((item) => (
-                      <span key={item} className={topicChipClass}>
-                        {item}
-                      </span>
-                    ))}
-                  </div>
                 </div>
 
-                <div className="flex items-center justify-between rounded-3xl border border-border/45 bg-surface/34 px-4 py-3 shadow-material-sm backdrop-blur-xl">
+                <div className="flex items-center justify-between rounded-3xl border border-border/45 bg-surface/38 px-4 py-3 shadow-material-sm backdrop-blur-xl transition duration-300 group-hover:-translate-y-0.5 group-hover:border-accent/45 group-hover:bg-surface/50">
                   <div>
                     <div className="text-xs font-semibold uppercase tracking-[0.16em] text-accent">
                       {isOpen ? "Collapse module" : "Expand module"}

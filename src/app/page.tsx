@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { ArrowUpRight, Github, Microscope, Network, Sparkles } from "lucide-react";
 import { ResearchHero } from "@/components/research-hero";
+import { ResearchProjectModules } from "@/components/research-project-modules";
 import { ScrollReveal } from "@/components/scroll-reveal";
 import { SectionHeading } from "@/components/section-heading";
-import { researchCategories, technicalSkills } from "@/data/portfolio";
+import { technicalSkills } from "@/data/portfolio";
 
 const labPrinciples = [
   {
@@ -51,65 +52,7 @@ export default function HomePage() {
           />
         </ScrollReveal>
 
-        <div className="mt-12 grid gap-5">
-          {researchCategories.map((category, categoryIndex) => (
-            <ScrollReveal
-              as="section"
-              key={category.title}
-              className="material-card p-5 md:p-6"
-              delay={categoryIndex * 0.035}
-              amount={0.05}
-            >
-              <div className="grid gap-6 lg:grid-cols-[0.28fr_1fr]">
-                <div>
-                  <div className="inline-flex rounded-full border border-border/35 bg-accent-soft/58 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-accent">
-                    {String(categoryIndex + 1).padStart(2, "0")}
-                  </div>
-                  <h3 className="mt-4 text-2xl font-semibold tracking-normal text-foreground">{category.title}</h3>
-                  <p className="mt-3 text-sm leading-6 text-muted-foreground">{category.description}</p>
-                </div>
-
-                <div className="grid gap-3 md:grid-cols-2">
-                  {category.projects.map((project) => (
-                    <article key={project.name} className="project-card rounded-3xl p-5">
-                      <div className="flex items-start justify-between gap-4">
-                        <div>
-                          <h4 className="text-lg font-semibold tracking-normal text-foreground">{project.name}</h4>
-                          <p className="mt-3 text-sm leading-6 text-muted-foreground">{project.description}</p>
-                        </div>
-                        <Link
-                          href={project.github}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="focus-ring inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-border/70 bg-surface/42 text-muted-foreground shadow-material-sm backdrop-blur-xl transition hover:-translate-y-0.5 hover:border-accent hover:text-accent"
-                          aria-label={`${project.name} GitHub link`}
-                        >
-                          <Github className="h-4 w-4" />
-                        </Link>
-                      </div>
-
-                      <div className="mt-5 flex flex-wrap gap-2">
-                        {project.keywords.map((keyword) => (
-                          <span key={keyword} className="rounded-full border border-border/60 bg-surface/40 px-3 py-1 text-xs font-medium text-muted-foreground">
-                            {keyword}
-                          </span>
-                        ))}
-                      </div>
-
-                      <div className="mt-5 rounded-2xl border border-border/40 bg-accent-soft/38 p-3">
-                        <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-accent">
-                          <ArrowUpRight className="h-3.5 w-3.5" />
-                          Research impact
-                        </div>
-                        <p className="mt-2 text-xs leading-5 text-muted-foreground">{project.impact}</p>
-                      </div>
-                    </article>
-                  ))}
-                </div>
-              </div>
-            </ScrollReveal>
-          ))}
-        </div>
+        <ResearchProjectModules />
       </section>
 
       <section className="border-y border-border/45 bg-surface/20 backdrop-blur-sm">

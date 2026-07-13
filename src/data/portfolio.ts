@@ -7,222 +7,279 @@ export const aiEvolution = [
   "Scientific Intelligence",
 ] as const;
 
-export const researchCategories = [
+export type ResearchProject = {
+  name: string;
+  description: string;
+  keywords: readonly string[];
+  github?: string;
+  impact: string;
+  platformRole: string;
+  image?: string;
+  images?: readonly string[];
+};
+
+export type ResearchCategory = {
+  title: string;
+  description: string;
+  signal: string;
+  projects: readonly ResearchProject[];
+};
+
+const imagePath = "/assets/web_page";
+
+export const researchCategories: readonly ResearchCategory[] = [
   {
     title: "Autonomous Intelligence",
-    description: "Agent systems that plan, use tools, coordinate, search deeply, and adapt across complex research workflows.",
+    description:
+      "Agent systems for planning, tool use, deep search, uncertainty reflection, user-attention modeling, and multi-agent coordination.",
+    signal: "Agents, deep search, simulation, reflection",
     projects: [
       {
         name: "Agent-You-MustKnows",
         description:
-          "A structured agent research knowledge base covering LLM-based agents, planning, memory, tool use, RAG plus Agent, and multi-agent collaboration.",
-        keywords: ["Agentic AI", "Planning", "Tool Use", "Memory"],
+          "A systematic AI Agent research knowledge base that organizes papers, technical reports, classic methods, and frontier agentic AI directions. It follows the evolution from language models that generate text to agents that perceive, reason, act, use tools, maintain memory, collaborate, and continuously improve.",
+        keywords: ["LLM-based Agent", "RAG + Agent", "Tool Use", "Memory System", "Planning"],
         github: "https://github.com/SuleynanAuir/Agent-You-MustKnows",
-        impact: "Builds a reusable research map for understanding and engineering autonomous AI agents.",
+        impact:
+          "Builds a reusable agent research map for quickly understanding agent theory, architecture patterns, and implementation routes.",
+        platformRole:
+          "Serves as the agent knowledge foundation for the portfolio, linking concepts, papers, frameworks, and system-level practice.",
+        image: `${imagePath}/agent_you_must_knows.png`,
       },
       {
         name: "NEXUS",
         description:
-          "A multi-agent framework for complex information environments, combining deep search agents, user-attention anchors, and knowledge-driven simulation.",
-        keywords: ["Multi-Agent", "Deep Search", "Digital Twin", "Reasoning"],
+          "Networked Emergent X-agent Universe Simulator is a multi-agent AI framework for complex information environments. It integrates domain-adapted models, custom deep-search agents, user-attention agents, and the Canyon digital twin environment to analyze evolving information flows, entities, relations, event dynamics, and narrative shifts.",
+        keywords: ["Multi-Agent AI", "Deep Search", "Digital Twin", "Entity Relation Extraction", "Narrative Reasoning"],
         github:
           "https://github.com/SuleynanAuir/NEXUS-Navigating-Emergent-X-agent-Universe-Simulator-with-Unprecedented-Insight",
-        impact: "Connects agent collaboration, entity extraction, narrative analysis, and system-level orchestration.",
+        impact:
+          "Connects autonomous agents, knowledge priors, attention anchors, and simulation to support lower-token, high-depth analysis.",
+        platformRole:
+          "Acts as the system orchestration layer where retrieval, agent collaboration, simulation, and deep insight generation converge.",
+        image: `${imagePath}/nexus_page.png`,
       },
       {
         name: "UPARIS-DS Agents",
         description:
-          "An uncertainty-aware paragraph-level reflective deep search framework for adaptive refinement and structured evidence synthesis.",
-        keywords: ["Reflection", "Uncertainty", "Deep Search", "Evidence"],
+          "Uncertainty-Aware Paragraph-Level Iterative Reflective Deep Search Agents is a reflective search framework that improves deep-search reliability through uncertainty estimation, paragraph-level refinement, adaptive iteration, and structured evidence synthesis.",
+        keywords: ["Uncertainty Quantification", "Reflection", "Deep Search", "Evidence Synthesis", "Hallucination Mitigation"],
         github: "https://github.com/SuleynanAuir/UPAIRS-Agents",
-        impact: "Improves research-agent reliability by making uncertainty and evidence refinement explicit.",
+        impact:
+          "Improves answer reliability by turning retrieval output into iteratively refined evidence objects instead of one-shot drafts.",
+        platformRole:
+          "Functions as the verification and refinement layer for research agents and GraphRAG-style evidence workflows.",
+        image: `${imagePath}/uparis_ds.png`,
       },
       {
-        name: "CognitiveTemp Agents",
+        name: "CognitiveTemp DeepSearch Agents",
         description:
-          "A configurable multi-agent reasoning system that adjusts search behavior from rigorous academic analysis to creative exploration.",
-        keywords: ["Temperature Control", "Adaptive Reasoning", "Search", "Agent"],
+          "A multi-agent reasoning system with temperature-driven cognitive styles. The system can shift search behavior from rigorous academic analysis to creative exploration through configuration, enabling different reasoning modes for different research questions.",
+        keywords: ["Temperature Control", "Cognitive Modeling", "Adaptive Reasoning", "Multi-Agent Search"],
         github: "https://github.com/SuleynanAuir/CognitiveTemp-DeepSearch-Agents",
-        impact: "Adds controllable reasoning style and exploration depth to research-agent workflows.",
+        impact:
+          "Adds controllable search depth, exploration style, and reasoning temperament to autonomous research workflows.",
+        platformRole:
+          "Provides behavior-control logic for agents that need to switch between conservative evidence checking and broader exploration.",
       },
     ],
   },
   {
     title: "Foundation Models & Alignment",
     description:
-      "Fine-tuning, model adaptation, Chain-of-Draft direct answering, and preference optimization for LLM systems.",
+      "Fine-tuning, model adaptation, domain assistant construction, preference optimization, and compact LLM alignment pipelines.",
+    signal: "SFT, LoRA, QLoRA, DPO, deployment",
     projects: [
-      {
-        name: "LLMs + CoD Direct Answer",
-        description:
-          "A professional answering module using Chain-of-Draft reasoning compression, direct answer synthesis, answer calibration, and retrieval-grounded verification.",
-        keywords: ["Chain-of-Draft", "Direct Answering", "Token Efficiency", "Calibration"],
-        github: "https://github.com/SuleynanAuir",
-        impact: "Balances concise expert answers with auditable reasoning, lower token cost, and terminology control.",
-      },
       {
         name: "LLaMA Factory Fine-tuning",
         description:
-          "An end-to-end LLM fine-tuning and deployment pipeline covering data engineering, SFT, LoRA-style adaptation, and local deployment.",
-        keywords: ["SFT", "LoRA", "LLaMA Factory", "Deployment"],
+          "An end-to-end LLM fine-tuning and deployment pipeline that integrates data augmentation, data engineering, cloud training, cloud data management, one-click fine-tuning, and local deployment for enterprise-grade iteration.",
+        keywords: ["LLaMA Factory", "SFT", "LoRA", "AutoDL", "Ollama"],
         github: "https://github.com/SuleynanAuir/LLaMa-Factory-Fine-Tuning",
-        impact: "Turns foundation-model adaptation into a repeatable training and deployment workflow.",
+        impact:
+          "Turns foundation-model adaptation from scattered commands into a reproducible model engineering workflow.",
+        platformRole:
+          "Supplies the model adaptation layer that prepares tuned assistants for downstream agent, QA, and knowledge-platform tasks.",
+        image: `${imagePath}/llamafactory.png`,
       },
       {
-        name: "Qwen Fine-tuning",
+        name: "Qwen HotelService Master",
         description:
-          "Qwen model adaptation for domain assistants using SFT, LoRA, QLoRA, and DPO under practical infrastructure constraints.",
-        keywords: ["Qwen", "SFT", "QLoRA", "DPO"],
+          "A hotel-domain conversational assistant based on Qwen2.5-7B-Instruct. It supports SFT + LoRA for a stable baseline, SFT + QLoRA for 4-bit constrained GPU training, and DPO to improve answers with human preference pairs.",
+        keywords: ["Qwen2.5-7B", "SFT", "LoRA", "QLoRA", "DPO"],
         github: "https://github.com/SuleynanAuir/Distributed-Fine-Tuning-of-Qwen2.5-7B-as-HotelService-Master",
-        impact: "Shows how domain-specific assistants can be trained, compressed, and aligned.",
+        impact:
+          "Demonstrates practical domain adaptation under real infrastructure limits while improving answer quality through preference optimization.",
+        platformRole:
+          "Represents a task-specific foundation model that can be embedded into service agents and domain QA systems.",
+        image: `${imagePath}/fine_tuning_qwen_hotelbot.png`,
       },
       {
-        name: "Preference Optimization",
+        name: "Weibo SentimentBot QA-Bot",
         description:
-          "Alignment workflows using preference pairs, reward signals, and DPO-style response shaping for specialized assistants.",
-        keywords: ["DPO", "Preference Data", "Alignment", "Evaluation"],
+          "A Qwen3.5-0.6B based sentiment assistant trained through a complete AutoDL fine-tuning pipeline. The model evolves from base Qwen through SFT, LoRA, and DPO preference optimization for sentiment-polarity and public-opinion QA tasks.",
+        keywords: ["Qwen3.5", "Sentiment Polarity", "SFT", "LoRA", "DPO"],
         github:
           "https://github.com/SuleynanAuir/WeiboPublic-SentimentBot-E2-FineTuning-Pipeline-of-Qwen3.5-0.6B-on-AutoDL-Cloud-Infrastrcture",
-        impact: "Connects compact LLM fine-tuning with behavior optimization and task-specific QA.",
+        impact:
+          "Shows how compact aligned LLMs can become focused social-media analysis assistants with staged training.",
+        platformRole:
+          "Adds a compact alignment case study for specialized QA, opinion analysis, and response-behavior optimization.",
+        image: `${imagePath}/weibo_sentiment_qabot.png`,
       },
     ],
   },
   {
-    title: "Knowledge Intelligence",
+    title: "AI for Science & Probabilistic Reasoning",
     description:
-      "Systems that connect research maps, retrieval, uncertainty, graph-like evidence, CoD answer synthesis, and grounded reasoning.",
-    projects: [
-      {
-        name: "GraphRAG",
-        description:
-          "Graph-aware retrieval that links documents, entities, relationships, evidence anchors, and source-grounded answers.",
-        keywords: ["GraphRAG", "Retrieval", "Evidence", "Entity Linking"],
-        github: "https://github.com/SuleynanAuir",
-        impact: "Improves answer traceability by combining graph neighborhoods with semantic search.",
-      },
-      {
-        name: "Knowledge Graph",
-        description:
-          "Entity and relationship modeling for transforming papers, notes, and project artifacts into reusable research memory.",
-        keywords: ["Entities", "Relations", "Ontology", "Research Memory"],
-        github: "https://github.com/SuleynanAuir",
-        impact: "Transforms unstructured research material into connected knowledge objects.",
-      },
-      {
-        name: "CoD Direct Answer Layer",
-        description:
-          "A final response layer that compresses intermediate reasoning into draft anchors before producing calibrated direct answers.",
-        keywords: ["CoT-to-CoD", "Faithfulness", "Answer Schema", "Hallucination Mitigation"],
-        github: "https://github.com/SuleynanAuir",
-        impact: "Makes LLM QA concise, terminology-aware, evidence-grounded, and easier to audit.",
-      },
-    ],
-  },
-  {
-    title: "AI for Science",
-    description: "Scientific forecasting, causal risk modeling, medical image analysis, and evidence-backed research workflows.",
+      "Time-series foundation models, Bayesian causal inference, geospatial risk analysis, and medical machine learning.",
+    signal: "Forecasting, DAGs, MCMC, medical ML",
     projects: [
       {
         name: "Chronos-2 Time-Series Foundation Model",
         description:
-          "A Chronos and Chronos-Bolt based study for univariate, multivariate, cross-item, and covariate-aware forecasting.",
-        keywords: ["Time Series", "Forecasting", "Chronos", "Covariates"],
+          "A time-series foundation model study built on Chronos and Chronos-Bolt. It supports univariate forecasting, cross-item learning, multivariate target prediction, and covariate-aware forecasting with historical and known-future covariates.",
+        keywords: ["Time-Series Foundation Model", "Chronos", "Forecasting", "Covariates"],
         github: "https://github.com/SuleynanAuir/Amazon-TSChronos",
-        impact: "Extends foundation-model thinking into temporal scientific and operational prediction.",
+        impact:
+          "Extends foundation-model methods into temporal prediction tasks that require future-state estimation and scenario modeling.",
+        platformRole:
+          "Provides the temporal intelligence module for scientific monitoring, market forecasting, and operational prediction.",
+        image: `${imagePath}/chronos2.png`,
       },
       {
         name: "VeFloodBN",
         description:
-          "A discrete Bayesian network for municipality-level flood-risk modeling with causal DAGs, MCMC, and geospatial heatmaps.",
-        keywords: ["Bayesian Network", "DAG", "MCMC", "GeoPandas"],
-        github: "https://github.com/SuleynanAuir",
-        impact: "Provides interpretable uncertainty-aware scientific risk analysis for decision support.",
+          "A discrete Bayesian network for municipality-level flood-risk modeling in Italy's Veneto region. It builds a 12-node causal DAG from GDP, population density, slope, river-network density, rainfall frequency, and other variables, then supports exact and approximate inference with spatial risk heatmaps.",
+        keywords: ["Bayesian Network", "Causal DAG", "Variable Elimination", "Gibbs MCMC", "GeoPandas"],
+        impact:
+          "Combines interpretable causal structure, uncertainty-aware inference, Markov blanket analysis, and geospatial visualization.",
+        platformRole:
+          "Represents the probabilistic reasoning module for scientific risk analysis and evidence-backed decision support.",
+        image: `${imagePath}/VeFloodBN.png`,
       },
       {
         name: "Clinical Brain Tumor Detection",
         description:
-          "A medical ML framework for MRI tumor detection using classical models, HOG features, augmentation, and basic Python libraries.",
-        keywords: ["Medical AI", "MRI", "HOG", "Small-Sample Learning"],
-        github: "https://github.com/SuleynanAuir",
-        impact: "Demonstrates robust scientific ML under limited tooling and constrained data settings.",
+          "An optimized medical ML framework for brain tumor detection using only NumPy, Pandas, and Matplotlib. It implements SVM, MLP, XGBoost, KNN, logistic regression, interpolation, rotation, folding, and HOG features for MRI analysis.",
+        keywords: ["Medical AI", "MRI", "HOG Features", "Small-Sample Learning", "Classical ML"],
+        impact:
+          "Demonstrates how carefully engineered classical models can support medical-image analysis without advanced frameworks.",
+        platformRole:
+          "Adds a medical AI case study focused on lightweight implementation, preprocessing rigor, and model comparison.",
+        image: `${imagePath}/clinical_brain_tumor_detection.png`,
       },
     ],
   },
   {
-    title: "Machine Learning Foundations",
-    description: "Core algorithms, probabilistic reasoning, optimization, diagnostics, and applied tabular intelligence.",
+    title: "Machine Learning Foundations & Analytics",
+    description:
+      "From-scratch optimization, Bayesian fusion, intrusion detection, customer analytics, segmentation, and interpretable applied ML.",
+    signal: "Optimization, Bayesian fusion, segmentation",
     projects: [
       {
         name: "ScratchOML-NIDS",
         description:
-          "A two-stage Bayesian fusion intrusion detection system with GD, SGD, Adam, logistic regression, Naive Bayes, decision trees, and MLP implemented from scratch.",
-        keywords: ["Bayesian Fusion", "Optimization", "From Scratch", "NIDS"],
+          "A two-stage Bayesian fusion intrusion detection system on UNSW-NB15. It manually implements GD, SGD, Adam, logistic regression, Gaussian Naive Bayes, decision trees, and MLP without third-party deep-learning frameworks, then fuses posterior probabilities for 10-class detection.",
+        keywords: ["From-Scratch ML", "Bayesian Fusion", "SGD", "Adam", "UNSW-NB15"],
         github: "https://github.com/SuleynanAuir/ScratchOML-NIDS",
-        impact: "Connects optimization, probability, class imbalance, and diagnostics in a complete ML system.",
+        impact:
+          "Connects optimization, class-imbalance handling, feature engineering, posterior fusion, ROC/PR evaluation, and error diagnosis in one system.",
+        platformRole:
+          "Forms the classical ML foundation beneath modern LLM, agent, and scientific AI workflows.",
+        image: `${imagePath}/scratchoml_NIDS.png`,
       },
       {
         name: "Customer Analytics Platform",
         description:
-          "An e-commerce analytics workflow combining EDA, supervised learning, segmentation, churn analysis, and value modeling.",
-        keywords: ["Customer Analytics", "Segmentation", "Churn", "Data Mining"],
+          "An e-commerce predictive customer analytics project using the Customer Personality Analysis dataset. It combines exploratory data analysis, supervised learning, unsupervised segmentation, demographic modeling, purchasing behavior analysis, and marketing-response discovery.",
+        keywords: ["Customer Analytics", "Data Mining", "Segmentation", "Churn", "Value Modeling"],
         github: "https://github.com/SuleynanAuir/Customer-Analytics-Modeling-Churn-and-Value-in-E-Commerce",
-        impact: "Turns structured customer data into interpretable decision-support signals.",
+        impact:
+          "Turns tabular customer data into interpretable behavior segments, response signals, and decision-support insights.",
+        platformRole:
+          "Represents applied structured-data intelligence and business analytics inside the broader AI systems portfolio.",
+        image: `${imagePath}/customer_platform1.png`,
+        images: [`${imagePath}/customer_platform1.png`, `${imagePath}/customer_platform2.png`],
       },
     ],
   },
   {
-    title: "Reinforcement Learning",
-    description: "Decision-making systems that learn through interaction, rewards, policy improvement, and preference feedback.",
+    title: "Reinforcement Learning & Recommendation",
+    description:
+      "Policy learning, value approximation, actor-critic methods, generative recommendation, preference alignment, and reward-driven optimization.",
+    signal: "DQN, PPO, A2C, OneRec, rewards",
     projects: [
       {
         name: "DRL Basis Projects",
         description:
-          "A modular deep reinforcement learning suite covering DQN, DDQN, PPO, policy gradient, and actor-critic implementations.",
-        keywords: ["DQN", "PPO", "Actor-Critic", "Replay Buffer"],
-        github: "https://github.com/SuleynanAuir",
-        impact: "Builds the policy-learning foundation for autonomous systems that improve through interaction.",
+          "A compact modular implementation of core deep reinforcement learning algorithms. It covers DQN/DDQN with Q-function approximation, replay buffers, target networks, and PPO with clipped objectives, generalized advantage estimation, policy-gradient methods, and actor-critic paradigms.",
+        keywords: ["DQN", "DDQN", "PPO", "Actor-Critic", "Experience Replay"],
+        impact:
+          "Builds the decision-learning foundation for agents that improve behavior through reward, interaction, and policy optimization.",
+        platformRole:
+          "Supplies policy-learning concepts for autonomous systems that must adapt from feedback rather than static supervision.",
+        image: `${imagePath}/rl.png`,
       },
       {
         name: "OMNI-Rec",
         description:
-          "A OneRec-inspired generative recommendation project using Semantic ID, multimodal behavior modeling, and reward optimization.",
-        keywords: ["Recommendation", "Semantic ID", "Reward", "OneRec"],
+          "A OneRec-inspired generative recommendation project for TikTok, Instagram, Kuaishou, and short-video recommendation paradigms. It models recommendation as sequence generation and preference alignment, using Semantic ID to unify multimodal content and user behavior with RL-style reward optimization.",
+        keywords: ["OneRec", "Semantic ID", "Generative Recommendation", "Reward Optimization", "Short Video"],
         github: "https://github.com/SuleynanAuir/OMNI-Rec/tree/main",
-        impact: "Reframes recommendation as a generative and preference-aligned decision problem.",
+        impact:
+          "Reframes recommendation from discriminative ranking into generative, context-aware, and preference-aligned intelligence.",
+        platformRole:
+          "Connects reinforcement learning, multimodal representation, and user-preference modeling for interactive AI systems.",
+        image: `${imagePath}/omni_rec.png`,
       },
     ],
   },
   {
     title: "Multimodal Intelligence",
-    description: "Video restoration, document OCR, image-text safety, and visual-language understanding for richer AI perception.",
+    description:
+      "Video restoration, OCR, document understanding, image-text semantic alignment, multimodal safety, and visual-language reasoning.",
+    signal: "OCR, optical flow, CLIP, VLM",
     projects: [
       {
         name: "PEANUT Video Restoration",
         description:
-          "A prompt-enhanced optical-flow video restoration project combining spatial consistency, temporal consistency, and clarity optimization.",
-        keywords: ["Video Restoration", "Optical Flow", "SAM2", "Prompt-Guided"],
+          "Prompt-Enhanced Ablation with Optical Flow-Based Neural Unit improves video restoration by combining spatial consistency, temporal consistency, and clarity optimization. Its core ideas are prompt-guided mask self-generation and optical-flow neural units for high-fidelity video sequences.",
+        keywords: ["Video Restoration", "Optical Flow", "Prompt-Guided Mask", "SAM2", "Crossmodal"],
         github: "https://github.com/SuleynanAuir/PEANUT--Prompt-Enhanced-Ablation-with-Optical-Flow-Based-Neural-Unit",
-        impact: "Bridges language prompts, masks, motion cues, and restoration for temporal perception systems.",
+        impact:
+          "Bridges language prompts, segmentation masks, motion cues, and restoration objectives in a temporal multimodal pipeline.",
+        platformRole:
+          "Adds temporal visual perception and restoration capability to the portfolio's multimodal intelligence layer.",
+        image: `${imagePath}/peanut1.png`,
+        images: [`${imagePath}/peanut1.png`, `${imagePath}/peanut2.png`, `${imagePath}/peanut3.png`],
       },
       {
         name: "P-ADONIS OCR",
         description:
-          "A prior-enhanced attention document OCR pipeline for improving recognition quality on noisy or low-resolution PDFs.",
-        keywords: ["OCR", "Super Resolution", "Document AI", "Text-to-Structure"],
+          "Prior-enhanced Attention Document OCR Network for Image-to-Structure integrates prior-enhanced text image super-resolution with an OCR pipeline to improve recognition quality for noisy or low-resolution PDFs.",
+        keywords: ["OCR", "Super Resolution", "Text-to-Structure", "Prior-Enhanced Attention"],
         github: "https://github.com/SuleynanAuir/P-ADONIS",
-        impact: "Turns noisy visual documents into more reliable machine-readable research knowledge.",
+        impact:
+          "Turns degraded visual documents into more reliable structured text for downstream search, retrieval, and knowledge extraction.",
+        platformRole:
+          "Works as a document-ingestion module for converting papers, PDFs, and scanned artifacts into usable evidence.",
       },
       {
         name: "Hateful Memes Detection",
         description:
-          "A CLIP plus LLM framework for multimodal hate detection under image-text inconsistency, implicit references, sarcasm, and irony.",
-        keywords: ["CLIP", "LLM", "Crossmodal", "Semantic Alignment"],
+          "A social-media multimodal hate detection project addressing image-text semantic inconsistency, implicit references, sarcasm, and irony. It uses a CLIP plus LLM framework for multimodal representation learning, semantic alignment, prompt engineering, and multi-LLM reasoning.",
+        keywords: ["CLIP", "LLM Inference", "Crossmodal Alignment", "Prompt Engineering", "Hateful Meme Detection"],
         github: "https://github.com/SuleynanAuir/Hateful-Image-Project",
-        impact: "Tests multimodal reasoning under ambiguous, implicit, and socially sensitive evidence.",
+        impact:
+          "Tests multimodal reasoning under ambiguous, implicit, and socially sensitive visual-language evidence.",
+        platformRole:
+          "Adds multimodal safety, semantic alignment, and robust image-text understanding to the AI research portfolio.",
+        image: `${imagePath}/hateful_memes_detection.png`,
       },
     ],
   },
-] as const;
+];
 
 export const technicalSkills = [
   "LLM",

@@ -1,21 +1,25 @@
 import { researchTimeline } from "@/data/research";
 import { SectionHeading } from "@/components/section-heading";
+import { ScrollReveal } from "@/components/scroll-reveal";
 
 export function ResearchTimeline() {
   return (
     <section className="border-y border-border/40 bg-surface/18 backdrop-blur-sm">
       <div className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
-        <SectionHeading
-          eyebrow="Agent Pipeline"
-          title="From raw research evidence to structured scientific answers."
-          description="A staged workflow connects data preparation, graph retrieval, reasoning, and report generation into one coherent analysis loop."
-        />
+        <ScrollReveal>
+          <SectionHeading
+            eyebrow="Agent Pipeline"
+            title="From raw research evidence to structured scientific answers."
+            description="A staged workflow connects data preparation, graph retrieval, reasoning, and report generation into one coherent analysis loop."
+          />
+        </ScrollReveal>
         <div className="mt-12 grid gap-4 md:grid-cols-3">
           {researchTimeline.map((item, index) => (
-            <article
+            <ScrollReveal
+              as="article"
               key={item.year}
-              className="material-card interactive-lift animate-fade-up p-6"
-              style={{ animationDelay: `${index * 90}ms` }}
+              className="material-card interactive-lift p-6"
+              delay={index * 0.09}
             >
               <div className="flex items-center justify-between gap-4">
                 <div className="text-3xl font-semibold text-accent">{item.year}</div>
@@ -35,7 +39,7 @@ export function ResearchTimeline() {
                   </span>
                 ))}
               </div>
-            </article>
+            </ScrollReveal>
           ))}
         </div>
       </div>

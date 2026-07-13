@@ -38,7 +38,7 @@ export function SiteHeader() {
               className={cn(
                 "focus-ring rounded-full px-4 py-2 text-sm font-medium transition",
                 pathname === item.href
-                  ? "bg-accent-soft text-accent shadow-sm"
+                  ? "bg-accent-soft/64 text-accent shadow-sm backdrop-blur-xl"
                   : "text-muted-foreground hover:bg-muted hover:text-foreground",
               )}
             >
@@ -81,7 +81,7 @@ export function SiteHeader() {
                 href={item.href}
                 className={cn(
                   "focus-ring rounded-2xl px-4 py-3 text-sm font-medium transition",
-                  pathname === item.href ? "bg-accent-soft text-accent" : "text-muted-foreground hover:bg-muted hover:text-foreground",
+                  pathname === item.href ? "bg-accent-soft/64 text-accent" : "text-muted-foreground hover:bg-muted hover:text-foreground",
                 )}
               >
                 {item.label}

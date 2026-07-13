@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowUpRight, Github } from "lucide-react";
+import { ScrollReveal } from "@/components/scroll-reveal";
 import { getAllProjects, getProjectBySlug } from "@/lib/content/projects";
 
 type ProjectPageProps = {
@@ -53,7 +54,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
       </Link>
 
       <section className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,0.72fr)_minmax(280px,0.28fr)] lg:items-start">
-        <div className="material-card p-7">
+        <ScrollReveal className="material-card p-7" variant="scale">
           <div className="inline-flex rounded-full bg-accent-soft px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-accent">
             {project.category}
           </div>
@@ -80,37 +81,37 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
               Research Map
             </Link>
           </div>
-        </div>
+        </ScrollReveal>
 
-        <aside className="material-card p-5">
+        <ScrollReveal as="aside" className="material-card p-5" delay={0.1} variant="scale">
           <div className="grid gap-5">
             <ProjectFact label="Year" value={String(project.year)} />
             <ProjectFact label="Status" value={project.status} />
             <ProjectFact label="Focus" value={project.focus} />
             <ProjectFact label="Difficulty" value={project.difficulty} />
           </div>
-        </aside>
+        </ScrollReveal>
       </section>
 
       <section className="mt-12 grid gap-8 lg:grid-cols-[minmax(0,0.68fr)_minmax(280px,0.32fr)] lg:items-start">
         <div className="space-y-8">
-          {sections.map((section) => (
-            <section key={section.title} className="material-card p-7">
+          {sections.map((section, index) => (
+            <ScrollReveal as="section" key={section.title} className="material-card p-7" delay={index * 0.06}>
               <h2 className="text-xl font-semibold tracking-normal">{section.title}</h2>
               <div className="mt-4 space-y-4 text-sm leading-7 text-muted-foreground">
                 {section.paragraphs.map((paragraph) => (
                   <p key={paragraph}>{paragraph}</p>
                 ))}
               </div>
-            </section>
+            </ScrollReveal>
           ))}
         </div>
 
-        <div className="material-card space-y-7 p-6">
+        <ScrollReveal className="material-card space-y-7 p-6" delay={0.12}>
           <ProjectList title="Tags" items={project.tags} />
           <ProjectList title="Stack" items={project.stack} />
           <ProjectList title="Related Papers" items={project.papers} />
-        </div>
+        </ScrollReveal>
       </section>
     </div>
   );

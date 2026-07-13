@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowLeft, FlaskConical } from "lucide-react";
+import { ScrollReveal } from "@/components/scroll-reveal";
 
 type ComingSoonPageProps = {
   eyebrow: string;
@@ -18,7 +19,7 @@ export function ComingSoonPage({ eyebrow, title, description, items }: ComingSoo
         <ArrowLeft className="h-4 w-4" />
         Back home
       </Link>
-      <div className="material-card mt-12 p-8 md:p-10">
+      <ScrollReveal className="material-card mt-12 p-8 md:p-10" variant="scale">
         <div className="inline-flex items-center gap-3 rounded-full bg-accent-soft px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-accent">
           <FlaskConical className="h-4 w-4" />
           {eyebrow}
@@ -32,7 +33,7 @@ export function ComingSoonPage({ eyebrow, title, description, items }: ComingSoo
             </span>
           ))}
         </div>
-      </div>
+      </ScrollReveal>
     </section>
   );
 }

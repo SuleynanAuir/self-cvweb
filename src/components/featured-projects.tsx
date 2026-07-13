@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowUpRight, Github } from "lucide-react";
+import { ScrollReveal } from "@/components/scroll-reveal";
 import type { Project } from "@/lib/content/projects";
 
 type FeaturedProjectsProps = {
@@ -10,10 +11,11 @@ export function FeaturedProjects({ projects }: FeaturedProjectsProps) {
   return (
     <div className="mt-10 grid gap-4">
       {projects.map((project, index) => (
-        <article
+        <ScrollReveal
+          as="article"
           key={project.slug}
-          className="material-card interactive-lift grid animate-fade-up gap-6 p-6 md:grid-cols-[0.32fr_1fr_auto] md:items-center"
-          style={{ animationDelay: `${index * 70}ms` }}
+          className="material-card interactive-lift grid gap-6 p-6 md:grid-cols-[0.32fr_1fr_auto] md:items-center"
+          delay={index * 0.07}
         >
           <div>
             <div className="inline-flex rounded-full bg-accent-soft px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-accent">
@@ -42,7 +44,7 @@ export function FeaturedProjects({ projects }: FeaturedProjectsProps) {
               <ArrowUpRight className="h-4 w-4" />
             </Link>
           </div>
-        </article>
+        </ScrollReveal>
       ))}
     </div>
   );

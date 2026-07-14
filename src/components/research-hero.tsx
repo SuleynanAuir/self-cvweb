@@ -26,7 +26,7 @@ const researchNavItems = [
     href: "#research-vision",
     icon: Sparkles,
     external: false,
-    x: 29,
+    x: 28,
     y: 23,
     size: "wide",
   },
@@ -62,8 +62,8 @@ const researchNavItems = [
     href: "#research-map",
     icon: Network,
     external: false,
-    x: 79,
-    y: 54,
+    x: 84,
+    y: 56,
     size: "wide",
   },
   {
@@ -74,8 +74,8 @@ const researchNavItems = [
     href: "#research-projects",
     icon: FlaskConical,
     external: false,
-    x: 39,
-    y: 83,
+    x: 36,
+    y: 84,
     size: "medium",
   },
   {
@@ -86,8 +86,8 @@ const researchNavItems = [
     href: "/papers",
     icon: BookOpen,
     external: false,
-    x: 70,
-    y: 78,
+    x: 64,
+    y: 84,
     size: "wide",
   },
 ] as const;
@@ -95,28 +95,29 @@ const researchNavItems = [
 const researchNavCore = { x: 50, y: 52 } as const;
 
 type ResearchNavItemId = (typeof researchNavItems)[number]["id"];
-type ResearchNavBodyId = ResearchNavItemId | "core";
 
 type ResearchNavBody = {
-  id: ResearchNavBodyId;
+  id: ResearchNavItemId;
   x: number;
   y: number;
   vx: number;
   vy: number;
   radius: number;
+  anchorX: number;
+  anchorY: number;
+  seed: number;
 };
 
 const initialResearchNavBodies: ResearchNavBody[] = [
-  { id: "core", x: researchNavCore.x, y: researchNavCore.y, vx: 0.026, vy: -0.032, radius: 14.6 },
-  { id: "research", x: 29, y: 23, vx: 0.052, vy: 0.034, radius: 12.3 },
-  { id: "projects", x: 72, y: 24, vx: -0.048, vy: 0.041, radius: 11.8 },
-  { id: "agents", x: 22, y: 57, vx: 0.044, vy: -0.047, radius: 11.8 },
-  { id: "knowledge", x: 79, y: 54, vx: -0.043, vy: -0.052, radius: 12.3 },
-  { id: "science", x: 39, y: 83, vx: 0.05, vy: -0.028, radius: 11.8 },
-  { id: "publications", x: 70, y: 78, vx: -0.051, vy: -0.034, radius: 12.3 },
+  { id: "research", x: 28, y: 23, vx: 0.026, vy: 0.017, radius: 14.2, anchorX: 28, anchorY: 24, seed: 0.8 },
+  { id: "projects", x: 72, y: 24, vx: -0.024, vy: 0.021, radius: 13.3, anchorX: 72, anchorY: 25, seed: 2.2 },
+  { id: "agents", x: 19, y: 58, vx: 0.022, vy: -0.024, radius: 13.3, anchorX: 21, anchorY: 58, seed: 3.7 },
+  { id: "knowledge", x: 84, y: 56, vx: -0.022, vy: -0.026, radius: 14.2, anchorX: 82, anchorY: 56, seed: 5.1 },
+  { id: "science", x: 36, y: 84, vx: 0.025, vy: -0.014, radius: 13.3, anchorX: 36, anchorY: 81, seed: 6.4 },
+  { id: "publications", x: 64, y: 84, vx: -0.026, vy: -0.017, radius: 14.2, anchorX: 64, anchorY: 81, seed: 8.0 },
 ];
 
-const initialResearchNavBodyMap = new Map<ResearchNavBodyId, ResearchNavBody>(
+const initialResearchNavBodyMap = new Map<ResearchNavItemId, ResearchNavBody>(
   initialResearchNavBodies.map((body) => [body.id, body]),
 );
 
@@ -382,11 +383,18 @@ export function ResearchHero() {
 function ResearchNavigation() {
   const reduceMotion = useReducedMotion();
   const [navBodies, setNavBodies] = useState<ResearchNavBody[]>(initialResearchNavBodies);
+  const [hoveredId, setHoveredId] = useState<ResearchNavItemId | null>(null);
+  const [activeId, setActiveId] = useState<ResearchNavItemId | null>(null);
   const navBodiesRef = useRef(navBodies);
+  const hoveredIdRef = useRef<ResearchNavItemId | null>(null);
 
   useEffect(() => {
     navBodiesRef.current = navBodies;
   }, [navBodies]);
+
+  useEffect(() => {
+    hoveredIdRef.current = hoveredId;
+  }, [hoveredId]);
 
   useEffect(() => {
     if (reduceMotion) {
@@ -399,35 +407,33 @@ function ResearchNavigation() {
     const tick = (time: number) => {
       const delta = Math.min((time - lastTime) / 16.67, 2.2);
       lastTime = time;
+      const hoveredBodyId = hoveredIdRef.current;
 
       const next = navBodiesRef.current.map((body, index) => {
-        const jitterX = Math.sin(time * 0.0011 + index * 1.7) * 0.00065;
-        const jitterY = Math.cos(time * 0.0009 + index * 1.3) * 0.00065;
-        const moved = {
+        const centerDx = researchNavCore.x - body.x;
+        const centerDy = researchNavCore.y - body.y;
+        const centerDistance = Math.max(Math.hypot(centerDx, centerDy), 0.001);
+        const anchorDx = body.anchorX - body.x;
+        const anchorDy = body.anchorY - body.y;
+        const swirl = Math.sin(time * 0.00017 + body.seed) * 0.00018;
+        const noiseX = Math.sin(time * 0.00071 + body.seed * 1.9) * 0.00024;
+        const noiseY = Math.cos(time * 0.00063 + body.seed * 1.5) * 0.00024;
+
+        return {
           ...body,
-          vx: body.vx + jitterX,
-          vy: body.vy + jitterY,
-          x: body.x + body.vx * delta,
-          y: body.y + body.vy * delta,
+          vx:
+            body.vx +
+            (centerDx / centerDistance) * 0.00072 +
+            anchorDx * 0.00015 +
+            (-centerDy / centerDistance) * swirl +
+            noiseX,
+          vy:
+            body.vy +
+            (centerDy / centerDistance) * 0.00072 +
+            anchorDy * 0.00015 +
+            (centerDx / centerDistance) * swirl +
+            noiseY,
         };
-
-        if (moved.x < moved.radius) {
-          moved.x = moved.radius;
-          moved.vx = Math.abs(moved.vx);
-        } else if (moved.x > 100 - moved.radius) {
-          moved.x = 100 - moved.radius;
-          moved.vx = -Math.abs(moved.vx);
-        }
-
-        if (moved.y < moved.radius) {
-          moved.y = moved.radius;
-          moved.vy = Math.abs(moved.vy);
-        } else if (moved.y > 100 - moved.radius) {
-          moved.y = 100 - moved.radius;
-          moved.vy = -Math.abs(moved.vy);
-        }
-
-        return moved;
       });
 
       for (let i = 0; i < next.length; i += 1) {
@@ -437,59 +443,81 @@ function ResearchNavigation() {
           const dx = second.x - first.x;
           const dy = second.y - first.y;
           const distance = Math.max(Math.hypot(dx, dy), 0.001);
-          const minDistance = first.radius + second.radius + 1.2;
+          const minDistance = first.radius + second.radius + 3.8;
 
-          if (distance >= minDistance) {
+          if (distance >= minDistance * 1.16) {
             continue;
           }
 
           const normalX = dx / distance;
           const normalY = dy / distance;
-          const overlap = minDistance - distance;
-          const firstWeight = second.radius / (first.radius + second.radius);
-          const secondWeight = first.radius / (first.radius + second.radius);
+          const softness = Math.max((minDistance * 1.16 - distance) / minDistance, 0);
+          const repulsion = softness * softness * 0.010;
 
-          first.x -= normalX * overlap * firstWeight;
-          first.y -= normalY * overlap * firstWeight;
-          second.x += normalX * overlap * secondWeight;
-          second.y += normalY * overlap * secondWeight;
+          first.vx -= normalX * repulsion;
+          first.vy -= normalY * repulsion;
+          second.vx += normalX * repulsion;
+          second.vy += normalY * repulsion;
 
-          const relativeVelocityX = second.vx - first.vx;
-          const relativeVelocityY = second.vy - first.vy;
-          const velocityAlongNormal = relativeVelocityX * normalX + relativeVelocityY * normalY;
-
-          if (velocityAlongNormal < 0) {
-            const impulse = (-(1 + 0.88) * velocityAlongNormal) / 2;
-            first.vx -= impulse * normalX;
-            first.vy -= impulse * normalY;
-            second.vx += impulse * normalX;
-            second.vy += impulse * normalY;
+          if (distance < minDistance) {
+            const correction = (minDistance - distance) * 0.045;
+            first.x -= normalX * correction;
+            first.y -= normalY * correction;
+            second.x += normalX * correction;
+            second.y += normalY * correction;
           }
         }
       }
 
       const bounded = next.map((body) => {
-        const speed = Math.hypot(body.vx, body.vy);
-        const maxSpeed = 0.078;
-        const minSpeed = 0.028;
+        const coreDx = body.x - researchNavCore.x;
+        const coreDy = body.y - researchNavCore.y;
+        const coreDistance = Math.max(Math.hypot(coreDx, coreDy), 0.001);
+        const coreMinDistance = body.radius + 16.6;
         let vx = body.vx;
         let vy = body.vy;
 
-        if (speed > maxSpeed) {
-          vx = (vx / speed) * maxSpeed;
-          vy = (vy / speed) * maxSpeed;
-        } else if (speed < minSpeed) {
-          const fallback = speed || 1;
-          vx = (vx / fallback) * minSpeed;
-          vy = (vy / fallback) * minSpeed;
+        if (coreDistance < coreMinDistance) {
+          const pressure = ((coreMinDistance - coreDistance) / coreMinDistance) ** 2 * 0.014;
+          vx += (coreDx / coreDistance) * pressure;
+          vy += (coreDy / coreDistance) * pressure;
         }
+
+        const edgePadding = body.radius + 1.4;
+
+        if (body.x < edgePadding) {
+          vx += (edgePadding - body.x) * 0.0042;
+        } else if (body.x > 100 - edgePadding) {
+          vx -= (body.x - (100 - edgePadding)) * 0.0042;
+        }
+
+        if (body.y < edgePadding) {
+          vy += (edgePadding - body.y) * 0.0042;
+        } else if (body.y > 100 - edgePadding) {
+          vy -= (body.y - (100 - edgePadding)) * 0.0042;
+        }
+
+        const damping = hoveredBodyId === body.id ? 0.82 : 0.972;
+        vx *= damping;
+        vy *= damping;
+
+        const adjustedSpeed = Math.hypot(vx, vy);
+        const maxSpeed = hoveredBodyId === body.id ? 0.018 : 0.044;
+
+        if (adjustedSpeed > maxSpeed) {
+          vx = (vx / adjustedSpeed) * maxSpeed;
+          vy = (vy / adjustedSpeed) * maxSpeed;
+        }
+
+        const x = body.x + vx * delta;
+        const y = body.y + vy * delta;
 
         return {
           ...body,
           vx,
           vy,
-          x: Math.min(Math.max(body.x, body.radius), 100 - body.radius),
-          y: Math.min(Math.max(body.y, body.radius), 100 - body.radius),
+          x: Math.min(Math.max(x, edgePadding), 100 - edgePadding),
+          y: Math.min(Math.max(y, edgePadding), 100 - edgePadding),
         };
       });
 
@@ -505,12 +533,11 @@ function ResearchNavigation() {
     };
   }, [reduceMotion]);
 
-  const navBodyMap = useMemo(() => new Map<ResearchNavBodyId, ResearchNavBody>(navBodies.map((body) => [body.id, body])), [navBodies]);
-  const getNavBody = (id: ResearchNavBodyId) => navBodyMap.get(id) ?? initialResearchNavBodyMap.get(id)!;
-  const coreBody = getNavBody("core");
+  const navBodyMap = useMemo(() => new Map<ResearchNavItemId, ResearchNavBody>(navBodies.map((body) => [body.id, body])), [navBodies]);
+  const getNavBody = (id: ResearchNavItemId) => navBodyMap.get(id) ?? initialResearchNavBodyMap.get(id)!;
 
   return (
-    <div className="research-landscape-panel min-h-[540px] p-5 md:p-6">
+    <div className="research-landscape-panel min-h-[580px] p-5 md:p-6">
       <div className="relative z-20 flex items-start justify-between gap-5">
         <div>
           <div className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">Research Laboratory Index</div>
@@ -524,7 +551,7 @@ function ResearchNavigation() {
         </div>
       </div>
 
-      <div className="relative z-10 mt-5 h-[390px] overflow-hidden rounded-[30px]">
+      <div className="relative z-10 mt-5 h-[430px] overflow-hidden rounded-[30px]">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,hsl(var(--surface)/0.22),transparent_34%),radial-gradient(circle_at_18%_68%,hsl(var(--green)/0.07),transparent_28%),radial-gradient(circle_at_86%_26%,hsl(var(--amber)/0.08),transparent_30%)]" />
         <svg className="pointer-events-none absolute inset-0 h-full w-full" viewBox="0 0 100 100" role="presentation">
           <defs>
@@ -541,16 +568,16 @@ function ResearchNavigation() {
             return (
               <line
                 key={`core-${item.id}`}
-                x1={coreBody.x}
-                y1={coreBody.y}
-                x2={body.x}
-                y2={body.y}
-                stroke="url(#researchNavLandscapeGradient)"
-                strokeWidth="0.45"
-                strokeLinecap="round"
-                strokeDasharray="3 8"
-                opacity="0.78"
-                className="animate-edge-flow"
+              x1={researchNavCore.x}
+              y1={researchNavCore.y}
+              x2={body.x}
+              y2={body.y}
+              stroke="url(#researchNavLandscapeGradient)"
+              strokeWidth={hoveredId === item.id ? "0.9" : "0.45"}
+              strokeLinecap="round"
+              strokeDasharray="3 8"
+              opacity={hoveredId ? (hoveredId === item.id ? "0.96" : "0.26") : "0.72"}
+              className="animate-edge-flow"
               />
             );
           })}
@@ -570,7 +597,7 @@ function ResearchNavigation() {
                 strokeWidth="0.32"
                 strokeLinecap="round"
                 strokeDasharray="2 7"
-                opacity="0.56"
+                opacity={hoveredId ? (hoveredId === from || hoveredId === to ? "0.72" : "0.16") : "0.44"}
               />
             );
           })}
@@ -578,7 +605,7 @@ function ResearchNavigation() {
 
         <div
           className="research-core-node absolute z-20"
-          style={{ left: `${coreBody.x}%`, top: `${coreBody.y}%`, transform: "translate(-50%, -50%)" }}
+          style={{ left: `${researchNavCore.x}%`, top: `${researchNavCore.y}%`, transform: "translate(-50%, -50%)" }}
         >
           <div className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-accent/80">Core</div>
           <div className="mt-1 text-base font-semibold leading-5 text-foreground">AI Systems Lab</div>
@@ -602,13 +629,25 @@ function ResearchNavigation() {
                 href={item.href}
                 target={item.external ? "_blank" : undefined}
                 rel={item.external ? "noreferrer" : undefined}
-                title={item.body}
-                aria-label={`${item.title}: ${item.body}`}
-                className={[
-                  "research-nav-node focus-ring group/item flex flex-col items-center justify-center rounded-full px-4 py-3 text-center transition duration-300 hover:-translate-y-1",
-                  item.size === "wide" ? "h-[136px] w-[136px]" : "h-[126px] w-[126px]",
-                ].join(" ")}
-              >
+              title={item.body}
+              aria-label={`${item.title}: ${item.body}`}
+              onPointerEnter={() => setHoveredId(item.id)}
+              onPointerLeave={() => setHoveredId((current) => (current === item.id ? null : current))}
+              onFocus={() => setHoveredId(item.id)}
+              onBlur={() => setHoveredId((current) => (current === item.id ? null : current))}
+              onClick={() => {
+                setActiveId(item.id);
+                window.setTimeout(() => {
+                  setActiveId((current) => (current === item.id ? null : current));
+                }, 420);
+              }}
+              className={[
+                "research-nav-node focus-ring group/item flex flex-col items-center justify-center rounded-full px-4 py-3 text-center transition duration-300 hover:-translate-y-1",
+                item.size === "wide" ? "h-[124px] w-[124px]" : "h-[116px] w-[116px]",
+                hoveredId === item.id ? "research-nav-node-hovered scale-[1.055]" : "",
+                activeId === item.id ? "research-nav-node-clicked" : "",
+              ].join(" ")}
+            >
                 <span className="mx-auto grid h-8 w-8 place-items-center rounded-full bg-surface/25 text-accent shadow-sm transition group-hover/item:bg-surface/40">
                   <item.icon className="h-4 w-4" />
                 </span>

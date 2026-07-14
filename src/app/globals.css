@@ -297,8 +297,8 @@ a {
 }
 
 .research-core-node {
-  width: 156px;
-  height: 156px;
+  width: 142px;
+  height: 142px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -315,6 +315,22 @@ a {
   box-shadow:
     0 22px 48px rgba(72, 56, 31, 0.095),
     inset 0 1px 0 hsl(0 0% 100% / 0.36);
+}
+
+.research-nav-node-hovered {
+  background:
+    radial-gradient(circle at 35% 18%, hsl(0 0% 100% / 0.64), transparent 50%),
+    radial-gradient(circle at 72% 76%, hsl(var(--lume-gold) / 0.12), transparent 45%),
+    linear-gradient(145deg, hsl(var(--surface) / 0.58), hsl(var(--lume-mist) / 0.18)),
+    hsl(var(--surface) / 0.32);
+  box-shadow:
+    0 26px 56px rgba(72, 56, 31, 0.12),
+    0 0 0 1px hsl(var(--lume-gold) / 0.10),
+    inset 0 1px 0 hsl(0 0% 100% / 0.42);
+}
+
+.research-nav-node-clicked {
+  animation: research-node-confirm 420ms ease-out both;
 }
 
 .hero-query-panel {
@@ -584,6 +600,20 @@ a {
 
   100% {
     transform: translateX(220%);
+  }
+}
+
+@keyframes research-node-confirm {
+  0% {
+    transform: scale(1);
+  }
+
+  42% {
+    transform: scale(1.065);
+  }
+
+  100% {
+    transform: scale(1);
   }
 }
 

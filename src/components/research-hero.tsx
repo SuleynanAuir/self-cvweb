@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { type CSSProperties, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import {
@@ -172,7 +172,9 @@ const researchMapNodes = [
     eyebrow: "Core",
     description: "Reasoning, memory, action",
     x: 50,
-    y: 50,
+    y: 18,
+    mobileX: 50,
+    mobileY: 10,
     layer: "core",
     tone: "research-map-node-core",
   },
@@ -181,8 +183,10 @@ const researchMapNodes = [
     label: "Foundation Models",
     eyebrow: "Primary",
     description: "Pretraining, adaptation, alignment",
-    x: 48,
-    y: 20,
+    x: 24,
+    y: 43,
+    mobileX: 32,
+    mobileY: 26,
     layer: "primary",
     tone: "research-map-node-gold",
   },
@@ -191,8 +195,10 @@ const researchMapNodes = [
     label: "LLM Agents",
     eyebrow: "Primary",
     description: "Planning, tools, memory, search",
-    x: 30,
+    x: 42,
     y: 43,
+    mobileX: 68,
+    mobileY: 26,
     layer: "primary",
     tone: "research-map-node-green",
   },
@@ -201,8 +207,10 @@ const researchMapNodes = [
     label: "Multi-Agent Systems",
     eyebrow: "Primary",
     description: "Collaboration and reflection",
-    x: 31,
-    y: 61,
+    x: 42,
+    y: 72,
+    mobileX: 32,
+    mobileY: 61,
     layer: "primary",
     tone: "research-map-node-green",
   },
@@ -211,8 +219,10 @@ const researchMapNodes = [
     label: "Knowledge Intelligence",
     eyebrow: "Primary",
     description: "Retrieval, evidence, memory",
-    x: 70,
-    y: 40,
+    x: 58,
+    y: 43,
+    mobileX: 32,
+    mobileY: 43,
     layer: "primary",
     tone: "research-map-node-mist",
   },
@@ -221,8 +231,10 @@ const researchMapNodes = [
     label: "AI for Science",
     eyebrow: "Primary",
     description: "Scientific discovery systems",
-    x: 50,
-    y: 74,
+    x: 76,
+    y: 43,
+    mobileX: 68,
+    mobileY: 43,
     layer: "primary",
     tone: "research-map-node-gold",
   },
@@ -231,8 +243,10 @@ const researchMapNodes = [
     label: "Machine Learning",
     eyebrow: "Base",
     description: "Classical learning foundations",
-    x: 18,
-    y: 82,
+    x: 13,
+    y: 72,
+    mobileX: 20,
+    mobileY: 80,
     layer: "base",
     tone: "research-map-node-base",
   },
@@ -241,8 +255,10 @@ const researchMapNodes = [
     label: "Deep Learning",
     eyebrow: "Base",
     description: "Neural representation learning",
-    x: 36,
-    y: 82,
+    x: 28,
+    y: 72,
+    mobileX: 40,
+    mobileY: 80,
     layer: "base",
     tone: "research-map-node-base",
   },
@@ -251,8 +267,10 @@ const researchMapNodes = [
     label: "Computer Vision",
     eyebrow: "Base",
     description: "Visual-language understanding",
-    x: 64,
-    y: 82,
+    x: 72,
+    y: 72,
+    mobileX: 60,
+    mobileY: 80,
     layer: "base",
     tone: "research-map-node-base",
   },
@@ -261,8 +279,10 @@ const researchMapNodes = [
     label: "Reinforcement Learning",
     eyebrow: "Base",
     description: "Reward-driven behavior",
-    x: 82,
-    y: 82,
+    x: 87,
+    y: 72,
+    mobileX: 80,
+    mobileY: 80,
     layer: "base",
     tone: "research-map-node-base",
   },
@@ -271,12 +291,41 @@ const researchMapNodes = [
     label: "GraphRAG",
     eyebrow: "Method",
     description: "Graph-grounded reasoning",
-    x: 70,
-    y: 61,
+    x: 58,
+    y: 72,
+    mobileX: 68,
+    mobileY: 61,
     layer: "method",
     tone: "research-map-node-method",
   },
 ] as const;
+
+type ResearchMapNodeId = (typeof researchMapNodes)[number]["id"];
+
+const researchMapTreeEdges = [
+  ["systems", "foundation"],
+  ["systems", "agents"],
+  ["systems", "knowledge"],
+  ["systems", "science"],
+  ["foundation", "ml"],
+  ["foundation", "deep"],
+  ["agents", "multi"],
+  ["knowledge", "graphrag"],
+  ["science", "cv"],
+  ["science", "rl"],
+] as const satisfies ReadonlyArray<readonly [ResearchMapNodeId, ResearchMapNodeId]>;
+
+const researchMapNodeById = new Map<ResearchMapNodeId, (typeof researchMapNodes)[number]>(
+  researchMapNodes.map((node) => [node.id, node]),
+);
+
+function getResearchMapTreePath([from, to]: readonly [ResearchMapNodeId, ResearchMapNodeId]) {
+  const start = researchMapNodeById.get(from)!;
+  const end = researchMapNodeById.get(to)!;
+  const midY = (start.y + end.y) / 2;
+
+  return `M ${start.x} ${start.y} C ${start.x} ${midY} ${end.x} ${midY} ${end.x} ${end.y}`;
+}
 
 const particles = [
   { left: "17%", top: "35%", delay: 0 },
@@ -805,6 +854,37 @@ export function ResearchMapSection() {
           className="material-card video-fused-panel relative min-h-[780px] overflow-hidden rounded-[36px] p-3 md:p-6"
         >
           <div className="graph-stage relative h-[720px] overflow-hidden rounded-[30px] border border-white/10">
+            <svg
+              className="pointer-events-none absolute inset-0 z-10 hidden h-full w-full md:block"
+              viewBox="0 0 100 100"
+              preserveAspectRatio="none"
+              role="presentation"
+            >
+              <defs>
+                <linearGradient id="researchMapTreeGradient" x1="0%" x2="100%" y1="0%" y2="100%">
+                  <stop offset="0%" stopColor="hsl(var(--green))" stopOpacity="0.18" />
+                  <stop offset="52%" stopColor="hsl(var(--amber))" stopOpacity="0.28" />
+                  <stop offset="100%" stopColor="hsl(var(--green))" stopOpacity="0.16" />
+                </linearGradient>
+              </defs>
+
+              {researchMapTreeEdges.map((edge, index) => (
+                <motion.path
+                  key={`${edge[0]}-${edge[1]}`}
+                  d={getResearchMapTreePath(edge)}
+                  fill="none"
+                  stroke="url(#researchMapTreeGradient)"
+                  strokeLinecap="round"
+                  strokeWidth="1.25"
+                  vectorEffect="non-scaling-stroke"
+                  initial={{ pathLength: 0, opacity: 0 }}
+                  whileInView={{ pathLength: 1, opacity: 1 }}
+                  viewport={{ once: true, amount: 0.35 }}
+                  transition={{ delay: 0.18 + index * 0.045, duration: 0.72, ease: [0.22, 1, 0.36, 1] }}
+                />
+              ))}
+            </svg>
+
             {particles.map((particle) => (
               <motion.span
                 key={`${particle.left}-${particle.top}`}
@@ -826,8 +906,16 @@ export function ResearchMapSection() {
                   scale: { delay: 0.18 + index * 0.08, duration: 0.36 },
                   y: { delay: 0.18 + index * 0.08, duration: 0.36 },
                 }}
-                className="absolute z-20"
-                style={{ left: `${node.x}%`, top: `${node.y}%`, transform: "translate(-50%, -50%)" }}
+                className="absolute left-[var(--map-mobile-x)] top-[var(--map-mobile-y)] z-20 md:left-[var(--map-x)] md:top-[var(--map-y)]"
+                style={
+                  {
+                    "--map-x": `${node.x}%`,
+                    "--map-y": `${node.y}%`,
+                    "--map-mobile-x": `${node.mobileX}%`,
+                    "--map-mobile-y": `${node.mobileY}%`,
+                    transform: "translate(-50%, -50%)",
+                  } as CSSProperties
+                }
               >
                 <div
                   className={[
@@ -838,8 +926,8 @@ export function ResearchMapSection() {
                       : node.layer === "primary"
                         ? "h-20 w-20 px-2 sm:h-[8.5rem] sm:w-[8.5rem] sm:px-4"
                         : node.layer === "method"
-                          ? "h-16 w-16 px-1.5 sm:h-[6.5rem] sm:w-[6.5rem] sm:px-3"
-                          : "h-16 w-16 px-1 sm:h-[6.5rem] sm:w-[6.5rem] sm:px-3",
+                          ? "h-14 w-14 px-1.5 sm:h-[6.5rem] sm:w-[6.5rem] sm:px-3"
+                          : "h-14 w-14 px-1 sm:h-[6.5rem] sm:w-[6.5rem] sm:px-3",
                     node.tone,
                   ].join(" ")}
                 >

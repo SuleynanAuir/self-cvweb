@@ -172,7 +172,7 @@ const researchMapNodes = [
     eyebrow: "Core",
     description: "Reasoning, memory, action",
     x: 50,
-    y: 18,
+    y: 14,
     mobileX: 50,
     mobileY: 10,
     layer: "core",
@@ -183,8 +183,8 @@ const researchMapNodes = [
     label: "Foundation Models",
     eyebrow: "Primary",
     description: "Pretraining, adaptation, alignment",
-    x: 24,
-    y: 43,
+    x: 18,
+    y: 39,
     mobileX: 32,
     mobileY: 26,
     layer: "primary",
@@ -195,8 +195,8 @@ const researchMapNodes = [
     label: "LLM Agents",
     eyebrow: "Primary",
     description: "Planning, tools, memory, search",
-    x: 42,
-    y: 43,
+    x: 39,
+    y: 39,
     mobileX: 68,
     mobileY: 26,
     layer: "primary",
@@ -207,8 +207,8 @@ const researchMapNodes = [
     label: "Multi-Agent Systems",
     eyebrow: "Primary",
     description: "Collaboration and reflection",
-    x: 42,
-    y: 72,
+    x: 39,
+    y: 67,
     mobileX: 32,
     mobileY: 61,
     layer: "primary",
@@ -219,8 +219,8 @@ const researchMapNodes = [
     label: "Knowledge Intelligence",
     eyebrow: "Primary",
     description: "Retrieval, evidence, memory",
-    x: 58,
-    y: 43,
+    x: 61,
+    y: 39,
     mobileX: 32,
     mobileY: 43,
     layer: "primary",
@@ -231,8 +231,8 @@ const researchMapNodes = [
     label: "AI for Science",
     eyebrow: "Primary",
     description: "Scientific discovery systems",
-    x: 76,
-    y: 43,
+    x: 82,
+    y: 39,
     mobileX: 68,
     mobileY: 43,
     layer: "primary",
@@ -243,8 +243,8 @@ const researchMapNodes = [
     label: "Machine Learning",
     eyebrow: "Base",
     description: "Classical learning foundations",
-    x: 13,
-    y: 72,
+    x: 11,
+    y: 67,
     mobileX: 20,
     mobileY: 80,
     layer: "base",
@@ -255,8 +255,8 @@ const researchMapNodes = [
     label: "Deep Learning",
     eyebrow: "Base",
     description: "Neural representation learning",
-    x: 28,
-    y: 72,
+    x: 25,
+    y: 67,
     mobileX: 40,
     mobileY: 80,
     layer: "base",
@@ -267,8 +267,8 @@ const researchMapNodes = [
     label: "Computer Vision",
     eyebrow: "Base",
     description: "Visual-language understanding",
-    x: 72,
-    y: 72,
+    x: 75,
+    y: 67,
     mobileX: 60,
     mobileY: 80,
     layer: "base",
@@ -279,8 +279,8 @@ const researchMapNodes = [
     label: "Reinforcement Learning",
     eyebrow: "Base",
     description: "Reward-driven behavior",
-    x: 87,
-    y: 72,
+    x: 89,
+    y: 67,
     mobileX: 80,
     mobileY: 80,
     layer: "base",
@@ -291,8 +291,8 @@ const researchMapNodes = [
     label: "GraphRAG",
     eyebrow: "Method",
     description: "Graph-grounded reasoning",
-    x: 58,
-    y: 72,
+    x: 61,
+    y: 67,
     mobileX: 68,
     mobileY: 61,
     layer: "method",
@@ -322,9 +322,11 @@ const researchMapNodeById = new Map<ResearchMapNodeId, (typeof researchMapNodes)
 function getResearchMapTreePath([from, to]: readonly [ResearchMapNodeId, ResearchMapNodeId]) {
   const start = researchMapNodeById.get(from)!;
   const end = researchMapNodeById.get(to)!;
-  const midY = (start.y + end.y) / 2;
+  const startY = start.y + (start.layer === "core" ? 6.4 : 5.8);
+  const endY = end.y - (end.layer === "primary" ? 6 : 4.8);
+  const midY = (startY + endY) / 2;
 
-  return `M ${start.x} ${start.y} C ${start.x} ${midY} ${end.x} ${midY} ${end.x} ${end.y}`;
+  return `M ${start.x} ${startY} C ${start.x} ${midY} ${end.x} ${midY} ${end.x} ${endY}`;
 }
 
 const particles = [
@@ -862,10 +864,21 @@ export function ResearchMapSection() {
             >
               <defs>
                 <linearGradient id="researchMapTreeGradient" x1="0%" x2="100%" y1="0%" y2="100%">
-                  <stop offset="0%" stopColor="hsl(var(--green))" stopOpacity="0.18" />
-                  <stop offset="52%" stopColor="hsl(var(--amber))" stopOpacity="0.28" />
-                  <stop offset="100%" stopColor="hsl(var(--green))" stopOpacity="0.16" />
+                  <stop offset="0%" stopColor="hsl(var(--foreground))" stopOpacity="0.34" />
+                  <stop offset="52%" stopColor="hsl(var(--amber))" stopOpacity="0.42" />
+                  <stop offset="100%" stopColor="hsl(var(--foreground))" stopOpacity="0.30" />
                 </linearGradient>
+                <marker
+                  id="researchMapArrow"
+                  markerHeight="9"
+                  markerWidth="9"
+                  orient="auto"
+                  refX="7"
+                  refY="4.5"
+                  viewBox="0 0 9 9"
+                >
+                  <path d="M 0 0 L 9 4.5 L 0 9 z" fill="hsl(var(--foreground) / 0.42)" />
+                </marker>
               </defs>
 
               {researchMapTreeEdges.map((edge, index) => (
@@ -875,8 +888,9 @@ export function ResearchMapSection() {
                   fill="none"
                   stroke="url(#researchMapTreeGradient)"
                   strokeLinecap="round"
-                  strokeWidth="1.25"
+                  strokeWidth="1.6"
                   vectorEffect="non-scaling-stroke"
+                  markerEnd="url(#researchMapArrow)"
                   initial={{ pathLength: 0, opacity: 0 }}
                   whileInView={{ pathLength: 1, opacity: 1 }}
                   viewport={{ once: true, amount: 0.35 }}
@@ -919,15 +933,15 @@ export function ResearchMapSection() {
               >
                 <div
                   className={[
-                    "research-map-node luminous-node group flex flex-col items-center justify-center rounded-full border px-4 text-center shadow-sm backdrop-blur-xl",
+                    "research-map-node luminous-node group flex flex-col items-center justify-center border px-4 text-center shadow-sm backdrop-blur-xl",
                     "transition duration-300 hover:-translate-y-1 hover:scale-[1.035] hover:bg-surface/50 hover:shadow-material-sm",
                     node.layer === "core"
-                      ? "h-24 w-24 px-3 sm:h-[11rem] sm:w-[11rem] sm:px-5"
+                      ? "h-20 w-36 rounded-full px-4 sm:h-[6.5rem] sm:w-[18rem] sm:px-6"
                       : node.layer === "primary"
-                        ? "h-20 w-20 px-2 sm:h-[8.5rem] sm:w-[8.5rem] sm:px-4"
+                        ? "h-20 w-28 rounded-[22px] px-3 sm:h-[6.25rem] sm:w-[11.25rem] sm:px-5"
                         : node.layer === "method"
-                          ? "h-14 w-14 px-1.5 sm:h-[6.5rem] sm:w-[6.5rem] sm:px-3"
-                          : "h-14 w-14 px-1 sm:h-[6.5rem] sm:w-[6.5rem] sm:px-3",
+                          ? "h-14 w-24 rounded-[18px] px-2 sm:h-[4.5rem] sm:w-[8.5rem] sm:px-4"
+                          : "h-14 w-24 rounded-[18px] px-2 sm:h-[4.5rem] sm:w-[8.5rem] sm:px-4",
                     node.tone,
                   ].join(" ")}
                 >

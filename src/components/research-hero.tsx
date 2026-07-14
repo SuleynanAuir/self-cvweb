@@ -171,8 +171,8 @@ const researchMapNodes = [
     label: "AI Systems",
     eyebrow: "Core",
     description: "Reasoning, memory, action",
-    x: 52,
-    y: 52,
+    x: 50,
+    y: 50,
     layer: "core",
     tone: "research-map-node-core",
   },
@@ -181,8 +181,8 @@ const researchMapNodes = [
     label: "Foundation Models",
     eyebrow: "Primary",
     description: "Pretraining, adaptation, alignment",
-    x: 57,
-    y: 22,
+    x: 48,
+    y: 20,
     layer: "primary",
     tone: "research-map-node-gold",
   },
@@ -191,7 +191,7 @@ const researchMapNodes = [
     label: "LLM Agents",
     eyebrow: "Primary",
     description: "Planning, tools, memory, search",
-    x: 32,
+    x: 30,
     y: 43,
     layer: "primary",
     tone: "research-map-node-green",
@@ -201,8 +201,8 @@ const researchMapNodes = [
     label: "Multi-Agent Systems",
     eyebrow: "Primary",
     description: "Collaboration and reflection",
-    x: 34,
-    y: 72,
+    x: 31,
+    y: 61,
     layer: "primary",
     tone: "research-map-node-green",
   },
@@ -211,8 +211,8 @@ const researchMapNodes = [
     label: "Knowledge Intelligence",
     eyebrow: "Primary",
     description: "Retrieval, evidence, memory",
-    x: 74,
-    y: 42,
+    x: 70,
+    y: 40,
     layer: "primary",
     tone: "research-map-node-mist",
   },
@@ -221,8 +221,8 @@ const researchMapNodes = [
     label: "AI for Science",
     eyebrow: "Primary",
     description: "Scientific discovery systems",
-    x: 68,
-    y: 75,
+    x: 50,
+    y: 74,
     layer: "primary",
     tone: "research-map-node-gold",
   },
@@ -231,8 +231,8 @@ const researchMapNodes = [
     label: "Machine Learning",
     eyebrow: "Base",
     description: "Classical learning foundations",
-    x: 20,
-    y: 24,
+    x: 18,
+    y: 82,
     layer: "base",
     tone: "research-map-node-base",
   },
@@ -241,8 +241,8 @@ const researchMapNodes = [
     label: "Deep Learning",
     eyebrow: "Base",
     description: "Neural representation learning",
-    x: 39,
-    y: 22,
+    x: 36,
+    y: 82,
     layer: "base",
     tone: "research-map-node-base",
   },
@@ -251,8 +251,8 @@ const researchMapNodes = [
     label: "Computer Vision",
     eyebrow: "Base",
     description: "Visual-language understanding",
-    x: 86,
-    y: 28,
+    x: 64,
+    y: 82,
     layer: "base",
     tone: "research-map-node-base",
   },
@@ -261,8 +261,8 @@ const researchMapNodes = [
     label: "Reinforcement Learning",
     eyebrow: "Base",
     description: "Reward-driven behavior",
-    x: 21,
-    y: 78,
+    x: 82,
+    y: 82,
     layer: "base",
     tone: "research-map-node-base",
   },
@@ -271,8 +271,8 @@ const researchMapNodes = [
     label: "GraphRAG",
     eyebrow: "Method",
     description: "Graph-grounded reasoning",
-    x: 86,
-    y: 65,
+    x: 70,
+    y: 61,
     layer: "method",
     tone: "research-map-node-method",
   },
@@ -761,7 +761,7 @@ function EvolutionTimeline() {
 export function ResearchMapSection() {
   return (
     <section id="research-map" className="border-b border-white/10 bg-surface/10 backdrop-blur-sm">
-      <div className="mx-auto grid max-w-7xl gap-10 px-6 py-20 lg:grid-cols-[0.32fr_0.68fr] lg:items-center lg:px-8">
+      <div className="mx-auto grid max-w-[100rem] gap-10 px-6 py-20 lg:grid-cols-[0.28fr_0.72fr] lg:items-center lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -802,9 +802,9 @@ export function ResearchMapSection() {
           whileInView={{ opacity: 1, scale: 1, y: 0 }}
           viewport={{ once: true, amount: 0.18 }}
           transition={{ duration: 0.66, ease: [0.22, 1, 0.36, 1] }}
-          className="material-card video-fused-panel relative min-h-[620px] overflow-hidden rounded-[36px] p-3 md:p-5"
+          className="material-card video-fused-panel relative min-h-[780px] overflow-hidden rounded-[36px] p-3 md:p-6"
         >
-          <div className="graph-stage relative h-[580px] overflow-hidden rounded-[30px] border border-white/10">
+          <div className="graph-stage relative h-[720px] overflow-hidden rounded-[30px] border border-white/10">
             {particles.map((particle) => (
               <motion.span
                 key={`${particle.left}-${particle.top}`}
@@ -834,12 +834,12 @@ export function ResearchMapSection() {
                     "research-map-node luminous-node group flex flex-col items-center justify-center rounded-full border px-4 text-center shadow-sm backdrop-blur-xl",
                     "transition duration-300 hover:-translate-y-1 hover:scale-[1.035] hover:bg-surface/50 hover:shadow-material-sm",
                     node.layer === "core"
-                      ? "h-24 w-24 px-3 sm:h-40 sm:w-40 sm:px-5"
+                      ? "h-24 w-24 px-3 sm:h-[11rem] sm:w-[11rem] sm:px-5"
                       : node.layer === "primary"
-                        ? "h-20 w-20 px-2 sm:h-32 sm:w-32 sm:px-4"
+                        ? "h-20 w-20 px-2 sm:h-[8.5rem] sm:w-[8.5rem] sm:px-4"
                         : node.layer === "method"
-                          ? "h-16 w-16 px-1.5 sm:h-24 sm:w-24 sm:px-3"
-                          : "h-16 w-16 px-1 sm:h-28 sm:w-28 sm:px-3",
+                          ? "h-16 w-16 px-1.5 sm:h-[6.5rem] sm:w-[6.5rem] sm:px-3"
+                          : "h-16 w-16 px-1 sm:h-[6.5rem] sm:w-[6.5rem] sm:px-3",
                     node.tone,
                   ].join(" ")}
                 >

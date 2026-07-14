@@ -135,33 +135,33 @@ const timelineIcons = [Cpu, Database, Layers3, Bot, UsersRound, FlaskConical] as
 const evolutionStages = [
   {
     title: "Machine Learning",
-    description: "Learning patterns from data",
-    role: "Optimization, features, probabilistic baselines",
+    description: "Statistical learning from data",
+    keywords: ["Optimization", "Generalization"],
   },
   {
     title: "Deep Learning",
-    description: "Representation learning",
-    role: "Neural architectures and scalable perception",
+    description: "Neural representation at scale",
+    keywords: ["Architectures", "Perception"],
   },
   {
     title: "Foundation Models",
-    description: "Large-scale general intelligence",
-    role: "Pretraining, adaptation, alignment, evaluation",
+    description: "Pretrained models with transfer",
+    keywords: ["Pretraining", "Alignment"],
   },
   {
     title: "AI Agents",
-    description: "Reasoning and tool usage",
-    role: "Planning, memory, tool use, deep search",
+    description: "Reasoning with tools and memory",
+    keywords: ["Planning", "Tool use"],
   },
   {
     title: "Multi-Agent Systems",
-    description: "Collaborative intelligence",
-    role: "Coordination, reflection, simulation, feedback",
+    description: "Collaborative autonomous behavior",
+    keywords: ["Coordination", "Reflection"],
   },
   {
     title: "Scientific AI",
-    description: "Knowledge discovery",
-    role: "Evidence graphs, discovery, material intelligence",
+    description: "Evidence-driven discovery loops",
+    keywords: ["Hypothesis", "Discovery"],
   },
 ] as const;
 
@@ -709,7 +709,7 @@ function EvolutionTimeline() {
               >
                 <div
                   className={[
-                    "group flex min-h-[174px] flex-col rounded-[24px] border bg-surface/25 p-4 text-left shadow-sm backdrop-blur-xl transition duration-300 hover:-translate-y-1",
+                    "group flex h-full min-h-[206px] flex-col rounded-[24px] border bg-surface/25 p-4 text-left shadow-sm backdrop-blur-xl transition duration-300 hover:-translate-y-1",
                     active
                       ? "border-white/20 bg-accent-soft/30 text-accent shadow-material-sm"
                       : "border-white/10 text-muted-foreground hover:bg-surface/40 hover:shadow-material-sm",
@@ -729,14 +729,24 @@ function EvolutionTimeline() {
                     </div>
                   </div>
 
-                  <div className="mt-4 text-sm font-semibold leading-5 tracking-normal text-foreground">
+                  <div className="mt-4 flex min-h-10 items-end text-sm font-semibold leading-5 tracking-normal text-foreground">
                     {stage.title}
                   </div>
-                  <p className="mt-2 text-xs leading-5 text-muted-foreground">
+                  <p className="mt-2 min-h-10 text-xs leading-5 text-muted-foreground">
                     {stage.description}
                   </p>
-                  <div className="mt-auto pt-3 text-[0.68rem] font-semibold uppercase tracking-[0.12em] text-accent/90">
-                    {active ? "Current focus" : stage.role}
+                  <div className="mt-auto grid gap-2 pt-3">
+                    {stage.keywords.map((keyword) => (
+                      <span
+                        key={keyword}
+                        className={[
+                          "inline-flex min-h-7 items-center rounded-full border border-white/10 bg-surface/25 px-3 text-[0.64rem] font-semibold uppercase tracking-[0.10em]",
+                          active ? "text-accent" : "text-accent/85",
+                        ].join(" ")}
+                      >
+                        {keyword}
+                      </span>
+                    ))}
                   </div>
                 </div>
               </motion.div>

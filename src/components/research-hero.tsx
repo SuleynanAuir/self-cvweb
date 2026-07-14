@@ -170,8 +170,8 @@ const researchMapNodes = [
     id: "ai",
     label: "Artificial Intelligence",
     description: "System-level research trajectory",
-    x: 56,
-    y: 50,
+    x: 53,
+    y: 49,
     size: "large",
     tone: "bg-surface/50 text-foreground",
   },
@@ -179,8 +179,8 @@ const researchMapNodes = [
     id: "foundation",
     label: "Foundation Models",
     description: "Pretraining, adaptation, alignment",
-    x: 56,
-    y: 14,
+    x: 48,
+    y: 16,
     size: "medium",
     tone: "bg-amber/10 text-foreground",
   },
@@ -188,8 +188,8 @@ const researchMapNodes = [
     id: "agents",
     label: "LLM Agents",
     description: "Planning, tools, memory, search",
-    x: 33,
-    y: 36,
+    x: 30,
+    y: 37,
     size: "medium",
     tone: "bg-green/10 text-foreground",
   },
@@ -197,8 +197,8 @@ const researchMapNodes = [
     id: "multi",
     label: "Multi-Agent Systems",
     description: "Collaboration and reflection",
-    x: 73,
-    y: 59,
+    x: 75,
+    y: 58,
     size: "medium",
     tone: "bg-accent-soft/40 text-foreground",
   },
@@ -206,8 +206,8 @@ const researchMapNodes = [
     id: "knowledge",
     label: "Knowledge Intelligence",
     description: "Retrieval, evidence, memory",
-    x: 28,
-    y: 61,
+    x: 20,
+    y: 64,
     size: "medium",
     tone: "bg-cyan/10 text-foreground",
   },
@@ -215,7 +215,7 @@ const researchMapNodes = [
     id: "graphrag",
     label: "GraphRAG",
     description: "Graph-grounded reasoning",
-    x: 38,
+    x: 37,
     y: 82,
     size: "small",
     tone: "bg-surface/40 text-foreground",
@@ -224,8 +224,8 @@ const researchMapNodes = [
     id: "science",
     label: "AI for Science",
     description: "Scientific discovery systems",
-    x: 59,
-    y: 85,
+    x: 60,
+    y: 84,
     size: "medium",
     tone: "bg-accent-soft/40 text-foreground",
   },
@@ -233,7 +233,7 @@ const researchMapNodes = [
     id: "ml",
     label: "Machine Learning",
     description: "Classical learning foundations",
-    x: 18,
+    x: 15,
     y: 22,
     size: "small",
     tone: "bg-surface/40 text-foreground",
@@ -242,8 +242,8 @@ const researchMapNodes = [
     id: "cv",
     label: "Computer Vision",
     description: "Visual-language understanding",
-    x: 85,
-    y: 29,
+    x: 84,
+    y: 25,
     size: "small",
     tone: "bg-violet/10 text-foreground",
   },
@@ -251,32 +251,68 @@ const researchMapNodes = [
     id: "rl",
     label: "Reinforcement Learning",
     description: "Reward-driven behavior",
-    x: 86,
-    y: 76,
+    x: 83,
+    y: 79,
     size: "small",
     tone: "bg-amber/10 text-foreground",
   },
 ] as const;
 
 const researchMapEdges = [
-  ["ai", "foundation"],
+  ["ml", "foundation"],
   ["foundation", "agents"],
+  ["foundation", "cv"],
+  ["agents", "ai"],
+  ["agents", "knowledge"],
   ["agents", "multi"],
-  ["multi", "knowledge"],
   ["knowledge", "graphrag"],
   ["graphrag", "science"],
-  ["ai", "ml"],
+  ["ai", "foundation"],
+  ["ai", "multi"],
+  ["ai", "science"],
   ["ai", "cv"],
   ["ai", "rl"],
+  ["multi", "rl"],
 ] as const;
 
 const particles = [
-  { left: "13%", top: "28%", delay: 0 },
-  { left: "30%", top: "76%", delay: 0.6 },
-  { left: "68%", top: "23%", delay: 1.1 },
-  { left: "84%", top: "66%", delay: 1.7 },
-  { left: "47%", top: "34%", delay: 2.1 },
+  { left: "12%", top: "34%", delay: 0 },
+  { left: "24%", top: "78%", delay: 0.6 },
+  { left: "43%", top: "30%", delay: 1.1 },
+  { left: "68%", top: "22%", delay: 1.7 },
+  { left: "88%", top: "64%", delay: 2.1 },
+  { left: "55%", top: "71%", delay: 2.6 },
+  { left: "76%", top: "43%", delay: 3.1 },
 ] as const;
+
+type ResearchMapNode = (typeof researchMapNodes)[number];
+
+function getResearchMapNodeRadius(node: ResearchMapNode) {
+  if (node.size === "large") {
+    return 8.8;
+  }
+
+  if (node.size === "medium") {
+    return 7.5;
+  }
+
+  return 6.4;
+}
+
+function getResearchMapLine(start: ResearchMapNode, end: ResearchMapNode) {
+  const dx = end.x - start.x;
+  const dy = end.y - start.y;
+  const distance = Math.max(Math.hypot(dx, dy), 0.001);
+  const startRadius = getResearchMapNodeRadius(start);
+  const endRadius = getResearchMapNodeRadius(end);
+
+  return {
+    x1: start.x + (dx / distance) * startRadius,
+    y1: start.y + (dy / distance) * startRadius,
+    x2: end.x - (dx / distance) * endRadius,
+    y2: end.y - (dy / distance) * endRadius,
+  };
+}
 
 export function ResearchHero() {
   return (
@@ -744,7 +780,7 @@ function EvolutionTimeline() {
 export function ResearchMapSection() {
   return (
     <section id="research-map" className="border-b border-white/10 bg-surface/10 backdrop-blur-sm">
-      <div className="mx-auto grid max-w-7xl gap-10 px-6 py-20 lg:grid-cols-[0.36fr_0.64fr] lg:items-center lg:px-8">
+      <div className="mx-auto grid max-w-7xl gap-10 px-6 py-20 lg:grid-cols-[0.34fr_0.66fr] lg:items-center lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -785,9 +821,9 @@ export function ResearchMapSection() {
           whileInView={{ opacity: 1, scale: 1, y: 0 }}
           viewport={{ once: true, amount: 0.18 }}
           transition={{ duration: 0.66, ease: [0.22, 1, 0.36, 1] }}
-          className="material-card video-fused-panel relative min-h-[560px] overflow-hidden rounded-[36px] p-4 md:p-6"
+          className="material-card video-fused-panel relative min-h-[620px] overflow-hidden rounded-[36px] p-3 md:p-5"
         >
-          <div className="graph-stage relative h-[520px] overflow-hidden rounded-[30px] border border-white/10">
+          <div className="graph-stage relative h-[580px] overflow-hidden rounded-[30px] border border-white/10">
             {particles.map((particle) => (
               <motion.span
                 key={`${particle.left}-${particle.top}`}
@@ -814,19 +850,21 @@ export function ResearchMapSection() {
                   return null;
                 }
 
+                const line = getResearchMapLine(start, end);
+
                 return (
                   <motion.line
                     key={`${from}-${to}`}
-                    x1={start.x}
-                    y1={start.y}
-                    x2={end.x}
-                    y2={end.y}
+                    x1={line.x1}
+                    y1={line.y1}
+                    x2={line.x2}
+                    y2={line.y2}
                     stroke="url(#researchMapGradient)"
-                    strokeWidth="0.7"
+                    strokeWidth="0.86"
                     strokeLinecap="round"
-                    strokeDasharray="5 7"
+                    strokeDasharray="7 8"
                     initial={{ opacity: 0, pathLength: 0 }}
-                    whileInView={{ opacity: 1, pathLength: 1 }}
+                    whileInView={{ opacity: 0.86, pathLength: 1 }}
                     viewport={{ once: true, amount: 0.4 }}
                     transition={{ delay: 0.22 + index * 0.08, duration: 0.72, ease: "easeOut" }}
                     className="animate-edge-flow"
@@ -841,11 +879,10 @@ export function ResearchMapSection() {
                 initial={{ opacity: 0, scale: 0.88, y: 12 }}
                 whileInView={{ opacity: 1, scale: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.4 }}
-                animate={{ y: node.id === "ai" ? [0, -5, 0] : [0, -3, 0] }}
                 transition={{
                   opacity: { delay: 0.18 + index * 0.08, duration: 0.36 },
                   scale: { delay: 0.18 + index * 0.08, duration: 0.36 },
-                  y: { duration: node.id === "ai" ? 5.4 : 6.4, repeat: Infinity, ease: "easeInOut" },
+                  y: { delay: 0.18 + index * 0.08, duration: 0.36 },
                 }}
                 className="absolute z-20"
                 style={{ left: `${node.x}%`, top: `${node.y}%`, transform: "translate(-50%, -50%)" }}
@@ -854,7 +891,7 @@ export function ResearchMapSection() {
                   className={[
                     "luminous-node grid place-items-center rounded-[28px] border px-4 text-center shadow-sm backdrop-blur-xl",
                     "group transition duration-300 hover:-translate-y-1 hover:bg-surface/50 hover:shadow-material-sm",
-                    node.size === "large" ? "min-h-24 w-48" : node.size === "medium" ? "min-h-20 w-40" : "min-h-16 w-32",
+                    node.size === "large" ? "min-h-24 w-52" : node.size === "medium" ? "min-h-20 w-44" : "min-h-16 w-36",
                     node.tone,
                   ].join(" ")}
                 >

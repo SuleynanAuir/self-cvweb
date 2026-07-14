@@ -183,7 +183,7 @@ const researchMapNodes = [
     label: "Foundation Models",
     eyebrow: "Primary",
     description: "Pretraining, adaptation, alignment",
-    x: 18,
+    x: 20,
     y: 39,
     mobileX: 32,
     mobileY: 26,
@@ -195,7 +195,7 @@ const researchMapNodes = [
     label: "LLM Agents",
     eyebrow: "Primary",
     description: "Planning, tools, memory, search",
-    x: 39,
+    x: 40,
     y: 39,
     mobileX: 68,
     mobileY: 26,
@@ -207,8 +207,8 @@ const researchMapNodes = [
     label: "Multi-Agent Systems",
     eyebrow: "Primary",
     description: "Collaboration and reflection",
-    x: 39,
-    y: 67,
+    x: 40,
+    y: 68,
     mobileX: 32,
     mobileY: 61,
     layer: "primary",
@@ -219,7 +219,7 @@ const researchMapNodes = [
     label: "Knowledge Intelligence",
     eyebrow: "Primary",
     description: "Retrieval, evidence, memory",
-    x: 61,
+    x: 60,
     y: 39,
     mobileX: 32,
     mobileY: 43,
@@ -231,7 +231,7 @@ const researchMapNodes = [
     label: "AI for Science",
     eyebrow: "Primary",
     description: "Scientific discovery systems",
-    x: 82,
+    x: 80,
     y: 39,
     mobileX: 68,
     mobileY: 43,
@@ -243,8 +243,8 @@ const researchMapNodes = [
     label: "Machine Learning",
     eyebrow: "Base",
     description: "Classical learning foundations",
-    x: 11,
-    y: 67,
+    x: 13,
+    y: 68,
     mobileX: 20,
     mobileY: 80,
     layer: "base",
@@ -255,8 +255,8 @@ const researchMapNodes = [
     label: "Deep Learning",
     eyebrow: "Base",
     description: "Neural representation learning",
-    x: 25,
-    y: 67,
+    x: 27,
+    y: 68,
     mobileX: 40,
     mobileY: 80,
     layer: "base",
@@ -267,8 +267,8 @@ const researchMapNodes = [
     label: "Computer Vision",
     eyebrow: "Base",
     description: "Visual-language understanding",
-    x: 75,
-    y: 67,
+    x: 74,
+    y: 68,
     mobileX: 60,
     mobileY: 80,
     layer: "base",
@@ -279,8 +279,8 @@ const researchMapNodes = [
     label: "Reinforcement Learning",
     eyebrow: "Base",
     description: "Reward-driven behavior",
-    x: 89,
-    y: 67,
+    x: 86,
+    y: 68,
     mobileX: 80,
     mobileY: 80,
     layer: "base",
@@ -291,8 +291,8 @@ const researchMapNodes = [
     label: "GraphRAG",
     eyebrow: "Method",
     description: "Graph-grounded reasoning",
-    x: 61,
-    y: 67,
+    x: 60,
+    y: 68,
     mobileX: 68,
     mobileY: 61,
     layer: "method",
@@ -324,9 +324,9 @@ function getResearchMapTreePath([from, to]: readonly [ResearchMapNodeId, Researc
   const end = researchMapNodeById.get(to)!;
   const startY = start.y + (start.layer === "core" ? 6.4 : 5.8);
   const endY = end.y - (end.layer === "primary" ? 6 : 4.8);
-  const midY = (startY + endY) / 2;
+  const junctionY = start.layer === "core" ? 28 : 54;
 
-  return `M ${start.x} ${startY} C ${start.x} ${midY} ${end.x} ${midY} ${end.x} ${endY}`;
+  return `M ${start.x} ${startY} C ${start.x} ${junctionY} ${end.x} ${junctionY} ${end.x} ${endY}`;
 }
 
 const particles = [
@@ -881,6 +881,29 @@ export function ResearchMapSection() {
                 </marker>
               </defs>
 
+              <line
+                x1="12"
+                y1="39"
+                x2="88"
+                y2="39"
+                stroke="hsl(var(--foreground) / 0.10)"
+                strokeDasharray="4 8"
+                strokeLinecap="round"
+                strokeWidth="1"
+                vectorEffect="non-scaling-stroke"
+              />
+              <line
+                x1="12"
+                y1="68"
+                x2="88"
+                y2="68"
+                stroke="hsl(var(--foreground) / 0.08)"
+                strokeDasharray="4 8"
+                strokeLinecap="round"
+                strokeWidth="1"
+                vectorEffect="non-scaling-stroke"
+              />
+
               {researchMapTreeEdges.map((edge, index) => (
                 <motion.path
                   key={`${edge[0]}-${edge[1]}`}
@@ -902,7 +925,7 @@ export function ResearchMapSection() {
             {particles.map((particle) => (
               <motion.span
                 key={`${particle.left}-${particle.top}`}
-                className="absolute z-10 h-1.5 w-1.5 rounded-full bg-accent/40 shadow-[0_8px_18px_rgba(72,56,31,0.14)]"
+                className="absolute z-10 h-1 w-1 rounded-full bg-accent/25 shadow-[0_8px_18px_rgba(72,56,31,0.10)]"
                 style={{ left: particle.left, top: particle.top }}
                 animate={{ opacity: [0.25, 0.85, 0.25], y: [0, -10, 0], scale: [1, 1.35, 1] }}
                 transition={{ duration: 4.8, delay: particle.delay, repeat: Infinity, ease: "easeInOut" }}
@@ -936,12 +959,12 @@ export function ResearchMapSection() {
                     "research-map-node luminous-node group flex flex-col items-center justify-center border px-4 text-center shadow-sm backdrop-blur-xl",
                     "transition duration-300 hover:-translate-y-1 hover:scale-[1.035] hover:bg-surface/50 hover:shadow-material-sm",
                     node.layer === "core"
-                      ? "h-20 w-36 rounded-full px-4 sm:h-[6.5rem] sm:w-[18rem] sm:px-6"
+                      ? "h-20 w-36 rounded-full px-4 sm:h-[6.5rem] sm:w-[17rem] sm:px-6"
                       : node.layer === "primary"
-                        ? "h-20 w-28 rounded-[22px] px-3 sm:h-[6.25rem] sm:w-[11.25rem] sm:px-5"
+                        ? "h-20 w-28 rounded-[22px] px-3 sm:h-[5.85rem] sm:w-[10rem] sm:px-4"
                         : node.layer === "method"
-                          ? "h-14 w-24 rounded-[18px] px-2 sm:h-[4.5rem] sm:w-[8.5rem] sm:px-4"
-                          : "h-14 w-24 rounded-[18px] px-2 sm:h-[4.5rem] sm:w-[8.5rem] sm:px-4",
+                          ? "h-14 w-24 rounded-[18px] px-2 sm:h-[4.35rem] sm:w-[7.5rem] sm:px-3"
+                          : "h-14 w-24 rounded-[18px] px-2 sm:h-[4.35rem] sm:w-[7.5rem] sm:px-3",
                     node.tone,
                   ].join(" ")}
                 >

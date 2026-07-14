@@ -167,136 +167,167 @@ const evolutionStages = [
 
 const researchMapNodes = [
   {
-    id: "ai",
-    label: "Artificial Intelligence",
-    description: "System-level research trajectory",
+    id: "systems",
+    label: "AI Systems",
+    eyebrow: "Core",
+    description: "Reasoning, memory, action",
     x: 53,
-    y: 49,
-    size: "large",
-    tone: "bg-surface/50 text-foreground",
+    y: 50,
+    radius: 9.8,
+    layer: "core",
+    tone: "research-map-node-core",
   },
   {
     id: "foundation",
     label: "Foundation Models",
+    eyebrow: "Primary",
     description: "Pretraining, adaptation, alignment",
-    x: 48,
-    y: 16,
-    size: "medium",
-    tone: "bg-amber/10 text-foreground",
+    x: 50,
+    y: 20,
+    radius: 8.2,
+    layer: "primary",
+    tone: "research-map-node-gold",
   },
   {
     id: "agents",
     label: "LLM Agents",
+    eyebrow: "Primary",
     description: "Planning, tools, memory, search",
     x: 30,
-    y: 37,
-    size: "medium",
-    tone: "bg-green/10 text-foreground",
+    y: 40,
+    radius: 8.0,
+    layer: "primary",
+    tone: "research-map-node-green",
   },
   {
     id: "multi",
     label: "Multi-Agent Systems",
+    eyebrow: "Primary",
     description: "Collaboration and reflection",
-    x: 75,
-    y: 58,
-    size: "medium",
-    tone: "bg-accent-soft/40 text-foreground",
+    x: 30,
+    y: 68,
+    radius: 8.0,
+    layer: "primary",
+    tone: "research-map-node-green",
   },
   {
     id: "knowledge",
     label: "Knowledge Intelligence",
+    eyebrow: "Primary",
     description: "Retrieval, evidence, memory",
-    x: 20,
-    y: 64,
-    size: "medium",
-    tone: "bg-cyan/10 text-foreground",
-  },
-  {
-    id: "graphrag",
-    label: "GraphRAG",
-    description: "Graph-grounded reasoning",
-    x: 37,
-    y: 82,
-    size: "small",
-    tone: "bg-surface/40 text-foreground",
+    x: 73,
+    y: 40,
+    radius: 8.0,
+    layer: "primary",
+    tone: "research-map-node-mist",
   },
   {
     id: "science",
     label: "AI for Science",
+    eyebrow: "Primary",
     description: "Scientific discovery systems",
-    x: 60,
-    y: 84,
-    size: "medium",
-    tone: "bg-accent-soft/40 text-foreground",
+    x: 73,
+    y: 68,
+    radius: 8.0,
+    layer: "primary",
+    tone: "research-map-node-gold",
   },
   {
     id: "ml",
     label: "Machine Learning",
+    eyebrow: "Base",
     description: "Classical learning foundations",
-    x: 15,
-    y: 22,
-    size: "small",
-    tone: "bg-surface/40 text-foreground",
+    x: 14,
+    y: 20,
+    radius: 6.1,
+    layer: "secondary",
+    tone: "research-map-node-base",
+  },
+  {
+    id: "deep",
+    label: "Deep Learning",
+    eyebrow: "Base",
+    description: "Neural representation learning",
+    x: 31,
+    y: 18,
+    radius: 6.1,
+    layer: "secondary",
+    tone: "research-map-node-base",
   },
   {
     id: "cv",
     label: "Computer Vision",
+    eyebrow: "Base",
     description: "Visual-language understanding",
-    x: 84,
-    y: 25,
-    size: "small",
-    tone: "bg-violet/10 text-foreground",
+    x: 86,
+    y: 21,
+    radius: 6.1,
+    layer: "secondary",
+    tone: "research-map-node-base",
   },
   {
     id: "rl",
     label: "Reinforcement Learning",
+    eyebrow: "Base",
     description: "Reward-driven behavior",
-    x: 83,
-    y: 79,
-    size: "small",
-    tone: "bg-amber/10 text-foreground",
+    x: 14,
+    y: 83,
+    radius: 6.1,
+    layer: "secondary",
+    tone: "research-map-node-base",
+  },
+  {
+    id: "graphrag",
+    label: "GraphRAG",
+    eyebrow: "Base",
+    description: "Graph-grounded reasoning",
+    x: 86,
+    y: 83,
+    radius: 6.1,
+    layer: "secondary",
+    tone: "research-map-node-base",
   },
 ] as const;
 
-const researchMapEdges = [
-  ["ml", "foundation"],
-  ["foundation", "agents"],
-  ["foundation", "cv"],
-  ["agents", "ai"],
-  ["agents", "knowledge"],
-  ["agents", "multi"],
-  ["knowledge", "graphrag"],
-  ["graphrag", "science"],
-  ["ai", "foundation"],
-  ["ai", "multi"],
-  ["ai", "science"],
-  ["ai", "cv"],
-  ["ai", "rl"],
-  ["multi", "rl"],
+type ResearchMapNode = (typeof researchMapNodes)[number];
+type ResearchMapNodeId = ResearchMapNode["id"];
+type ResearchMapEdgeKind = "evolution" | "branch" | "support";
+
+const researchMapEdges: readonly {
+  from: ResearchMapNodeId;
+  to: ResearchMapNodeId;
+  kind: ResearchMapEdgeKind;
+  curve?: number;
+}[] = [
+  { from: "ml", to: "deep", kind: "evolution", curve: 2.4 },
+  { from: "deep", to: "foundation", kind: "evolution", curve: 2.2 },
+  { from: "foundation", to: "agents", kind: "evolution", curve: -6.4 },
+  { from: "agents", to: "multi", kind: "evolution", curve: 3.6 },
+  { from: "multi", to: "science", kind: "evolution", curve: -5.8 },
+  { from: "systems", to: "foundation", kind: "branch" },
+  { from: "systems", to: "agents", kind: "branch" },
+  { from: "systems", to: "multi", kind: "branch" },
+  { from: "systems", to: "knowledge", kind: "branch" },
+  { from: "systems", to: "science", kind: "branch" },
+  { from: "knowledge", to: "graphrag", kind: "support", curve: 5.2 },
+  { from: "graphrag", to: "science", kind: "support", curve: 4.4 },
+  { from: "cv", to: "foundation", kind: "support", curve: -3.8 },
+  { from: "rl", to: "agents", kind: "support", curve: 4.8 },
 ] as const;
 
 const particles = [
-  { left: "12%", top: "34%", delay: 0 },
-  { left: "24%", top: "78%", delay: 0.6 },
+  { left: "16%", top: "34%", delay: 0 },
+  { left: "26%", top: "76%", delay: 0.6 },
   { left: "43%", top: "30%", delay: 1.1 },
-  { left: "68%", top: "22%", delay: 1.7 },
-  { left: "88%", top: "64%", delay: 2.1 },
-  { left: "55%", top: "71%", delay: 2.6 },
+  { left: "66%", top: "22%", delay: 1.7 },
+  { left: "88%", top: "63%", delay: 2.1 },
+  { left: "55%", top: "72%", delay: 2.6 },
   { left: "76%", top: "43%", delay: 3.1 },
+  { left: "50%", top: "50%", delay: 3.7 },
 ] as const;
 
-type ResearchMapNode = (typeof researchMapNodes)[number];
-
 function getResearchMapNodeRadius(node: ResearchMapNode) {
-  if (node.size === "large") {
-    return 8.8;
-  }
-
-  if (node.size === "medium") {
-    return 7.5;
-  }
-
-  return 6.4;
+  return node.radius;
 }
 
 function getResearchMapLine(start: ResearchMapNode, end: ResearchMapNode) {
@@ -312,6 +343,24 @@ function getResearchMapLine(start: ResearchMapNode, end: ResearchMapNode) {
     x2: end.x - (dx / distance) * endRadius,
     y2: end.y - (dy / distance) * endRadius,
   };
+}
+
+function getResearchMapPath(start: ResearchMapNode, end: ResearchMapNode, curve = 0) {
+  const line = getResearchMapLine(start, end);
+  const dx = line.x2 - line.x1;
+  const dy = line.y2 - line.y1;
+  const distance = Math.max(Math.hypot(dx, dy), 0.001);
+
+  if (Math.abs(curve) < 0.1) {
+    return `M ${line.x1} ${line.y1} L ${line.x2} ${line.y2}`;
+  }
+
+  const midX = (line.x1 + line.x2) / 2;
+  const midY = (line.y1 + line.y2) / 2;
+  const controlX = midX + (-dy / distance) * curve;
+  const controlY = midY + (dx / distance) * curve;
+
+  return `M ${line.x1} ${line.y1} Q ${controlX} ${controlY} ${line.x2} ${line.y2}`;
 }
 
 export function ResearchHero() {
@@ -791,21 +840,21 @@ export function ResearchMapSection() {
             Research Map
           </div>
           <h2 className="mt-5 max-w-md text-3xl font-semibold leading-tight tracking-normal text-foreground md:text-5xl">
-            A connected map of intelligent systems research.
+            A living map of AI systems evolution.
           </h2>
           <div className="mt-5 max-w-xl space-y-4 text-sm leading-7 text-muted-foreground md:text-base">
             <p>
-              The map organizes the research stack from machine learning foundations to foundation models, agentic reasoning, knowledge
-              retrieval, and scientific intelligence.
+              This landscape places AI Systems at the center, surrounded by the primary research branches that turn foundation models into
+              autonomous, knowledge-grounded, scientific intelligence.
             </p>
             <p>
-              Each node represents a reusable capability in an autonomous research workflow: models are adapted into agents, agents call
-              retrieval and graph memory, and evidence-grounded reasoning supports scientific QA, materials discovery, and long-horizon
-              experimentation.
+              The evolution flow moves from machine learning and deep representation learning toward foundation models, LLM agents,
+              multi-agent collaboration, and scientific AI. Secondary technologies provide the technical gravity for perception, control,
+              retrieval, and graph reasoning.
             </p>
           </div>
           <div className="mt-6 flex max-w-xl flex-wrap gap-2">
-            {["Model adaptation", "Agent planning", "Graph memory", "Scientific reasoning"].map((item) => (
+            {["ML -> DL", "Foundation models", "Agentic systems", "Scientific AI"].map((item) => (
               <span
                 key={item}
                 className="rounded-2xl border border-white/10 bg-surface/20 px-3 py-1.5 text-xs font-medium text-muted-foreground shadow-sm backdrop-blur-xl"
@@ -841,34 +890,59 @@ export function ResearchMapSection() {
                   <stop offset="52%" stopColor="hsl(var(--amber))" stopOpacity="0.48" />
                   <stop offset="100%" stopColor="hsl(var(--green))" stopOpacity="0.34" />
                 </linearGradient>
+                <linearGradient id="researchMapEvolutionGradient" x1="0%" x2="100%" y1="0%" y2="100%">
+                  <stop offset="0%" stopColor="hsl(var(--green))" stopOpacity="0.78" />
+                  <stop offset="48%" stopColor="hsl(var(--amber))" stopOpacity="0.86" />
+                  <stop offset="100%" stopColor="hsl(var(--green))" stopOpacity="0.70" />
+                </linearGradient>
+                <marker id="researchMapArrow" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+                  <path d="M 0 0 L 7 3.5 L 0 7 z" fill="hsl(var(--amber))" fillOpacity="0.72" />
+                </marker>
               </defs>
-              {researchMapEdges.map(([from, to], index) => {
-                const start = researchMapNodes.find((node) => node.id === from);
-                const end = researchMapNodes.find((node) => node.id === to);
+              <circle className="research-map-orbit" cx="53" cy="50" r="23" fill="none" stroke="hsl(var(--green) / 0.16)" strokeWidth="0.25" />
+              <circle className="research-map-orbit research-map-orbit-slow" cx="53" cy="50" r="39" fill="none" stroke="hsl(var(--amber) / 0.13)" strokeWidth="0.22" />
+
+              {researchMapEdges.map((edge, index) => {
+                const start = researchMapNodes.find((node) => node.id === edge.from);
+                const end = researchMapNodes.find((node) => node.id === edge.to);
 
                 if (!start || !end) {
                   return null;
                 }
 
-                const line = getResearchMapLine(start, end);
+                const path = getResearchMapPath(start, end, edge.curve);
+                const isEvolution = edge.kind === "evolution";
+                const isBranch = edge.kind === "branch";
 
                 return (
-                  <motion.line
-                    key={`${from}-${to}`}
-                    x1={line.x1}
-                    y1={line.y1}
-                    x2={line.x2}
-                    y2={line.y2}
-                    stroke="url(#researchMapGradient)"
-                    strokeWidth="0.86"
-                    strokeLinecap="round"
-                    strokeDasharray="7 8"
-                    initial={{ opacity: 0, pathLength: 0 }}
-                    whileInView={{ opacity: 0.86, pathLength: 1 }}
-                    viewport={{ once: true, amount: 0.4 }}
-                    transition={{ delay: 0.22 + index * 0.08, duration: 0.72, ease: "easeOut" }}
-                    className="animate-edge-flow"
-                  />
+                  <g key={`${edge.from}-${edge.to}`}>
+                    <motion.path
+                      d={path}
+                      fill="none"
+                      stroke={isEvolution ? "url(#researchMapEvolutionGradient)" : "url(#researchMapGradient)"}
+                      strokeWidth={isEvolution ? "0.88" : isBranch ? "0.42" : "0.58"}
+                      strokeLinecap="round"
+                      strokeDasharray={isEvolution ? "7 7" : isBranch ? "2 9" : "4 8"}
+                      markerEnd={isBranch ? undefined : "url(#researchMapArrow)"}
+                      initial={{ opacity: 0, pathLength: 0 }}
+                      whileInView={{ opacity: isEvolution ? 0.94 : isBranch ? 0.38 : 0.62, pathLength: 1 }}
+                      viewport={{ once: true, amount: 0.4 }}
+                      transition={{ delay: 0.18 + index * 0.055, duration: 0.72, ease: "easeOut" }}
+                    />
+                    <motion.path
+                      d={path}
+                      fill="none"
+                      stroke="hsl(0 0% 100% / 0.46)"
+                      strokeWidth={isEvolution ? "0.34" : "0.22"}
+                      strokeLinecap="round"
+                      strokeDasharray="1 12"
+                      initial={{ opacity: 0 }}
+                      whileInView={{ opacity: isEvolution ? 0.58 : 0.28 }}
+                      viewport={{ once: true, amount: 0.4 }}
+                      transition={{ delay: 0.3 + index * 0.04, duration: 0.4, ease: "easeOut" }}
+                      className="animate-edge-flow"
+                    />
+                  </g>
                 );
               })}
             </svg>
@@ -889,14 +963,22 @@ export function ResearchMapSection() {
               >
                 <div
                   className={[
-                    "luminous-node grid place-items-center rounded-[28px] border px-4 text-center shadow-sm backdrop-blur-xl",
-                    "group transition duration-300 hover:-translate-y-1 hover:bg-surface/50 hover:shadow-material-sm",
-                    node.size === "large" ? "min-h-24 w-52" : node.size === "medium" ? "min-h-20 w-44" : "min-h-16 w-36",
+                    "research-map-node luminous-node group grid place-items-center rounded-full border px-4 text-center shadow-sm backdrop-blur-xl",
+                    "transition duration-300 hover:-translate-y-1 hover:scale-[1.045] hover:bg-surface/50 hover:shadow-material-sm",
+                    node.layer === "core" ? "h-36 w-36" : node.layer === "primary" ? "h-28 w-28" : "h-24 w-24",
                     node.tone,
                   ].join(" ")}
                 >
-                  <div className="text-xs font-semibold leading-4">{node.label}</div>
-                  <div className="mt-1 max-h-0 overflow-hidden text-[0.62rem] leading-4 text-muted-foreground opacity-0 transition-all duration-300 group-hover:max-h-12 group-hover:opacity-100">
+                  <div className="text-[0.56rem] font-semibold uppercase tracking-[0.16em] text-accent/70">{node.eyebrow}</div>
+                  <div className={["mt-1 font-semibold leading-tight text-foreground", node.layer === "core" ? "text-lg" : node.layer === "primary" ? "text-[0.82rem]" : "text-[0.72rem]"].join(" ")}>
+                    {node.label}
+                  </div>
+                  <div
+                    className={[
+                      "mt-1 overflow-hidden text-[0.58rem] leading-3 text-muted-foreground transition-all duration-300",
+                      node.layer === "core" ? "max-h-10 opacity-100" : "max-h-0 opacity-0 group-hover:max-h-10 group-hover:opacity-100",
+                    ].join(" ")}
+                  >
                     {node.description}
                   </div>
                 </div>

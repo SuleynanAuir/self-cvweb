@@ -559,6 +559,68 @@ a {
   animation: none;
 }
 
+.research-map-orbit {
+  stroke-dasharray: 1.2 3.8;
+  animation: research-map-orbit-flow 24s linear infinite;
+}
+
+.research-map-orbit-slow {
+  animation-duration: 34s;
+  animation-direction: reverse;
+}
+
+.research-map-node {
+  animation: research-map-node-breathe 7.2s ease-in-out infinite;
+}
+
+.research-map-node-core {
+  border-color: hsl(var(--amber) / 0.16);
+  background:
+    radial-gradient(circle at 42% 22%, hsl(0 0% 100% / 0.62), transparent 44%),
+    radial-gradient(circle at 62% 76%, hsl(var(--green) / 0.13), transparent 48%),
+    linear-gradient(145deg, hsl(var(--surface) / 0.54), hsl(var(--lume-mist) / 0.18));
+  box-shadow:
+    0 22px 54px rgba(72, 56, 31, 0.13),
+    0 0 0 1px hsl(var(--amber) / 0.08),
+    0 0 54px hsl(var(--green) / 0.08),
+    inset 0 1px 0 hsl(0 0% 100% / 0.42);
+}
+
+.research-map-node-green {
+  border-color: hsl(var(--green) / 0.13);
+  background:
+    radial-gradient(circle at 36% 20%, hsl(0 0% 100% / 0.56), transparent 48%),
+    radial-gradient(circle at 70% 78%, hsl(var(--green) / 0.12), transparent 44%),
+    hsl(var(--surface) / 0.36);
+}
+
+.research-map-node-gold {
+  border-color: hsl(var(--amber) / 0.14);
+  background:
+    radial-gradient(circle at 36% 20%, hsl(0 0% 100% / 0.58), transparent 48%),
+    radial-gradient(circle at 68% 72%, hsl(var(--amber) / 0.13), transparent 44%),
+    hsl(var(--surface) / 0.38);
+}
+
+.research-map-node-mist {
+  border-color: hsl(var(--cyan) / 0.12);
+  background:
+    radial-gradient(circle at 36% 20%, hsl(0 0% 100% / 0.56), transparent 48%),
+    radial-gradient(circle at 68% 72%, hsl(var(--cyan) / 0.10), transparent 44%),
+    hsl(var(--surface) / 0.36);
+}
+
+.research-map-node-base {
+  border-color: hsl(0 0% 100% / 0.12);
+  background:
+    radial-gradient(circle at 36% 20%, hsl(0 0% 100% / 0.50), transparent 48%),
+    linear-gradient(145deg, hsl(var(--surface) / 0.38), hsl(var(--lume-mist) / 0.10));
+}
+
+.animate-edge-flow {
+  animation: research-map-edge-flow 4.8s linear infinite;
+}
+
 .site-page-shell :where(a, button).focus-ring:not(.material-button):is(.rounded-full, .rounded-2xl) {
   position: relative;
   overflow: hidden;
@@ -614,6 +676,37 @@ a {
 
   100% {
     transform: scale(1);
+  }
+}
+
+@keyframes research-map-node-breathe {
+  0%,
+  100% {
+    filter: brightness(1) saturate(1);
+  }
+
+  50% {
+    filter: brightness(1.045) saturate(1.04);
+  }
+}
+
+@keyframes research-map-edge-flow {
+  0% {
+    stroke-dashoffset: 0;
+  }
+
+  100% {
+    stroke-dashoffset: -48;
+  }
+}
+
+@keyframes research-map-orbit-flow {
+  0% {
+    stroke-dashoffset: 0;
+  }
+
+  100% {
+    stroke-dashoffset: -36;
   }
 }
 

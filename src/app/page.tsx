@@ -4,7 +4,7 @@ import {
   Github,
   Sparkles,
 } from "lucide-react";
-import { ResearchHero, ResearchMapSection } from "@/components/research-hero";
+import { ResearchHero } from "@/components/research-hero";
 import { ResearchProjectModules } from "@/components/research-project-modules";
 import { ScrollReveal } from "@/components/scroll-reveal";
 import { SectionHeading } from "@/components/section-heading";
@@ -29,7 +29,6 @@ export default function HomePage() {
     <>
       <ResearchHero />
       <ResearchVisionSection />
-      <ResearchMapSection />
 
       <section id="research-projects" className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
         <ScrollReveal>

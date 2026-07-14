@@ -1,10 +1,6 @@
 export const navigation = [
   { label: "Home", href: "/" },
   { label: "Projects", href: "/projects" },
-  { label: "Research Map", href: "/research-map" },
-  { label: "Agent Systems", href: "/agent-hub" },
-  { label: "Publications", href: "/papers" },
-  { label: "Notes", href: "/notes" },
   { label: "Contact", href: "/#contact" },
 ] as const;
 

@@ -170,8 +170,8 @@ const researchMapNodes = [
     id: "ai",
     label: "Artificial Intelligence",
     description: "System-level research trajectory",
-    x: 50,
-    y: 46,
+    x: 56,
+    y: 50,
     size: "large",
     tone: "bg-surface/50 text-foreground",
   },
@@ -179,8 +179,8 @@ const researchMapNodes = [
     id: "foundation",
     label: "Foundation Models",
     description: "Pretraining, adaptation, alignment",
-    x: 50,
-    y: 13,
+    x: 56,
+    y: 14,
     size: "medium",
     tone: "bg-amber/10 text-foreground",
   },
@@ -188,8 +188,8 @@ const researchMapNodes = [
     id: "agents",
     label: "LLM Agents",
     description: "Planning, tools, memory, search",
-    x: 50,
-    y: 30,
+    x: 33,
+    y: 36,
     size: "medium",
     tone: "bg-green/10 text-foreground",
   },
@@ -197,8 +197,8 @@ const researchMapNodes = [
     id: "multi",
     label: "Multi-Agent Systems",
     description: "Collaboration and reflection",
-    x: 50,
-    y: 64,
+    x: 73,
+    y: 59,
     size: "medium",
     tone: "bg-accent-soft/40 text-foreground",
   },
@@ -206,8 +206,8 @@ const researchMapNodes = [
     id: "knowledge",
     label: "Knowledge Intelligence",
     description: "Retrieval, evidence, memory",
-    x: 30,
-    y: 56,
+    x: 28,
+    y: 61,
     size: "medium",
     tone: "bg-cyan/10 text-foreground",
   },
@@ -215,8 +215,8 @@ const researchMapNodes = [
     id: "graphrag",
     label: "GraphRAG",
     description: "Graph-grounded reasoning",
-    x: 31,
-    y: 76,
+    x: 38,
+    y: 82,
     size: "small",
     tone: "bg-surface/40 text-foreground",
   },
@@ -224,8 +224,8 @@ const researchMapNodes = [
     id: "science",
     label: "AI for Science",
     description: "Scientific discovery systems",
-    x: 50,
-    y: 88,
+    x: 59,
+    y: 85,
     size: "medium",
     tone: "bg-accent-soft/40 text-foreground",
   },
@@ -233,8 +233,8 @@ const researchMapNodes = [
     id: "ml",
     label: "Machine Learning",
     description: "Classical learning foundations",
-    x: 22,
-    y: 24,
+    x: 18,
+    y: 22,
     size: "small",
     tone: "bg-surface/40 text-foreground",
   },
@@ -242,8 +242,8 @@ const researchMapNodes = [
     id: "cv",
     label: "Computer Vision",
     description: "Visual-language understanding",
-    x: 78,
-    y: 28,
+    x: 85,
+    y: 29,
     size: "small",
     tone: "bg-violet/10 text-foreground",
   },
@@ -251,8 +251,8 @@ const researchMapNodes = [
     id: "rl",
     label: "Reinforcement Learning",
     description: "Reward-driven behavior",
-    x: 78,
-    y: 70,
+    x: 86,
+    y: 76,
     size: "small",
     tone: "bg-amber/10 text-foreground",
   },
@@ -757,9 +757,27 @@ export function ResearchMapSection() {
           <h2 className="mt-5 max-w-md text-3xl font-semibold leading-tight tracking-normal text-foreground md:text-5xl">
             A connected map of intelligent systems research.
           </h2>
-          <p className="mt-5 max-w-md text-sm leading-7 text-muted-foreground md:text-base">
-            The map links foundation models, LLM agents, multi-agent systems, GraphRAG, and scientific AI into one evolving knowledge system.
-          </p>
+          <div className="mt-5 max-w-xl space-y-4 text-sm leading-7 text-muted-foreground md:text-base">
+            <p>
+              The map organizes the research stack from machine learning foundations to foundation models, agentic reasoning, knowledge
+              retrieval, and scientific intelligence.
+            </p>
+            <p>
+              Each node represents a reusable capability in an autonomous research workflow: models are adapted into agents, agents call
+              retrieval and graph memory, and evidence-grounded reasoning supports scientific QA, materials discovery, and long-horizon
+              experimentation.
+            </p>
+          </div>
+          <div className="mt-6 flex max-w-xl flex-wrap gap-2">
+            {["Model adaptation", "Agent planning", "Graph memory", "Scientific reasoning"].map((item) => (
+              <span
+                key={item}
+                className="rounded-2xl border border-white/10 bg-surface/20 px-3 py-1.5 text-xs font-medium text-muted-foreground shadow-sm backdrop-blur-xl"
+              >
+                {item}
+              </span>
+            ))}
+          </div>
         </motion.div>
 
         <motion.div

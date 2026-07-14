@@ -278,56 +278,12 @@ const researchMapNodes = [
   },
 ] as const;
 
-type ResearchMapNode = (typeof researchMapNodes)[number];
-type ResearchMapNodeId = ResearchMapNode["id"];
-type ResearchMapEdgeKind = "evolution" | "branch" | "method" | "support";
-
-const researchMapEdges: readonly {
-  from: ResearchMapNodeId;
-  to: ResearchMapNodeId;
-  kind: ResearchMapEdgeKind;
-  curve?: number;
-}[] = [
-  { from: "ml", to: "deep", kind: "evolution" },
-  { from: "deep", to: "foundation", kind: "evolution" },
-  { from: "foundation", to: "agents", kind: "evolution", curve: 3.4 },
-  { from: "agents", to: "multi", kind: "evolution" },
-  { from: "multi", to: "science", kind: "evolution", curve: -3.8 },
-  { from: "systems", to: "foundation", kind: "branch" },
-  { from: "systems", to: "agents", kind: "branch" },
-  { from: "systems", to: "multi", kind: "branch" },
-  { from: "systems", to: "knowledge", kind: "branch" },
-  { from: "systems", to: "science", kind: "branch" },
-  { from: "knowledge", to: "graphrag", kind: "method" },
-  { from: "knowledge", to: "science", kind: "method", curve: 2.4 },
-  { from: "graphrag", to: "science", kind: "support" },
-  { from: "cv", to: "foundation", kind: "support", curve: -2.4 },
-  { from: "rl", to: "agents", kind: "support", curve: 2.8 },
-] as const;
-
 const particles = [
   { left: "17%", top: "35%", delay: 0 },
   { left: "39%", top: "83%", delay: 1.1 },
   { left: "67%", top: "24%", delay: 2.1 },
   { left: "90%", top: "47%", delay: 3.1 },
 ] as const;
-
-function getResearchMapPath(start: ResearchMapNode, end: ResearchMapNode, curve = 0) {
-  const dx = end.x - start.x;
-  const dy = end.y - start.y;
-  const distance = Math.max(Math.hypot(dx, dy), 0.001);
-
-  if (Math.abs(curve) < 0.1) {
-    return `M ${start.x} ${start.y} L ${end.x} ${end.y}`;
-  }
-
-  const midX = (start.x + end.x) / 2;
-  const midY = (start.y + end.y) / 2;
-  const controlX = midX + (-dy / distance) * curve;
-  const controlY = midY + (dx / distance) * curve;
-
-  return `M ${start.x} ${start.y} Q ${controlX} ${controlY} ${end.x} ${end.y}`;
-}
 
 export function ResearchHero() {
   return (
@@ -805,8 +761,9 @@ export function ResearchMapSection() {
           <div className="inline-flex rounded-2xl border border-white/10 bg-accent-soft/40 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-accent backdrop-blur-xl">
             Research Map
           </div>
-          <h2 className="mt-5 max-w-md text-3xl font-semibold leading-tight tracking-normal text-foreground md:text-5xl">
-            A living map of AI systems evolution.
+          <h2 className="mt-5 max-w-lg text-3xl font-semibold leading-[1.12] tracking-normal text-foreground md:text-4xl">
+            <span className="block">A living map of</span>
+            <span className="block">AI systems evolution.</span>
           </h2>
           <div className="mt-5 max-w-xl space-y-4 text-sm leading-7 text-muted-foreground md:text-base">
             <p>
@@ -820,7 +777,7 @@ export function ResearchMapSection() {
             </p>
           </div>
           <div className="mt-6 flex max-w-xl flex-wrap gap-2">
-            {["ML -> DL", "Foundation models", "Agentic systems", "Scientific AI"].map((item) => (
+            {["Learning foundations", "Foundation models", "Agentic systems", "Scientific AI"].map((item) => (
               <span
                 key={item}
                 className="rounded-2xl border border-white/10 bg-surface/20 px-3 py-1.5 text-xs font-medium text-muted-foreground shadow-sm backdrop-blur-xl"
@@ -849,81 +806,6 @@ export function ResearchMapSection() {
               />
             ))}
 
-            <svg
-              className="absolute inset-0 h-full w-full"
-              viewBox="0 0 100 100"
-              preserveAspectRatio="none"
-              role="presentation"
-            >
-              <defs>
-                <linearGradient id="researchMapGradient" x1="0%" x2="100%" y1="0%" y2="100%">
-                  <stop offset="0%" stopColor="hsl(var(--green))" stopOpacity="0.36" />
-                  <stop offset="52%" stopColor="hsl(var(--amber))" stopOpacity="0.48" />
-                  <stop offset="100%" stopColor="hsl(var(--green))" stopOpacity="0.34" />
-                </linearGradient>
-                <linearGradient id="researchMapEvolutionGradient" x1="0%" x2="100%" y1="0%" y2="100%">
-                  <stop offset="0%" stopColor="hsl(var(--green))" stopOpacity="0.78" />
-                  <stop offset="48%" stopColor="hsl(var(--amber))" stopOpacity="0.86" />
-                  <stop offset="100%" stopColor="hsl(var(--green))" stopOpacity="0.70" />
-                </linearGradient>
-              </defs>
-              <circle
-                className="research-map-orbit"
-                cx="52"
-                cy="52"
-                r="27"
-                fill="none"
-                stroke="hsl(var(--green) / 0.12)"
-                strokeWidth="0.22"
-              />
-
-              {researchMapEdges.map((edge, index) => {
-                const start = researchMapNodes.find((node) => node.id === edge.from);
-                const end = researchMapNodes.find((node) => node.id === edge.to);
-
-                if (!start || !end) {
-                  return null;
-                }
-
-                const path = getResearchMapPath(start, end, edge.curve);
-                const isEvolution = edge.kind === "evolution";
-                const isBranch = edge.kind === "branch";
-                const isMethod = edge.kind === "method";
-
-                return (
-                  <g key={`${edge.from}-${edge.to}`}>
-                    <motion.path
-                      d={path}
-                      fill="none"
-                      stroke={isEvolution ? "url(#researchMapEvolutionGradient)" : "url(#researchMapGradient)"}
-                      strokeWidth={isEvolution ? "0.52" : isMethod ? "0.42" : "0.24"}
-                      strokeLinecap="round"
-                      strokeDasharray={edge.kind === "support" ? "1.2 3.2" : undefined}
-                      initial={{ opacity: 0, pathLength: 0 }}
-                      whileInView={{ opacity: isEvolution ? 0.64 : isMethod ? 0.48 : isBranch ? 0.2 : 0.26, pathLength: 1 }}
-                      viewport={{ once: true, amount: 0.4 }}
-                      transition={{ delay: 0.18 + index * 0.055, duration: 0.72, ease: "easeOut" }}
-                    />
-                    {(isEvolution || isMethod) && (
-                      <motion.path
-                        d={path}
-                        fill="none"
-                        stroke="hsl(0 0% 100% / 0.52)"
-                        strokeWidth="0.22"
-                        strokeLinecap="round"
-                        strokeDasharray="0.7 8"
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: isEvolution ? 0.42 : 0.3 }}
-                        viewport={{ once: true, amount: 0.4 }}
-                        transition={{ delay: 0.3 + index * 0.04, duration: 0.4, ease: "easeOut" }}
-                        className="animate-edge-flow"
-                      />
-                    )}
-                  </g>
-                );
-              })}
-            </svg>
-
             {researchMapNodes.map((node, index) => (
               <motion.div
                 key={node.id}
@@ -943,12 +825,12 @@ export function ResearchMapSection() {
                     "research-map-node luminous-node group grid place-items-center rounded-full border px-4 text-center shadow-sm backdrop-blur-xl",
                     "transition duration-300 hover:-translate-y-1 hover:scale-[1.035] hover:bg-surface/50 hover:shadow-material-sm",
                     node.layer === "core"
-                      ? "h-24 w-24 px-3 sm:h-36 sm:w-36 sm:px-4"
+                      ? "h-24 w-24 px-3 sm:h-40 sm:w-40 sm:px-5"
                       : node.layer === "primary"
-                        ? "h-20 w-20 px-2 sm:h-28 sm:w-28 sm:px-4"
+                        ? "h-20 w-20 px-2 sm:h-32 sm:w-32 sm:px-4"
                         : node.layer === "method"
-                          ? "h-16 w-16 px-1.5 sm:h-20 sm:w-20 sm:px-2"
-                          : "h-16 w-16 px-1 sm:h-20 sm:w-20 sm:px-2",
+                          ? "h-16 w-16 px-1.5 sm:h-24 sm:w-24 sm:px-3"
+                          : "h-16 w-16 px-1 sm:h-28 sm:w-28 sm:px-3",
                     node.tone,
                   ].join(" ")}
                 >

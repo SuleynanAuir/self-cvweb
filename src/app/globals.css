@@ -559,10 +559,6 @@ a {
   animation: none;
 }
 
-.research-map-orbit {
-  stroke-dasharray: 1 4.5;
-}
-
 .research-map-node {
   animation: research-map-node-breathe 8.4s ease-in-out infinite;
 }

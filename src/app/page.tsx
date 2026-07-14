@@ -1,23 +1,13 @@
 import Link from "next/link";
 import {
-  ArrowRight,
   ArrowUpRight,
-  BookOpen,
-  Bot,
-  Cpu,
-  Database,
-  FlaskConical,
   Github,
-  Layers3,
-  Network,
   Sparkles,
-  UsersRound,
 } from "lucide-react";
 import { ResearchHero, ResearchMapSection } from "@/components/research-hero";
 import { ResearchProjectModules } from "@/components/research-project-modules";
 import { ScrollReveal } from "@/components/scroll-reveal";
 import { SectionHeading } from "@/components/section-heading";
-import { technicalSkills } from "@/data/portfolio";
 
 const researchVision = [
   {
@@ -34,64 +24,11 @@ const researchVision = [
   },
 ] as const;
 
-const researchAreas = [
-  {
-    title: "Foundation Models",
-    body: "Fine-tuning, alignment, domain adaptation, compact assistants, and model evaluation.",
-    icon: Layers3,
-  },
-  {
-    title: "LLM Agents",
-    body: "Planning, tool use, memory, reflection, deep search, and autonomous task execution.",
-    icon: Bot,
-  },
-  {
-    title: "Multi-Agent Intelligence",
-    body: "Collaborative reasoning, simulation, role specialization, and coordination protocols.",
-    icon: UsersRound,
-  },
-  {
-    title: "Knowledge Intelligence",
-    body: "RAG, GraphRAG, knowledge graphs, evidence tracing, and graph-grounded QA.",
-    icon: Network,
-  },
-  {
-    title: "AI for Science",
-    body: "Scientific QA, material intelligence, forecasting, uncertainty, and discovery workflows.",
-    icon: FlaskConical,
-  },
-  {
-    title: "ML Foundations",
-    body: "Optimization, probabilistic reasoning, Bayesian fusion, and interpretable analytics.",
-    icon: Cpu,
-  },
-  {
-    title: "Multimodal Intelligence",
-    body: "OCR, vision-language understanding, restoration, multimodal safety, and perception.",
-    icon: Database,
-  },
-] as const;
-
-const labMetrics = [
-  { label: "Projects", value: "15+" },
-  { label: "Research Topics", value: "8" },
-  { label: "Open-source Systems", value: "10+" },
-] as const;
-
-const currentExploration = ["Agent self-improvement", "GraphRAG reasoning", "Scientific AI"];
-
-const focusTimeline = [
-  { time: "2025", title: "Foundation Models", body: "Fine-tuning, alignment, compact domain assistants" },
-  { time: "2026", title: "Agent Systems", body: "Deep search, tool use, multi-agent orchestration" },
-  { time: "Future", title: "Scientific Intelligence", body: "Evidence-grounded discovery and material knowledge systems" },
-] as const;
-
 export default function HomePage() {
   return (
     <>
       <ResearchHero />
       <ResearchVisionSection />
-      <ResearchAreasSection />
       <ResearchMapSection />
 
       <section id="research-projects" className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
@@ -104,37 +41,6 @@ export default function HomePage() {
         </ScrollReveal>
 
         <ResearchProjectModules />
-      </section>
-
-      <LabNotebookSection />
-
-      <section className="border-y border-white/10 bg-surface/10 backdrop-blur-sm">
-        <div className="mx-auto grid max-w-7xl gap-8 px-6 py-20 lg:grid-cols-[0.72fr_0.28fr] lg:items-center lg:px-8">
-          <ScrollReveal>
-            <div className="max-w-4xl">
-              <div className="inline-flex rounded-full border border-white/10 bg-accent-soft/40 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-accent">
-                Research Philosophy
-              </div>
-              <blockquote className="mt-6 text-3xl font-semibold leading-tight tracking-normal text-balance text-foreground md:text-5xl">
-                From algorithms to intelligent systems: building AI that can understand, reason, act, and continuously improve.
-              </blockquote>
-              <p className="mt-6 max-w-2xl text-base leading-8 text-muted-foreground">
-                The research direction is system-first: foundation models are treated as building blocks for agents, knowledge engines, scientific QA systems, and autonomous research workflows.
-              </p>
-            </div>
-          </ScrollReveal>
-
-          <ScrollReveal className="material-card p-5" delay={0.08} variant="scale">
-            <div className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">Technical Skills</div>
-            <div className="mt-5 flex flex-wrap gap-2">
-              {technicalSkills.map((skill) => (
-                <span key={skill} className="rounded-full border border-white/10 bg-surface/25 px-3 py-1.5 text-sm font-medium text-muted-foreground shadow-sm">
-                  {skill}
-                </span>
-              ))}
-            </div>
-          </ScrollReveal>
-        </div>
       </section>
 
       <section id="contact" className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
@@ -202,112 +108,6 @@ function ResearchVisionSection() {
               <p className="mt-3 text-sm leading-7 text-muted-foreground">{item.body}</p>
             </ScrollReveal>
           ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function ResearchAreasSection() {
-  return (
-    <section className="border-y border-white/10 bg-surface/10 backdrop-blur-sm">
-      <div className="mx-auto max-w-7xl px-6 py-20 lg:px-8">
-        <ScrollReveal>
-          <SectionHeading
-            eyebrow="Research Areas"
-            title="A connected research program for autonomous intelligence."
-            description="The areas are organized as a technical stack: foundations and perception feed models; models become agents; agents use knowledge systems; scientific AI converts evidence into discovery."
-          />
-        </ScrollReveal>
-
-        <div className="mt-12 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-          {researchAreas.map((area, index) => {
-            const Icon = area.icon;
-
-            return (
-              <ScrollReveal
-                key={area.title}
-                as="article"
-                className="project-card min-h-[190px] rounded-[28px] p-5"
-                delay={index * 0.035}
-                variant="scale"
-              >
-                <div className="flex items-start justify-between gap-4">
-                  <div className="grid h-11 w-11 place-items-center rounded-2xl border border-white/10 bg-surface/25 text-accent shadow-sm backdrop-blur-xl">
-                    <Icon className="h-5 w-5" />
-                  </div>
-                  <span className="text-xs font-semibold uppercase tracking-[0.16em] text-accent/80">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                </div>
-                <h3 className="mt-6 text-lg font-semibold tracking-normal text-foreground">{area.title}</h3>
-                <p className="mt-3 text-sm leading-6 text-muted-foreground">{area.body}</p>
-              </ScrollReveal>
-            );
-          })}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function LabNotebookSection() {
-  return (
-    <section className="mx-auto max-w-7xl px-6 pb-20 lg:px-8">
-      <div className="grid gap-6 lg:grid-cols-[0.43fr_0.57fr]">
-        <ScrollReveal className="material-card video-fused-panel p-6 md:p-8" variant="scale">
-          <div className="inline-flex items-center gap-2 rounded-2xl border border-white/10 bg-surface/25 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-accent">
-            <BookOpen className="h-4 w-4" />
-            Current Exploration
-          </div>
-          <h2 className="mt-6 text-3xl font-semibold tracking-normal text-foreground md:text-4xl">
-            A living research notebook.
-          </h2>
-          <p className="mt-4 text-sm leading-7 text-muted-foreground">
-            The portfolio is designed as a continuously evolving research surface, where systems, notes, and experiments converge into a long-term AI research program.
-          </p>
-          <div className="mt-7 grid gap-3">
-            {currentExploration.map((item) => (
-              <div
-                key={item}
-                className="flex items-center justify-between rounded-2xl border border-white/10 bg-surface/25 px-4 py-3 text-sm font-medium text-foreground shadow-sm backdrop-blur-xl"
-              >
-                <span>{item}</span>
-                <ArrowRight className="h-4 w-4 text-accent" />
-              </div>
-            ))}
-          </div>
-        </ScrollReveal>
-
-        <div className="grid gap-4">
-          <ScrollReveal className="grid gap-3 sm:grid-cols-3" delay={0.05}>
-            {labMetrics.map((metric) => (
-              <div key={metric.label} className="material-card p-5 text-center">
-                <div className="text-3xl font-semibold tracking-normal text-foreground">{metric.value}</div>
-                <div className="mt-2 text-xs font-semibold uppercase tracking-[0.16em] text-accent">
-                  {metric.label}
-                </div>
-              </div>
-            ))}
-          </ScrollReveal>
-
-          <ScrollReveal className="material-card p-5 md:p-6" delay={0.1} variant="scale">
-            <div className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">Current Focus Timeline</div>
-            <div className="mt-5 grid gap-3">
-              {focusTimeline.map((item) => (
-                <div
-                  key={item.time}
-                  className="grid gap-3 rounded-2xl border border-white/10 bg-surface/25 p-4 shadow-sm backdrop-blur-xl sm:grid-cols-[88px_1fr]"
-                >
-                  <div className="text-sm font-semibold text-accent">{item.time}</div>
-                  <div>
-                    <h3 className="text-sm font-semibold text-foreground">{item.title}</h3>
-                    <p className="mt-1 text-xs leading-5 text-muted-foreground">{item.body}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </ScrollReveal>
         </div>
       </div>
     </section>

@@ -181,8 +181,8 @@ const researchMapNodes = [
     label: "Foundation Models",
     eyebrow: "Primary",
     description: "Pretraining, adaptation, alignment",
-    x: 54,
-    y: 18,
+    x: 57,
+    y: 22,
     layer: "primary",
     tone: "research-map-node-gold",
   },
@@ -191,8 +191,8 @@ const researchMapNodes = [
     label: "LLM Agents",
     eyebrow: "Primary",
     description: "Planning, tools, memory, search",
-    x: 28,
-    y: 42,
+    x: 32,
+    y: 43,
     layer: "primary",
     tone: "research-map-node-green",
   },
@@ -201,8 +201,8 @@ const researchMapNodes = [
     label: "Multi-Agent Systems",
     eyebrow: "Primary",
     description: "Collaboration and reflection",
-    x: 27,
-    y: 71,
+    x: 34,
+    y: 72,
     layer: "primary",
     tone: "research-map-node-green",
   },
@@ -211,8 +211,8 @@ const researchMapNodes = [
     label: "Knowledge Intelligence",
     eyebrow: "Primary",
     description: "Retrieval, evidence, memory",
-    x: 77,
-    y: 41,
+    x: 74,
+    y: 42,
     layer: "primary",
     tone: "research-map-node-mist",
   },
@@ -221,8 +221,8 @@ const researchMapNodes = [
     label: "AI for Science",
     eyebrow: "Primary",
     description: "Scientific discovery systems",
-    x: 70,
-    y: 76,
+    x: 68,
+    y: 75,
     layer: "primary",
     tone: "research-map-node-gold",
   },
@@ -231,8 +231,8 @@ const researchMapNodes = [
     label: "Machine Learning",
     eyebrow: "Base",
     description: "Classical learning foundations",
-    x: 10,
-    y: 17,
+    x: 20,
+    y: 24,
     layer: "base",
     tone: "research-map-node-base",
   },
@@ -241,8 +241,8 @@ const researchMapNodes = [
     label: "Deep Learning",
     eyebrow: "Base",
     description: "Neural representation learning",
-    x: 31,
-    y: 15,
+    x: 39,
+    y: 22,
     layer: "base",
     tone: "research-map-node-base",
   },
@@ -251,8 +251,8 @@ const researchMapNodes = [
     label: "Computer Vision",
     eyebrow: "Base",
     description: "Visual-language understanding",
-    x: 89,
-    y: 18,
+    x: 86,
+    y: 28,
     layer: "base",
     tone: "research-map-node-base",
   },
@@ -261,8 +261,8 @@ const researchMapNodes = [
     label: "Reinforcement Learning",
     eyebrow: "Base",
     description: "Reward-driven behavior",
-    x: 10,
-    y: 84,
+    x: 21,
+    y: 78,
     layer: "base",
     tone: "research-map-node-base",
   },
@@ -271,8 +271,8 @@ const researchMapNodes = [
     label: "GraphRAG",
     eyebrow: "Method",
     description: "Graph-grounded reasoning",
-    x: 88,
-    y: 66,
+    x: 86,
+    y: 65,
     layer: "method",
     tone: "research-map-node-method",
   },
@@ -761,7 +761,7 @@ function EvolutionTimeline() {
 export function ResearchMapSection() {
   return (
     <section id="research-map" className="border-b border-white/10 bg-surface/10 backdrop-blur-sm">
-      <div className="mx-auto grid max-w-7xl gap-10 px-6 py-20 lg:grid-cols-[0.34fr_0.66fr] lg:items-center lg:px-8">
+      <div className="mx-auto grid max-w-7xl gap-10 px-6 py-20 lg:grid-cols-[0.32fr_0.68fr] lg:items-center lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -771,9 +771,8 @@ export function ResearchMapSection() {
           <div className="inline-flex rounded-2xl border border-white/10 bg-accent-soft/40 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-accent backdrop-blur-xl">
             Research Map
           </div>
-          <h2 className="mt-5 max-w-lg text-3xl font-semibold leading-[1.12] tracking-normal text-foreground md:text-4xl">
-            <span className="block">A living map of</span>
-            <span className="block">AI systems evolution.</span>
+          <h2 className="mt-5 max-w-lg text-2xl font-semibold leading-[1.08] tracking-normal text-foreground md:text-[2.35rem]">
+            <span className="block whitespace-nowrap">AI Systems Evolution Map</span>
           </h2>
           <div className="mt-5 max-w-xl space-y-4 text-sm leading-7 text-muted-foreground md:text-base">
             <p>
@@ -832,7 +831,7 @@ export function ResearchMapSection() {
               >
                 <div
                   className={[
-                    "research-map-node luminous-node group grid place-items-center rounded-full border px-4 text-center shadow-sm backdrop-blur-xl",
+                    "research-map-node luminous-node group flex flex-col items-center justify-center rounded-full border px-4 text-center shadow-sm backdrop-blur-xl",
                     "transition duration-300 hover:-translate-y-1 hover:scale-[1.035] hover:bg-surface/50 hover:shadow-material-sm",
                     node.layer === "core"
                       ? "h-24 w-24 px-3 sm:h-40 sm:w-40 sm:px-5"

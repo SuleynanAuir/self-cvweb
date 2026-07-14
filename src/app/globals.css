@@ -560,17 +560,11 @@ a {
 }
 
 .research-map-orbit {
-  stroke-dasharray: 1.2 3.8;
-  animation: research-map-orbit-flow 24s linear infinite;
-}
-
-.research-map-orbit-slow {
-  animation-duration: 34s;
-  animation-direction: reverse;
+  stroke-dasharray: 1 4.5;
 }
 
 .research-map-node {
-  animation: research-map-node-breathe 7.2s ease-in-out infinite;
+  animation: research-map-node-breathe 8.4s ease-in-out infinite;
 }
 
 .research-map-node-core {
@@ -580,9 +574,9 @@ a {
     radial-gradient(circle at 62% 76%, hsl(var(--green) / 0.13), transparent 48%),
     linear-gradient(145deg, hsl(var(--surface) / 0.54), hsl(var(--lume-mist) / 0.18));
   box-shadow:
-    0 22px 54px rgba(72, 56, 31, 0.13),
+    0 20px 46px rgba(72, 56, 31, 0.11),
     0 0 0 1px hsl(var(--amber) / 0.08),
-    0 0 54px hsl(var(--green) / 0.08),
+    0 0 44px hsl(var(--green) / 0.065),
     inset 0 1px 0 hsl(0 0% 100% / 0.42);
 }
 
@@ -611,10 +605,24 @@ a {
 }
 
 .research-map-node-base {
-  border-color: hsl(0 0% 100% / 0.12);
+  border-color: hsl(var(--green) / 0.08);
   background:
-    radial-gradient(circle at 36% 20%, hsl(0 0% 100% / 0.50), transparent 48%),
-    linear-gradient(145deg, hsl(var(--surface) / 0.38), hsl(var(--lume-mist) / 0.10));
+    radial-gradient(circle at 36% 20%, hsl(0 0% 100% / 0.46), transparent 48%),
+    linear-gradient(145deg, hsl(var(--surface) / 0.32), hsl(var(--lume-mist) / 0.08));
+  box-shadow:
+    0 10px 24px rgba(72, 56, 31, 0.06),
+    inset 0 1px 0 hsl(0 0% 100% / 0.28);
+}
+
+.research-map-node-method {
+  border-color: hsl(var(--green) / 0.18);
+  background:
+    radial-gradient(circle at 34% 18%, hsl(0 0% 100% / 0.52), transparent 48%),
+    linear-gradient(145deg, hsl(var(--surface) / 0.4), hsl(var(--green) / 0.11));
+  box-shadow:
+    0 12px 28px rgba(72, 56, 31, 0.075),
+    0 0 24px hsl(var(--green) / 0.045),
+    inset 0 1px 0 hsl(0 0% 100% / 0.32);
 }
 
 .animate-edge-flow {
@@ -697,16 +705,6 @@ a {
 
   100% {
     stroke-dashoffset: -48;
-  }
-}
-
-@keyframes research-map-orbit-flow {
-  0% {
-    stroke-dashoffset: 0;
-  }
-
-  100% {
-    stroke-dashoffset: -36;
   }
 }
 

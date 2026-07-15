@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type PointerEvent } from "react";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import {
@@ -14,8 +14,15 @@ import {
   Layers3,
   Network,
   Sparkles,
+  Star,
   UsersRound,
 } from "lucide-react";
+
+const githubProfileStats = [
+  { label: "Repositories", value: "25", icon: Layers3 },
+  { label: "Stars", value: "150", icon: Star },
+  { label: "Followers", value: "☝️", icon: UsersRound },
+] as const;
 
 const researchNavItems = [
   {
@@ -92,7 +99,7 @@ const researchNavItems = [
   },
 ] as const;
 
-const researchNavCore = { x: 50, y: 52 } as const;
+const researchNavCore = { x: 45, y: 47 } as const;
 
 type ResearchNavItemId = (typeof researchNavItems)[number]["id"];
 
@@ -109,12 +116,12 @@ type ResearchNavBody = {
 };
 
 const initialResearchNavBodies: ResearchNavBody[] = [
-  { id: "research", x: 28, y: 23, vx: 0.026, vy: 0.017, radius: 14.2, anchorX: 28, anchorY: 24, seed: 0.8 },
-  { id: "projects", x: 72, y: 24, vx: -0.024, vy: 0.021, radius: 13.3, anchorX: 72, anchorY: 25, seed: 2.2 },
-  { id: "agents", x: 19, y: 58, vx: 0.022, vy: -0.024, radius: 13.3, anchorX: 21, anchorY: 58, seed: 3.7 },
-  { id: "knowledge", x: 84, y: 56, vx: -0.022, vy: -0.026, radius: 14.2, anchorX: 82, anchorY: 56, seed: 5.1 },
-  { id: "science", x: 36, y: 84, vx: 0.025, vy: -0.014, radius: 13.3, anchorX: 36, anchorY: 81, seed: 6.4 },
-  { id: "publications", x: 64, y: 84, vx: -0.026, vy: -0.017, radius: 14.2, anchorX: 64, anchorY: 81, seed: 8.0 },
+  { id: "research", x: 24, y: 16, vx: 0.013, vy: 0.008, radius: 11.6, anchorX: 24, anchorY: 16, seed: 0.8 },
+  { id: "projects", x: 74, y: 21, vx: -0.012, vy: 0.011, radius: 11.2, anchorX: 74, anchorY: 21, seed: 2.2 },
+  { id: "agents", x: 14, y: 57, vx: 0.012, vy: -0.012, radius: 11.2, anchorX: 14, anchorY: 57, seed: 3.7 },
+  { id: "knowledge", x: 83, y: 55, vx: -0.013, vy: -0.010, radius: 11.6, anchorX: 83, anchorY: 55, seed: 5.1 },
+  { id: "science", x: 35, y: 78, vx: 0.010, vy: -0.008, radius: 11.2, anchorX: 35, anchorY: 78, seed: 6.4 },
+  { id: "publications", x: 67, y: 72, vx: -0.011, vy: -0.009, radius: 11.6, anchorX: 67, anchorY: 72, seed: 8.0 },
 ];
 
 const initialResearchNavBodyMap = new Map<ResearchNavItemId, ResearchNavBody>(
@@ -140,27 +147,27 @@ const evolutionStages = [
   },
   {
     title: "Deep Learning",
-    description: "Neural representation at scale",
+    description: "Neural represent learning",
     keywords: ["Architectures", "Perception"],
   },
   {
     title: "Foundation Models",
-    description: "Pretrained models with transfer",
+    description: "Pretrained models transfer",
     keywords: ["Pretraining", "Alignment"],
   },
   {
     title: "AI Agents",
-    description: "Reasoning with tools and memory",
+    description: "Reasoning by tool、memory",
     keywords: ["Planning", "Tool use"],
   },
   {
     title: "Multi-Agent Systems",
-    description: "Collaborative autonomous behavior",
+    description: "Collaborative autonomous",
     keywords: ["Coordination", "Reflection"],
   },
   {
     title: "Scientific AI",
-    description: "Evidence-driven discovery loops",
+    description: "Evidence-driven discovery",
     keywords: ["Hypothesis", "Discovery"],
   },
 ] as const;
@@ -168,15 +175,15 @@ const evolutionStages = [
 export function ResearchHero() {
   return (
     <section className="relative overflow-hidden border-b border-white/10 bg-background/10">
-      <div className="mx-auto grid max-w-7xl gap-10 px-6 pb-16 pt-16 lg:min-h-[560px] lg:grid-cols-[minmax(0,0.58fr)_minmax(340px,0.42fr)] lg:items-stretch lg:px-8 lg:pb-20 lg:pt-20 xl:grid-cols-[minmax(0,0.6fr)_minmax(360px,0.4fr)]">
-        <div className="relative z-10 flex flex-col lg:min-h-[420px] lg:justify-center">
+      <div className="mx-auto grid max-w-7xl gap-5 px-6 pb-8 pt-8 lg:min-h-[calc(100svh-72px)] lg:grid-cols-[minmax(0,0.58fr)_minmax(340px,0.42fr)] lg:items-stretch lg:px-8 lg:pb-8 lg:pt-8 xl:grid-cols-[minmax(0,0.6fr)_minmax(360px,0.4fr)]">
+        <div className="relative z-10 flex flex-col lg:min-h-[340px] lg:justify-center">
           <motion.div
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
             className="inline-flex h-10 items-center gap-2 rounded-2xl border border-white/10 bg-surface/25 px-4 text-sm font-medium text-accent shadow-sm backdrop-blur-xl"
           >
-            <Sparkles className="h-4 w-4" />
+            <Sparkles className="h-2 w-4" />
             AI Systems Research Laboratory
           </motion.div>
 
@@ -184,13 +191,13 @@ export function ResearchHero() {
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.62, delay: 0.08, ease: "easeOut" }}
-            className="mt-8 max-w-none text-[1.7rem] font-semibold leading-[1.04] tracking-normal text-foreground sm:text-[2.65rem] md:text-[3.2rem] lg:text-[2.95rem] xl:text-[3.45rem]"
+            className="mt-6 max-w-none text-[1.7rem] font-semibold leading-[1.04] tracking-normal text-foreground sm:text-[2.65rem] md:text-[3.2rem] lg:text-[2.75rem] xl:text-[3.25rem]"
           >
             <span className="block whitespace-nowrap">
               From <span className="gradient-text">Foundation Models</span>
             </span>
             <span className="block whitespace-nowrap">
-              to <span className="text-accent">Agentic AI</span>
+              to <span className="text-accent">Agentic AI Laboratory 🧑‍🍳</span>
             </span>
           </motion.h1>
 
@@ -198,9 +205,9 @@ export function ResearchHero() {
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.62, delay: 0.16, ease: "easeOut" }}
-            className="mt-7 max-w-2xl text-base leading-8 text-muted-foreground md:text-lg"
+            className="mt-5 max-w-2xl text-base leading-7 text-muted-foreground md:text-[1.04rem]"
           >
-            Exploring the evolution of artificial intelligence from learning algorithms to autonomous reasoning systems.
+            Exploring evolution of AI from learning algorithms to autonomous reasoning systems.
           </motion.p>
 
           <motion.div
@@ -209,7 +216,7 @@ export function ResearchHero() {
             transition={{ duration: 0.56, delay: 0.22, ease: "easeOut" }}
             className="mt-5 flex max-w-full flex-wrap gap-2"
           >
-            {["LLM Agents", "GraphRAG", "AI for Science"].map((tag) => (
+            {["LLM Agents 🤖", "GraphRAG 🧩", "AI for Science 🧑‍🔬"].map((tag) => (
               <span
                 key={tag}
                 className="rounded-2xl border border-white/10 bg-surface/25 px-4 py-2 text-xs font-medium uppercase tracking-[0.14em] text-muted-foreground shadow-sm backdrop-blur-xl"
@@ -220,10 +227,50 @@ export function ResearchHero() {
           </motion.div>
 
           <motion.div
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.56, delay: 0.25, ease: "easeOut" }}
+            className="mt-4 flex max-w-2xl flex-col gap-3 rounded-3xl border border-white/10 bg-surface/25 p-3 shadow-sm backdrop-blur-xl sm:flex-row sm:items-center"
+          >
+            <img
+              src="/assets/web_page/head_img.jpeg"
+              alt="Suleynan Aiur avatar"
+              className="h-14 w-14 shrink-0 rounded-2xl border border-white/20 object-cover shadow-sm"
+            />
+            <div className="min-w-0">
+              <div className="text-[0.65rem] font-semibold uppercase tracking-[0.16em] text-accent">Author</div>
+              <Link
+                href="https://github.com/SuleynanAuir"
+                target="_blank"
+                rel="noreferrer"
+                className="focus-ring mt-1 inline-flex items-center gap-2 rounded-xl text-base font-semibold tracking-normal text-foreground transition hover:text-accent"
+              >
+                Suleynan Aiur
+                <Github className="h-4 w-4" />
+              </Link>
+              <div className="mt-0.5 text-xs text-muted-foreground">github.com/SuleynanAuir</div>
+            </div>
+            <div className="flex flex-wrap gap-2 sm:ml-auto sm:justify-end">
+              {githubProfileStats.map((stat) => (
+                <div
+                  key={stat.label}
+                  className="inline-flex min-w-[5rem] items-center gap-2 rounded-2xl border border-white/10 bg-surface/25 px-3 py-2 text-xs text-muted-foreground shadow-sm"
+                >
+                  <stat.icon className="h-3.5 w-3.5 text-accent" />
+                  <span>
+                    <span className="block font-semibold leading-none text-foreground">{stat.value}</span>
+                    <span className="mt-0.5 block leading-none">{stat.label}</span>
+                  </span>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+
+          <motion.div
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.62, delay: 0.28, ease: "easeOut" }}
-            className="mt-8 flex flex-col gap-3 sm:flex-row"
+            className="mt-6 flex flex-col gap-3 sm:flex-row"
           >
             <Link
               href="#research-projects"
@@ -248,7 +295,7 @@ export function ResearchHero() {
           initial={{ opacity: 0, scale: 0.985, y: 14 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ duration: 0.72, delay: 0.18, ease: "easeOut" }}
-          className="relative z-10 flex lg:min-h-[420px]"
+          className="relative z-10 flex lg:min-h-[340px]"
         >
           <ResearchNavigation />
         </motion.div>
@@ -271,8 +318,13 @@ function ResearchNavigation() {
   const [navBodies, setNavBodies] = useState<ResearchNavBody[]>(initialResearchNavBodies);
   const [hoveredId, setHoveredId] = useState<ResearchNavItemId | null>(null);
   const [activeId, setActiveId] = useState<ResearchNavItemId | null>(null);
+  const [draggingId, setDraggingId] = useState<ResearchNavItemId | null>(null);
+  const navStageRef = useRef<HTMLDivElement | null>(null);
   const navBodiesRef = useRef(navBodies);
   const hoveredIdRef = useRef<ResearchNavItemId | null>(null);
+  const draggingIdRef = useRef<ResearchNavItemId | null>(null);
+  const dragMovedRef = useRef(false);
+  const dragStartRef = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
     navBodiesRef.current = navBodies;
@@ -281,6 +333,10 @@ function ResearchNavigation() {
   useEffect(() => {
     hoveredIdRef.current = hoveredId;
   }, [hoveredId]);
+
+  useEffect(() => {
+    draggingIdRef.current = draggingId;
+  }, [draggingId]);
 
   useEffect(() => {
     if (reduceMotion) {
@@ -294,8 +350,13 @@ function ResearchNavigation() {
       const delta = Math.min((time - lastTime) / 16.67, 2.2);
       lastTime = time;
       const hoveredBodyId = hoveredIdRef.current;
+      const draggedBodyId = draggingIdRef.current;
 
       const next = navBodiesRef.current.map((body, index) => {
+        if (draggedBodyId === body.id) {
+          return { ...body, vx: 0, vy: 0 };
+        }
+
         const centerDx = researchNavCore.x - body.x;
         const centerDy = researchNavCore.y - body.y;
         const centerDistance = Math.max(Math.hypot(centerDx, centerDy), 0.001);
@@ -309,14 +370,14 @@ function ResearchNavigation() {
           ...body,
           vx:
             body.vx +
-            (centerDx / centerDistance) * 0.00072 +
-            anchorDx * 0.00015 +
+            (centerDx / centerDistance) * 0.00012 +
+            anchorDx * 0.00034 +
             (-centerDy / centerDistance) * swirl +
             noiseX,
           vy:
             body.vy +
-            (centerDy / centerDistance) * 0.00072 +
-            anchorDy * 0.00015 +
+            (centerDy / centerDistance) * 0.00012 +
+            anchorDy * 0.00034 +
             (centerDx / centerDistance) * swirl +
             noiseY,
         };
@@ -326,6 +387,11 @@ function ResearchNavigation() {
         for (let j = i + 1; j < next.length; j += 1) {
           const first = next[i];
           const second = next[j];
+
+          if (draggedBodyId === first.id || draggedBodyId === second.id) {
+            continue;
+          }
+
           const dx = second.x - first.x;
           const dy = second.y - first.y;
           const distance = Math.max(Math.hypot(dx, dy), 0.001);
@@ -356,6 +422,18 @@ function ResearchNavigation() {
       }
 
       const bounded = next.map((body) => {
+        if (draggedBodyId === body.id) {
+          const edgePadding = body.radius + 1.4;
+
+          return {
+            ...body,
+            vx: 0,
+            vy: 0,
+            x: Math.min(Math.max(body.x, edgePadding), 100 - edgePadding),
+            y: Math.min(Math.max(body.y, edgePadding), 100 - edgePadding),
+          };
+        }
+
         const coreDx = body.x - researchNavCore.x;
         const coreDy = body.y - researchNavCore.y;
         const coreDistance = Math.max(Math.hypot(coreDx, coreDy), 0.001);
@@ -421,15 +499,84 @@ function ResearchNavigation() {
 
   const navBodyMap = useMemo(() => new Map<ResearchNavItemId, ResearchNavBody>(navBodies.map((body) => [body.id, body])), [navBodies]);
   const getNavBody = (id: ResearchNavItemId) => navBodyMap.get(id) ?? initialResearchNavBodyMap.get(id)!;
+  const moveNavBody = (id: ResearchNavItemId, clientX: number, clientY: number) => {
+    const stage = navStageRef.current;
+
+    if (!stage) {
+      return;
+    }
+
+    const rect = stage.getBoundingClientRect();
+    const currentBody = navBodiesRef.current.find((body) => body.id === id);
+
+    if (!currentBody) {
+      return;
+    }
+
+    const edgePadding = currentBody.radius + 1.4;
+    const rawX = ((clientX - rect.left) / rect.width) * 100;
+    const rawY = ((clientY - rect.top) / rect.height) * 100;
+    const x = Math.min(Math.max(rawX, edgePadding), 100 - edgePadding);
+    const y = Math.min(Math.max(rawY, edgePadding), 100 - edgePadding);
+    const next = navBodiesRef.current.map((body) =>
+      body.id === id ? { ...body, x, y, vx: 0, vy: 0, anchorX: x, anchorY: y } : body,
+    );
+
+    navBodiesRef.current = next;
+    setNavBodies(next);
+  };
+  const handleNodePointerDown = (id: ResearchNavItemId, event: PointerEvent<HTMLAnchorElement>) => {
+    dragMovedRef.current = false;
+    dragStartRef.current = { x: event.clientX, y: event.clientY };
+    draggingIdRef.current = id;
+    setDraggingId(id);
+    setHoveredId(id);
+    event.currentTarget.setPointerCapture(event.pointerId);
+  };
+  const handleNodePointerMove = (id: ResearchNavItemId, event: PointerEvent<HTMLAnchorElement>) => {
+    if (draggingIdRef.current !== id) {
+      return;
+    }
+
+    const distance = Math.hypot(event.clientX - dragStartRef.current.x, event.clientY - dragStartRef.current.y);
+
+    if (distance > 4) {
+      dragMovedRef.current = true;
+    }
+
+    moveNavBody(id, event.clientX, event.clientY);
+  };
+  const handleNodePointerUp = (id: ResearchNavItemId, event: PointerEvent<HTMLAnchorElement>) => {
+    if (draggingIdRef.current === id) {
+      moveNavBody(id, event.clientX, event.clientY);
+    }
+
+    setDraggingId(null);
+    draggingIdRef.current = null;
+
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+      event.currentTarget.releasePointerCapture(event.pointerId);
+    }
+  };
+  const handleNodePointerCancel = (id: ResearchNavItemId, event: PointerEvent<HTMLAnchorElement>) => {
+    if (draggingIdRef.current === id) {
+      setDraggingId(null);
+      draggingIdRef.current = null;
+    }
+
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+      event.currentTarget.releasePointerCapture(event.pointerId);
+    }
+  };
 
   return (
-    <div className="flex min-h-[420px] w-full flex-col p-4 md:p-5">
+    <div className="flex min-h-[330px] w-full flex-col p-3 md:p-3.5">
       <div className="relative z-20 flex items-start justify-between gap-5">
         <div>
           <div className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">Research Laboratory Index</div>
-          <h2 className="mt-2 text-2xl font-semibold tracking-normal text-foreground md:text-3xl">Research ecosystem</h2>
-          <p className="mt-2 max-w-sm text-sm leading-6 text-muted-foreground">
-            A laboratory navigation map for projects, agents, knowledge systems, science, and publications.
+          <h2 className="mt-1.5 text-2xl font-semibold tracking-normal text-foreground md:text-[1.7rem]">Research ecosystem</h2>
+          <p className="mt-1.5 max-w-sm text-sm leading-6 text-muted-foreground">
+            Projects, agents, knowledge systems.
           </p>
         </div>
         <div className="hidden rounded-full bg-surface/20 p-3 text-accent shadow-sm backdrop-blur-xl sm:block">
@@ -437,7 +584,7 @@ function ResearchNavigation() {
         </div>
       </div>
 
-      <div className="relative z-10 mt-4 min-h-[300px] flex-1 overflow-hidden rounded-[26px]">
+      <div ref={navStageRef} className="relative z-10 mt-2 min-h-[240px] flex-1 overflow-hidden rounded-[26px]">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,hsl(var(--surface)/0.22),transparent_34%),radial-gradient(circle_at_18%_68%,hsl(var(--green)/0.07),transparent_28%),radial-gradient(circle_at_86%_26%,hsl(var(--amber)/0.08),transparent_30%)]" />
         <svg className="pointer-events-none absolute inset-0 h-full w-full" viewBox="0 0 100 100" role="presentation">
           <defs>
@@ -494,8 +641,8 @@ function ResearchNavigation() {
           style={{ left: `${researchNavCore.x}%`, top: `${researchNavCore.y}%`, transform: "translate(-50%, -50%)" }}
         >
           <div className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-accent/80">Core</div>
-          <div className="mt-1 text-sm font-semibold leading-4 text-foreground">AI Systems Lab</div>
-          <div className="mt-1 text-[0.62rem] leading-3 text-muted-foreground">Research directions converge here</div>
+          <div className="mt-1 text-sm font-semibold leading-4 text-foreground">AI Lab</div>
+          <div className="mt-1 text-[0.62rem] leading-3 text-muted-foreground">Research Converge here</div>
         </div>
 
         {researchNavItems.map((item) => {
@@ -517,27 +664,37 @@ function ResearchNavigation() {
                 rel={item.external ? "noreferrer" : undefined}
                 title={item.body}
                 aria-label={`${item.title}: ${item.body}`}
+                onPointerDown={(event) => handleNodePointerDown(item.id, event)}
+                onPointerMove={(event) => handleNodePointerMove(item.id, event)}
+                onPointerUp={(event) => handleNodePointerUp(item.id, event)}
+                onPointerCancel={(event) => handleNodePointerCancel(item.id, event)}
                 onPointerEnter={() => setHoveredId(item.id)}
                 onPointerLeave={() => setHoveredId((current) => (current === item.id ? null : current))}
                 onFocus={() => setHoveredId(item.id)}
                 onBlur={() => setHoveredId((current) => (current === item.id ? null : current))}
-                onClick={() => {
+                onClick={(event) => {
+                  if (dragMovedRef.current) {
+                    event.preventDefault();
+                    dragMovedRef.current = false;
+                    return;
+                  }
+
                   setActiveId(item.id);
                   window.setTimeout(() => {
                     setActiveId((current) => (current === item.id ? null : current));
                   }, 420);
                 }}
                 className={[
-                  "research-nav-node focus-ring group/item flex flex-col items-center justify-center rounded-full px-4 py-3 text-center transition duration-300 hover:-translate-y-1",
-                  item.size === "wide" ? "h-[104px] w-[104px]" : "h-[96px] w-[96px]",
-                  hoveredId === item.id ? "research-nav-node-hovered scale-[1.055]" : "",
+                  "research-nav-node focus-ring group/item flex touch-none cursor-grab select-none flex-col items-center justify-center rounded-full px-4 py-3 text-center transition duration-300 hover:-translate-y-1 active:cursor-grabbing",
+                  item.size === "wide" ? "h-[86px] w-[86px]" : "h-[80px] w-[80px]",
+                  hoveredId === item.id || draggingId === item.id ? "research-nav-node-hovered scale-[1.055]" : "",
                   activeId === item.id ? "research-nav-node-clicked" : "",
                 ].join(" ")}
               >
                 <span className="mx-auto grid h-7 w-7 place-items-center rounded-full bg-surface/25 text-accent shadow-sm transition group-hover/item:bg-surface/40">
                   <item.icon className="h-3.5 w-3.5" />
                 </span>
-                <span className="mt-1.5 block text-[0.82rem] font-semibold leading-4 text-foreground">{item.title}</span>
+                <span className="mt-1.5 block text-[0.72rem] font-semibold leading-4 text-foreground">{item.title}</span>
                 <span className="mt-1 block text-[0.66rem] font-medium uppercase tracking-[0.16em] text-accent/70">{item.number}</span>
               </Link>
             </div>
@@ -550,20 +707,15 @@ function ResearchNavigation() {
 
 function EvolutionTimeline() {
   return (
-    <div className="material-card video-fused-panel rounded-[32px] p-5 md:p-7">
-      <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-        <div>
-          <div className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">Evolution of Intelligence</div>
-          <h2 className="mt-3 text-2xl font-semibold tracking-normal text-foreground md:text-3xl">Evolution of Intelligence</h2>
-          <p className="mt-2 text-sm leading-6 text-muted-foreground">From algorithms to autonomous scientific systems</p>
-        </div>
+    <div className="p-1.5 md:p-2">
+      <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
         <div className="inline-flex w-fit rounded-2xl border border-white/10 bg-surface/25 px-3 py-1.5 text-xs font-medium text-accent shadow-sm backdrop-blur-xl">
           Current focus: AI Agents + Scientific AI
         </div>
       </div>
 
-      <div className="relative mt-8">
-        <div className="absolute left-[7%] right-[7%] top-[32px] hidden h-px overflow-hidden rounded-full bg-white/20 md:block">
+      <div className="relative mt-3">
+        <div className="absolute left-[7%] right-[7%] top-[25px] hidden h-px overflow-hidden rounded-full bg-white/20 md:block">
           <motion.div
             initial={{ width: "0%" }}
             animate={{ width: "100%" }}
@@ -588,7 +740,7 @@ function EvolutionTimeline() {
               >
                 <div
                   className={[
-                    "group flex h-full min-h-[206px] flex-col rounded-[24px] border bg-surface/25 p-4 text-left shadow-sm backdrop-blur-xl transition duration-300 hover:-translate-y-1",
+                    "group flex h-full min-h-[140px] flex-col rounded-[18px] border bg-surface/25 p-3 text-left shadow-sm backdrop-blur-xl transition duration-300 hover:-translate-y-1",
                     active
                       ? "border-white/20 bg-accent-soft/30 text-accent shadow-material-sm"
                       : "border-white/10 text-muted-foreground hover:bg-surface/40 hover:shadow-material-sm",
@@ -597,29 +749,29 @@ function EvolutionTimeline() {
                   <div className="flex items-center justify-between gap-3">
                     <div
                       className={[
-                        "grid h-11 w-11 shrink-0 place-items-center rounded-2xl border bg-surface/30 shadow-sm",
+                        "grid h-8 w-8 shrink-0 place-items-center rounded-2xl border bg-surface/30 shadow-sm",
                         active ? "border-white/20 text-accent" : "border-white/10 text-muted-foreground",
                       ].join(" ")}
                     >
-                      <Icon className="h-5 w-5" />
+                      <Icon className="h-3.5 w-3.5" />
                     </div>
                     <div className="rounded-full border border-white/10 bg-surface/25 px-2.5 py-1 text-[0.62rem] font-semibold uppercase tracking-[0.12em] text-accent">
                       {String(index + 1).padStart(2, "0")}
                     </div>
                   </div>
 
-                  <div className="mt-4 flex min-h-10 items-end text-sm font-semibold leading-5 tracking-normal text-foreground">
+                  <div className="mt-2.5 flex min-h-7 items-end text-sm font-semibold leading-5 tracking-normal text-foreground">
                     {stage.title}
                   </div>
-                  <p className="mt-2 min-h-10 text-xs leading-5 text-muted-foreground">
+                  <p className="mt-1 min-h-7 text-xs leading-5 text-muted-foreground">
                     {stage.description}
                   </p>
-                  <div className="mt-auto grid gap-2 pt-3">
+                  <div className="mt-auto grid gap-1.5 pt-1.5">
                     {stage.keywords.map((keyword) => (
                       <span
                         key={keyword}
                         className={[
-                          "inline-flex min-h-7 items-center rounded-full border border-white/10 bg-surface/25 px-3 text-[0.64rem] font-semibold uppercase tracking-[0.10em]",
+                          "inline-flex min-h-6 items-center rounded-full border border-white/10 bg-surface/25 px-3 text-[0.62rem] font-semibold uppercase tracking-[0.10em]",
                           active ? "text-accent" : "text-accent/85",
                         ].join(" ")}
                       >

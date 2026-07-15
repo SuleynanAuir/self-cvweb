@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type CSSProperties } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { BookOpenCheck, ChevronDown, Github, Layers3, Sparkles } from "lucide-react";
@@ -8,7 +8,26 @@ import { researchCategories, type ResearchProject } from "@/data/portfolio";
 import { cn } from "@/lib/utils";
 
 const topicChipClass =
-  "max-w-full rounded-full border border-white/10 bg-surface/25 px-3.5 py-1.5 text-[clamp(0.64rem,1vw,0.75rem)] font-medium leading-tight text-muted-foreground shadow-sm backdrop-blur-xl";
+  "module-topic-chip max-w-full shrink-0 rounded-full px-3.5 py-1.5 text-[clamp(0.64rem,1vw,0.75rem)] font-medium leading-tight shadow-sm backdrop-blur-xl";
+
+const moduleTones = [
+  { accent: "97 29% 38%", soft: "86 42% 88%", glow: "97 29% 38%" },
+  { accent: "39 76% 49%", soft: "43 70% 88%", glow: "39 76% 49%" },
+  { accent: "174 36% 36%", soft: "168 39% 88%", glow: "174 36% 36%" },
+  { accent: "212 28% 43%", soft: "210 34% 89%", glow: "212 28% 43%" },
+  { accent: "350 38% 49%", soft: "354 45% 90%", glow: "350 38% 49%" },
+  { accent: "264 26% 47%", soft: "265 32% 90%", glow: "264 26% 47%" },
+] as const;
+
+function getModuleToneStyle(index: number): CSSProperties {
+  const tone = moduleTones[index % moduleTones.length];
+
+  return {
+    "--module-accent": tone.accent,
+    "--module-soft": tone.soft,
+    "--module-glow": tone.glow,
+  } as CSSProperties;
+}
 
 export function ResearchProjectModules() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -17,6 +36,7 @@ export function ResearchProjectModules() {
     <div className="mt-12 grid gap-5">
       {researchCategories.map((category, index) => {
         const isOpen = openIndex === index;
+        const moduleToneStyle = getModuleToneStyle(index);
         const previewImages = category.projects
           .map((project) => project.image ?? project.images?.[0])
           .filter(Boolean)
@@ -29,7 +49,8 @@ export function ResearchProjectModules() {
             whileInView={{ opacity: 1, y: 0, scale: 1 }}
             viewport={{ once: true, amount: 0.08, margin: "0px 0px 120px 0px" }}
             transition={{ delay: index * 0.045, duration: 0.58, ease: [0.22, 1, 0.36, 1] }}
-            className={cn("material-card overflow-hidden", isOpen ? "bg-surface/30" : "")}
+            style={moduleToneStyle}
+            className={cn("material-card research-module-card overflow-hidden", isOpen ? "research-module-card-open" : "")}
           >
             <button
               type="button"
@@ -37,46 +58,34 @@ export function ResearchProjectModules() {
               className="focus-ring group w-full p-5 text-left transition md:p-7"
               aria-expanded={isOpen}
             >
-              <div
-                className={cn(
-                  "mb-7 grid gap-4",
-                  previewImages.length > 0
-                    ? "xl:grid-cols-[minmax(0,1fr)_minmax(220px,0.28fr)] xl:items-start"
-                    : "",
-                )}
-              >
-                {previewImages.length > 0 ? (
-                  <div className="flex flex-wrap items-start justify-start gap-3 md:gap-4">
-                    {previewImages.map((image, imageIndex) => (
-                      <img
-                        key={image}
-                        src={image}
-                        alt={`${category.title} project preview ${imageIndex + 1}`}
-                        className="h-[clamp(7rem,9.4vw,9.75rem)] w-auto max-w-full min-w-0 rounded-2xl object-contain shadow-material-sm transition duration-500 group-hover:-translate-y-1 group-hover:scale-[1.015]"
-                      />
-                    ))}
-                  </div>
-                ) : null}
-
-                <div className="flex flex-wrap items-start justify-start gap-2.5 xl:justify-end xl:pt-1">
-                  {category.signal.split(", ").map((item) => (
-                    <span key={item} className={topicChipClass}>
-                      {item}
-                    </span>
+              {previewImages.length > 0 ? (
+                <div className="mb-7 flex flex-wrap items-start justify-start gap-3 md:gap-4">
+                  {previewImages.map((image, imageIndex) => (
+                    <img
+                      key={image}
+                      src={image}
+                      alt={`${category.title} project preview ${imageIndex + 1}`}
+                      className="h-[clamp(7rem,9.4vw,9.75rem)] w-auto max-w-full min-w-0 rounded-2xl object-contain shadow-material-sm transition duration-500 group-hover:-translate-y-1 group-hover:scale-[1.015]"
+                    />
                   ))}
                 </div>
-              </div>
+              ) : null}
 
               <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(250px,0.25fr)] lg:items-end">
                 <div className="min-w-0">
-                  <div className="flex flex-wrap items-center gap-3">
-                    <div className="inline-flex rounded-full border border-white/10 bg-accent-soft/40 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-accent">
+                  <div className="module-meta-row flex max-w-full items-center gap-2 overflow-x-auto pb-1">
+                    <div className="module-index-chip inline-flex shrink-0 rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em]">
                       {String(index + 1).padStart(2, "0")}
                     </div>
-                    <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-surface/25 px-3 py-1 text-xs font-medium text-muted-foreground">
-                      <Layers3 className="h-3.5 w-3.5 text-accent" />
+                    <div className="module-count-chip inline-flex shrink-0 items-center gap-2 rounded-full px-3 py-1 text-xs font-medium">
+                      <Layers3 className="h-3.5 w-3.5" />
                       {category.projects.length} projects
                     </div>
+                    {category.signal.split(", ").map((item) => (
+                      <span key={item} className={topicChipClass}>
+                        {item}
+                      </span>
+                    ))}
                   </div>
 
                   <h3 className="mt-5 max-w-full text-[clamp(1.55rem,2.55vw,2.45rem)] font-semibold leading-[1.08] tracking-normal text-foreground md:whitespace-nowrap">
@@ -87,17 +96,17 @@ export function ResearchProjectModules() {
                   </p>
                 </div>
 
-                <div className="flex items-center justify-between rounded-3xl border border-white/10 bg-surface/25 px-4 py-3 shadow-sm backdrop-blur-xl transition duration-300 group-hover:-translate-y-0.5 group-hover:bg-surface/40 group-hover:shadow-material-sm">
+                <div className="module-expand-card flex items-center justify-between rounded-3xl px-4 py-3 shadow-sm backdrop-blur-xl transition duration-300 group-hover:-translate-y-0.5 group-hover:shadow-material-sm">
                   <div>
-                    <div className="text-xs font-semibold uppercase tracking-[0.16em] text-accent">
+                    <div className="module-eyebrow text-xs font-semibold uppercase tracking-[0.16em]">
                       {isOpen ? "Collapse module" : "Expand module"}
                     </div>
                     <div className="mt-1 text-sm text-muted-foreground">
-                      Open research contribution evidence
+                      Open research evidence
                     </div>
                   </div>
                   <ChevronDown
-                    className={cn("h-5 w-5 text-accent transition duration-300", isOpen ? "rotate-180" : "")}
+                    className={cn("module-chevron h-5 w-5 transition duration-300", isOpen ? "rotate-180" : "")}
                   />
                 </div>
               </div>
@@ -133,11 +142,11 @@ function ProjectDetail({ project, index }: { project: ResearchProject; index: nu
   const images = project.images ?? (project.image ? [project.image] : []);
   const readmeHighlights = project.readmeHighlights ?? [];
   const [activeEvidencePanel, setActiveEvidencePanel] = useState<"notes" | "logic" | null>(null);
-  const readmeLogic = [
+  const readmeLogic = project.logicChain ?? ([
     { label: "Research object", value: project.platformRole },
     { label: "Technical route", value: project.keywords.join(" -> ") },
     { label: "Project value", value: project.impact },
-  ] as const;
+  ] as const);
   const toggleEvidencePanel = (panel: "notes" | "logic") => {
     setActiveEvidencePanel((current) => (current === panel ? null : panel));
   };

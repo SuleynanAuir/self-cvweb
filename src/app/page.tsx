@@ -34,8 +34,8 @@ export default function HomePage() {
         <ScrollReveal>
           <SectionHeading
             eyebrow="Research Portfolio"
-            title="Featured systems as research contributions."
-            description="Each system is presented through its research question, technical approach, key contribution, and implementation evidence rather than as a simple repository list."
+            title="Project Content ✍️"
+            description="Project: summary, tech-stack, links, knowledge"
           />
         </ScrollReveal>
 

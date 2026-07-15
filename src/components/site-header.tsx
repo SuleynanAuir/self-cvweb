@@ -18,7 +18,7 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-50 border-b border-white/10 bg-background/30 backdrop-blur-2xl">
       <div className="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-6 lg:px-8">
-        <Link href="/" className="focus-ring flex items-center gap-3 rounded-2xl">
+        <Link href="/asrl_agent_ml_dl_cv_nlp" className="focus-ring flex items-center gap-3 rounded-2xl">
           <span className="grid h-10 w-10 place-items-center rounded-2xl bg-surface/25 shadow-sm ring-1 ring-white/10 backdrop-blur-xl">
             <img
               src="/assets/web_page/logo.png"

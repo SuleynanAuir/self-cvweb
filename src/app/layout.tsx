@@ -15,6 +15,21 @@ export const metadata: Metadata = {
   },
   description: siteDescription,
   metadataBase: new URL("https://ai-research-laboratory.vercel.app"),
+  icons: {
+    icon: [
+      {
+        url: "/assets/web_page/logo.png",
+        type: "image/png",
+      },
+    ],
+    shortcut: ["/assets/web_page/logo.png"],
+    apple: [
+      {
+        url: "/assets/web_page/logo.png",
+        type: "image/png",
+      },
+    ],
+  },
   openGraph: {
     title: siteTitle,
     description: siteDescription,

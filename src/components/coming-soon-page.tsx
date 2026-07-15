@@ -13,7 +13,7 @@ export function ComingSoonPage({ eyebrow, title, description, items }: ComingSoo
   return (
     <section className="mx-auto max-w-5xl px-6 py-20 lg:px-8">
       <Link
-        href="/"
+        href="/asrl_agent_ml_dl_cv_nlp"
         className="focus-ring inline-flex h-10 items-center gap-2 rounded-full border border-border bg-surface px-4 text-sm font-medium text-muted-foreground shadow-material-sm transition hover:-translate-y-0.5 hover:border-accent hover:text-accent"
       >
         <ArrowLeft className="h-4 w-4" />

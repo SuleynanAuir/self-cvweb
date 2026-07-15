@@ -1,6 +1,6 @@
 export const navigation = [
-  { label: "Home", href: "/" },
-  { label: "Contact", href: "/#contact" },
+  { label: "Home", href: "/asrl_agent_ml_dl_cv_nlp" },
+  { label: "Contact", href: "/asrl_agent_ml_dl_cv_nlp#contact" },
 ] as const;
 
 export const focusAreas = [

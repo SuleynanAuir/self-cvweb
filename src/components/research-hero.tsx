@@ -183,7 +183,7 @@ export function ResearchHero() {
             transition={{ duration: 0.5, ease: "easeOut" }}
             className="inline-flex h-10 items-center gap-2 rounded-2xl border border-white/10 bg-surface/25 px-4 text-sm font-medium text-accent shadow-sm backdrop-blur-xl"
           >
-            <Sparkles className="h-2 w-4" />
+            <Sparkles className="h-1 w-2" />
             AI Systems Research Laboratory
           </motion.div>
 

@@ -16,7 +16,7 @@ export function SiteFooter() {
           <Link href="/papers" className="transition hover:text-accent">
             Publications
           </Link>
-          <Link href="/#contact" className="transition hover:text-accent">
+          <Link href="/asrl_agent_ml_dl_cv_nlp#contact" className="transition hover:text-accent">
             Contact
           </Link>
           <Link

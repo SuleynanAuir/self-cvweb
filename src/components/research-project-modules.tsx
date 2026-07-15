@@ -132,11 +132,15 @@ export function ResearchProjectModules() {
 function ProjectDetail({ project, index }: { project: ResearchProject; index: number }) {
   const images = project.images ?? (project.image ? [project.image] : []);
   const readmeHighlights = project.readmeHighlights ?? [];
+  const [activeEvidencePanel, setActiveEvidencePanel] = useState<"notes" | "logic" | null>(null);
   const readmeLogic = [
     { label: "Research object", value: project.platformRole },
     { label: "Technical route", value: project.keywords.join(" -> ") },
     { label: "Project value", value: project.impact },
   ] as const;
+  const toggleEvidencePanel = (panel: "notes" | "logic") => {
+    setActiveEvidencePanel((current) => (current === panel ? null : panel));
+  };
 
   return (
     <motion.article
@@ -177,40 +181,92 @@ function ProjectDetail({ project, index }: { project: ResearchProject; index: nu
         <p className="mt-3 text-sm leading-7 text-muted-foreground">{project.description}</p>
 
         {readmeHighlights.length > 0 ? (
-          <div className="mt-4 grid gap-4 rounded-2xl border border-white/10 bg-surface/25 p-4 shadow-sm backdrop-blur-xl xl:grid-cols-[minmax(0,0.58fr)_minmax(260px,0.42fr)]">
-            <div>
-              <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-accent">
+          <div className="mt-4">
+            <div className="flex flex-wrap gap-2">
+              <button
+                type="button"
+                onClick={() => toggleEvidencePanel("notes")}
+                className={cn(
+                  "focus-ring inline-flex h-10 items-center gap-2 rounded-full border px-4 text-xs font-semibold uppercase tracking-[0.12em] shadow-sm backdrop-blur-xl transition hover:-translate-y-0.5",
+                  activeEvidencePanel === "notes"
+                    ? "border-white/20 bg-accent-soft/55 text-accent"
+                    : "border-white/10 bg-surface/25 text-muted-foreground hover:bg-surface/40 hover:text-accent",
+                )}
+                aria-expanded={activeEvidencePanel === "notes"}
+              >
                 <BookOpenCheck className="h-3.5 w-3.5" />
                 README Notes
-              </div>
-              <ul className="mt-3 grid gap-2.5">
-                {readmeHighlights.map((highlight) => (
-                  <li key={highlight} className="flex gap-3 text-sm leading-6 text-muted-foreground">
-                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
-                    <span>{highlight}</span>
-                  </li>
-                ))}
-              </ul>
+                <ChevronDown
+                  className={cn("h-3.5 w-3.5 transition duration-300", activeEvidencePanel === "notes" ? "rotate-180" : "")}
+                />
+              </button>
+              <button
+                type="button"
+                onClick={() => toggleEvidencePanel("logic")}
+                className={cn(
+                  "focus-ring inline-flex h-10 items-center gap-2 rounded-full border px-4 text-xs font-semibold uppercase tracking-[0.12em] shadow-sm backdrop-blur-xl transition hover:-translate-y-0.5",
+                  activeEvidencePanel === "logic"
+                    ? "border-white/20 bg-accent-soft/55 text-accent"
+                    : "border-white/10 bg-surface/25 text-muted-foreground hover:bg-surface/40 hover:text-accent",
+                )}
+                aria-expanded={activeEvidencePanel === "logic"}
+              >
+                <Layers3 className="h-3.5 w-3.5" />
+                Logic chain
+                <ChevronDown
+                  className={cn("h-3.5 w-3.5 transition duration-300", activeEvidencePanel === "logic" ? "rotate-180" : "")}
+                />
+              </button>
             </div>
 
-            <div className="rounded-2xl border border-white/10 bg-accent-soft/20 p-4">
-              <div className="text-xs font-semibold uppercase tracking-[0.16em] text-accent">Logic chain</div>
-              <ol className="mt-3 grid gap-3">
-                {readmeLogic.map((step, stepIndex) => (
-                  <li key={step.label} className="grid grid-cols-[2rem_minmax(0,1fr)] gap-3 text-sm leading-6">
-                    <span className="flex h-8 w-8 items-center justify-center rounded-full border border-white/10 bg-surface/35 text-xs font-semibold text-accent">
-                      {stepIndex + 1}
-                    </span>
-                    <span>
-                      <span className="block text-xs font-semibold uppercase tracking-[0.12em] text-accent">
-                        {step.label}
-                      </span>
-                      <span className="mt-1 block text-muted-foreground">{step.value}</span>
-                    </span>
-                  </li>
-                ))}
-              </ol>
-            </div>
+            <AnimatePresence initial={false}>
+              {activeEvidencePanel ? (
+                <motion.div
+                  key={activeEvidencePanel}
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: "auto", opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+                  className="overflow-hidden"
+                >
+                  {activeEvidencePanel === "notes" ? (
+                    <div className="mt-3 rounded-2xl border border-white/10 bg-surface/25 p-4 shadow-sm backdrop-blur-xl">
+                      <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-accent">
+                        <BookOpenCheck className="h-3.5 w-3.5" />
+                        README Notes
+                      </div>
+                      <ul className="mt-3 grid gap-2.5">
+                        {readmeHighlights.map((highlight) => (
+                          <li key={highlight} className="flex gap-3 text-sm leading-6 text-muted-foreground">
+                            <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
+                            <span>{highlight}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ) : (
+                    <div className="mt-3 rounded-2xl border border-white/10 bg-accent-soft/20 p-4 shadow-sm backdrop-blur-xl">
+                      <div className="text-xs font-semibold uppercase tracking-[0.16em] text-accent">Logic chain</div>
+                      <ol className="mt-3 grid gap-3">
+                        {readmeLogic.map((step, stepIndex) => (
+                          <li key={step.label} className="grid grid-cols-[2rem_minmax(0,1fr)] gap-3 text-sm leading-6">
+                            <span className="flex h-8 w-8 items-center justify-center rounded-full border border-white/10 bg-surface/35 text-xs font-semibold text-accent">
+                              {stepIndex + 1}
+                            </span>
+                            <span>
+                              <span className="block text-xs font-semibold uppercase tracking-[0.12em] text-accent">
+                                {step.label}
+                              </span>
+                              <span className="mt-1 block text-muted-foreground">{step.value}</span>
+                            </span>
+                          </li>
+                        ))}
+                      </ol>
+                    </div>
+                  )}
+                </motion.div>
+              ) : null}
+            </AnimatePresence>
           </div>
         ) : null}
 

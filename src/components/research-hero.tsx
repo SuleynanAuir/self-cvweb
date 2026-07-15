@@ -168,8 +168,8 @@ const evolutionStages = [
 export function ResearchHero() {
   return (
     <section className="relative overflow-hidden border-b border-white/10 bg-background/10">
-      <div className="mx-auto grid max-w-7xl gap-12 px-6 pb-16 pt-16 lg:grid-cols-[minmax(0,0.55fr)_minmax(380px,0.45fr)] lg:px-8 lg:pb-20 lg:pt-20">
-        <div className="relative z-10">
+      <div className="mx-auto grid max-w-7xl gap-10 px-6 pb-16 pt-16 lg:min-h-[560px] lg:grid-cols-[minmax(0,0.58fr)_minmax(340px,0.42fr)] lg:items-stretch lg:px-8 lg:pb-20 lg:pt-20 xl:grid-cols-[minmax(0,0.6fr)_minmax(360px,0.4fr)]">
+        <div className="relative z-10 flex flex-col lg:min-h-[420px] lg:justify-center">
           <motion.div
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
@@ -248,7 +248,7 @@ export function ResearchHero() {
           initial={{ opacity: 0, scale: 0.985, y: 14 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ duration: 0.72, delay: 0.18, ease: "easeOut" }}
-          className="relative z-10"
+          className="relative z-10 flex lg:min-h-[420px]"
         >
           <ResearchNavigation />
         </motion.div>
@@ -423,11 +423,11 @@ function ResearchNavigation() {
   const getNavBody = (id: ResearchNavItemId) => navBodyMap.get(id) ?? initialResearchNavBodyMap.get(id)!;
 
   return (
-    <div className="research-landscape-panel min-h-[580px] p-5 md:p-6">
+    <div className="research-landscape-panel flex min-h-[420px] w-full flex-col p-4 md:p-5">
       <div className="relative z-20 flex items-start justify-between gap-5">
         <div>
           <div className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">Research Laboratory Index</div>
-          <h2 className="mt-3 text-3xl font-semibold tracking-normal text-foreground">Research ecosystem</h2>
+          <h2 className="mt-2 text-2xl font-semibold tracking-normal text-foreground md:text-3xl">Research ecosystem</h2>
           <p className="mt-2 max-w-sm text-sm leading-6 text-muted-foreground">
             A laboratory navigation map for projects, agents, knowledge systems, science, and publications.
           </p>
@@ -437,7 +437,7 @@ function ResearchNavigation() {
         </div>
       </div>
 
-      <div className="relative z-10 mt-5 h-[430px] overflow-hidden rounded-[30px]">
+      <div className="relative z-10 mt-4 min-h-[300px] flex-1 overflow-hidden rounded-[26px]">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,hsl(var(--surface)/0.22),transparent_34%),radial-gradient(circle_at_18%_68%,hsl(var(--green)/0.07),transparent_28%),radial-gradient(circle_at_86%_26%,hsl(var(--amber)/0.08),transparent_30%)]" />
         <svg className="pointer-events-none absolute inset-0 h-full w-full" viewBox="0 0 100 100" role="presentation">
           <defs>
@@ -454,16 +454,16 @@ function ResearchNavigation() {
             return (
               <line
                 key={`core-${item.id}`}
-              x1={researchNavCore.x}
-              y1={researchNavCore.y}
-              x2={body.x}
-              y2={body.y}
-              stroke="url(#researchNavLandscapeGradient)"
-              strokeWidth={hoveredId === item.id ? "0.9" : "0.45"}
-              strokeLinecap="round"
-              strokeDasharray="3 8"
-              opacity={hoveredId ? (hoveredId === item.id ? "0.96" : "0.26") : "0.72"}
-              className="animate-edge-flow"
+                x1={researchNavCore.x}
+                y1={researchNavCore.y}
+                x2={body.x}
+                y2={body.y}
+                stroke="url(#researchNavLandscapeGradient)"
+                strokeWidth={hoveredId === item.id ? "0.9" : "0.45"}
+                strokeLinecap="round"
+                strokeDasharray="3 8"
+                opacity={hoveredId ? (hoveredId === item.id ? "0.96" : "0.26") : "0.72"}
+                className="animate-edge-flow"
               />
             );
           })}
@@ -494,8 +494,8 @@ function ResearchNavigation() {
           style={{ left: `${researchNavCore.x}%`, top: `${researchNavCore.y}%`, transform: "translate(-50%, -50%)" }}
         >
           <div className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-accent/80">Core</div>
-          <div className="mt-1 text-base font-semibold leading-5 text-foreground">AI Systems Lab</div>
-          <div className="mt-1 text-[0.68rem] leading-4 text-muted-foreground">Research directions converge here</div>
+          <div className="mt-1 text-sm font-semibold leading-4 text-foreground">AI Systems Lab</div>
+          <div className="mt-1 text-[0.62rem] leading-3 text-muted-foreground">Research directions converge here</div>
         </div>
 
         {researchNavItems.map((item) => {
@@ -515,29 +515,29 @@ function ResearchNavigation() {
                 href={item.href}
                 target={item.external ? "_blank" : undefined}
                 rel={item.external ? "noreferrer" : undefined}
-              title={item.body}
-              aria-label={`${item.title}: ${item.body}`}
-              onPointerEnter={() => setHoveredId(item.id)}
-              onPointerLeave={() => setHoveredId((current) => (current === item.id ? null : current))}
-              onFocus={() => setHoveredId(item.id)}
-              onBlur={() => setHoveredId((current) => (current === item.id ? null : current))}
-              onClick={() => {
-                setActiveId(item.id);
-                window.setTimeout(() => {
-                  setActiveId((current) => (current === item.id ? null : current));
-                }, 420);
-              }}
-              className={[
-                "research-nav-node focus-ring group/item flex flex-col items-center justify-center rounded-full px-4 py-3 text-center transition duration-300 hover:-translate-y-1",
-                item.size === "wide" ? "h-[124px] w-[124px]" : "h-[116px] w-[116px]",
-                hoveredId === item.id ? "research-nav-node-hovered scale-[1.055]" : "",
-                activeId === item.id ? "research-nav-node-clicked" : "",
-              ].join(" ")}
-            >
-                <span className="mx-auto grid h-8 w-8 place-items-center rounded-full bg-surface/25 text-accent shadow-sm transition group-hover/item:bg-surface/40">
-                  <item.icon className="h-4 w-4" />
+                title={item.body}
+                aria-label={`${item.title}: ${item.body}`}
+                onPointerEnter={() => setHoveredId(item.id)}
+                onPointerLeave={() => setHoveredId((current) => (current === item.id ? null : current))}
+                onFocus={() => setHoveredId(item.id)}
+                onBlur={() => setHoveredId((current) => (current === item.id ? null : current))}
+                onClick={() => {
+                  setActiveId(item.id);
+                  window.setTimeout(() => {
+                    setActiveId((current) => (current === item.id ? null : current));
+                  }, 420);
+                }}
+                className={[
+                  "research-nav-node focus-ring group/item flex flex-col items-center justify-center rounded-full px-4 py-3 text-center transition duration-300 hover:-translate-y-1",
+                  item.size === "wide" ? "h-[104px] w-[104px]" : "h-[96px] w-[96px]",
+                  hoveredId === item.id ? "research-nav-node-hovered scale-[1.055]" : "",
+                  activeId === item.id ? "research-nav-node-clicked" : "",
+                ].join(" ")}
+              >
+                <span className="mx-auto grid h-7 w-7 place-items-center rounded-full bg-surface/25 text-accent shadow-sm transition group-hover/item:bg-surface/40">
+                  <item.icon className="h-3.5 w-3.5" />
                 </span>
-                <span className="mt-2 block text-sm font-semibold leading-5 text-foreground">{item.title}</span>
+                <span className="mt-1.5 block text-[0.82rem] font-semibold leading-4 text-foreground">{item.title}</span>
                 <span className="mt-1 block text-[0.66rem] font-medium uppercase tracking-[0.16em] text-accent/70">{item.number}</span>
               </Link>
             </div>

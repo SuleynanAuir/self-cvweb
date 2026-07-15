@@ -184,12 +184,12 @@ export function ResearchHero() {
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.62, delay: 0.08, ease: "easeOut" }}
-            className="mt-8 max-w-[760px] text-[clamp(2.35rem,3.75vw,4.25rem)] font-semibold leading-[1.04] tracking-normal text-foreground"
+            className="mt-8 max-w-none text-[1.7rem] font-semibold leading-[1.04] tracking-normal text-foreground sm:text-[2.65rem] md:text-[3.2rem] lg:text-[2.95rem] xl:text-[3.45rem]"
           >
-            <span className="block">
+            <span className="block whitespace-nowrap">
               From <span className="gradient-text">Foundation Models</span>
             </span>
-            <span className="block">
+            <span className="block whitespace-nowrap">
               to <span className="text-accent">Agentic AI</span>
             </span>
           </motion.h1>

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
-import { ChevronDown, Github, Layers3, Sparkles } from "lucide-react";
+import { BookOpenCheck, ChevronDown, Github, Layers3, Sparkles } from "lucide-react";
 import { researchCategories, type ResearchProject } from "@/data/portfolio";
 import { cn } from "@/lib/utils";
 
@@ -131,6 +131,9 @@ export function ResearchProjectModules() {
 
 function ProjectDetail({ project, index }: { project: ResearchProject; index: number }) {
   const images = project.images ?? (project.image ? [project.image] : []);
+  const readmeHighlights = project.readmeHighlights ?? [];
+  const [isReadmeOpen, setIsReadmeOpen] = useState(false);
+  const readmePanelId = `readme-${project.name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
 
   return (
     <motion.article
@@ -167,8 +170,59 @@ function ProjectDetail({ project, index }: { project: ResearchProject; index: nu
           ) : null}
         </div>
 
-        <h4 className="mt-4 text-2xl font-semibold tracking-normal text-foreground">{project.name}</h4>
-        <p className="mt-3 text-sm leading-7 text-muted-foreground">{project.description}</p>
+        {readmeHighlights.length > 0 ? (
+          <button
+            type="button"
+            onClick={() => setIsReadmeOpen((current) => !current)}
+            className="focus-ring mt-4 w-full rounded-2xl border border-transparent p-3 text-left transition hover:border-white/10 hover:bg-surface/25"
+            aria-expanded={isReadmeOpen}
+            aria-controls={readmePanelId}
+          >
+            <div className="flex flex-wrap items-start justify-between gap-3">
+              <h4 className="min-w-0 text-2xl font-semibold tracking-normal text-foreground">{project.name}</h4>
+              <span className="inline-flex h-8 shrink-0 items-center gap-2 rounded-full border border-white/10 bg-surface/25 px-3 text-xs font-medium text-accent shadow-sm backdrop-blur-xl">
+                README key points
+                <ChevronDown
+                  className={cn("h-3.5 w-3.5 transition duration-300", isReadmeOpen ? "rotate-180" : "")}
+                />
+              </span>
+            </div>
+            <p className="mt-3 text-sm leading-7 text-muted-foreground">{project.description}</p>
+          </button>
+        ) : (
+          <>
+            <h4 className="mt-4 text-2xl font-semibold tracking-normal text-foreground">{project.name}</h4>
+            <p className="mt-3 text-sm leading-7 text-muted-foreground">{project.description}</p>
+          </>
+        )}
+
+        <AnimatePresence initial={false}>
+          {isReadmeOpen && readmeHighlights.length > 0 ? (
+            <motion.div
+              id={readmePanelId}
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              className="overflow-hidden"
+            >
+              <div className="mt-3 rounded-2xl border border-white/10 bg-surface/25 p-4 shadow-sm backdrop-blur-xl">
+                <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-accent">
+                  <BookOpenCheck className="h-3.5 w-3.5" />
+                  README Notes
+                </div>
+                <ul className="mt-3 grid gap-2.5">
+                  {readmeHighlights.map((highlight) => (
+                    <li key={highlight} className="flex gap-3 text-sm leading-6 text-muted-foreground">
+                      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
+                      <span>{highlight}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </motion.div>
+          ) : null}
+        </AnimatePresence>
 
         <div className="mt-5 grid gap-3 lg:grid-cols-3">
           <InfoBlock label="Research question" value={project.platformRole} />

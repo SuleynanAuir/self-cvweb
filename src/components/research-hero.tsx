@@ -423,7 +423,7 @@ function ResearchNavigation() {
   const getNavBody = (id: ResearchNavItemId) => navBodyMap.get(id) ?? initialResearchNavBodyMap.get(id)!;
 
   return (
-    <div className="research-landscape-panel flex min-h-[420px] w-full flex-col p-4 md:p-5">
+    <div className="flex min-h-[420px] w-full flex-col p-4 md:p-5">
       <div className="relative z-20 flex items-start justify-between gap-5">
         <div>
           <div className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">Research Laboratory Index</div>

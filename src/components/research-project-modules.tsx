@@ -4,7 +4,10 @@ import { useEffect, useState, type CSSProperties } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUpRight, BookOpenCheck, ChevronDown, Github, GraduationCap, Layers3, Sparkles } from "lucide-react";
+import { OfficialBrandIcon } from "@/components/official-brand-icon";
 import { researchCategories, type ResearchProject } from "@/data/portfolio";
+import { defaultLocale, getCategoryDisplay, getProjectDisplay, projectModuleCopy, type Locale } from "@/data/site-copy";
+import { getLearningPathBrand } from "@/lib/learning-path-brands";
 import { getResearchProjectId, researchProjectLinks } from "@/lib/research-project-index";
 import { cn } from "@/lib/utils";
 
@@ -50,8 +53,9 @@ function getLearningPathToneStyle(index: number): CSSProperties {
   } as CSSProperties;
 }
 
-export function ResearchProjectModules() {
+export function ResearchProjectModules({ locale = defaultLocale }: { locale?: Locale }) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const uiCopy = projectModuleCopy[locale];
 
   useEffect(() => {
     let jumpTimer: number | null = null;
@@ -99,10 +103,11 @@ export function ResearchProjectModules() {
 
   return (
     <div className="mt-12 grid gap-5">
-      <ProjectInlineDirectory />
+      <ProjectInlineDirectory locale={locale} />
       {researchCategories.map((category, index) => {
         const isOpen = openIndex === index;
         const moduleToneStyle = getModuleToneStyle(index);
+        const categoryDisplay = getCategoryDisplay(category, locale);
         const previewImages = category.projects
           .map((project) => project.image ?? project.images?.[0])
           .filter(Boolean)
@@ -145,9 +150,9 @@ export function ResearchProjectModules() {
                     </div>
                     <div className="module-count-chip inline-flex shrink-0 items-center gap-2 rounded-full px-3 py-1 text-xs font-medium">
                       <Layers3 className="h-3.5 w-3.5" />
-                      {category.projects.length} projects
+                      {locale === "zh" ? `${category.projects.length}${uiCopy.projects}` : `${category.projects.length} ${uiCopy.projects}`}
                     </div>
-                    {category.signal.split(", ").map((item) => (
+                    {categoryDisplay.signal.split(", ").map((item) => (
                       <span key={item} className={topicChipClass}>
                         {item}
                       </span>
@@ -155,20 +160,20 @@ export function ResearchProjectModules() {
                   </div>
 
                   <h3 className="mt-5 max-w-full text-[clamp(1.55rem,2.55vw,2.45rem)] font-semibold leading-[1.08] tracking-normal text-foreground md:whitespace-nowrap">
-                    {category.title}
+                    {categoryDisplay.title}
                   </h3>
                   <p className="mt-4 max-w-5xl text-sm leading-7 text-muted-foreground md:text-[0.96rem]">
-                    {category.description}
+                    {categoryDisplay.description}
                   </p>
                 </div>
 
                 <div className="module-expand-card flex items-center justify-between rounded-3xl px-4 py-3 shadow-sm backdrop-blur-xl transition duration-300 group-hover:-translate-y-0.5 group-hover:shadow-material-sm">
                   <div>
                     <div className="module-eyebrow text-xs font-semibold uppercase tracking-[0.16em]">
-                      {isOpen ? "Collapse module" : "Expand module"}
+                      {isOpen ? uiCopy.collapse : uiCopy.expand}
                     </div>
                     <div className="mt-1 text-sm text-muted-foreground">
-                      Open research evidence
+                      {uiCopy.openEvidence}
                     </div>
                   </div>
                   <ChevronDown
@@ -195,6 +200,7 @@ export function ResearchProjectModules() {
                           project={project}
                           index={projectIndex}
                           toneOffset={index * 4 + projectIndex}
+                          locale={locale}
                         />
                       ))}
                     </div>
@@ -209,15 +215,27 @@ export function ResearchProjectModules() {
   );
 }
 
-function ProjectDetail({ project, index, toneOffset }: { project: ResearchProject; index: number; toneOffset: number }) {
+function ProjectDetail({
+  project,
+  index,
+  toneOffset,
+  locale,
+}: {
+  project: ResearchProject;
+  index: number;
+  toneOffset: number;
+  locale: Locale;
+}) {
+  const uiCopy = projectModuleCopy[locale];
+  const displayProject = getProjectDisplay(project, locale);
   const images = project.images ?? (project.image ? [project.image] : []);
-  const readmeHighlights = project.readmeHighlights ?? [];
+  const readmeHighlights = displayProject.readmeHighlights ?? [];
   const learningPath = project.learningPath ?? [];
   const [activeEvidencePanel, setActiveEvidencePanel] = useState<"notes" | "logic" | null>(null);
-  const readmeLogic = project.logicChain ?? ([
-    { label: "Research object", value: project.platformRole },
-    { label: "Technical route", value: project.keywords.join(" -> ") },
-    { label: "Project value", value: project.impact },
+  const readmeLogic = displayProject.logicChain ?? ([
+    { label: uiCopy.researchQuestion, value: displayProject.platformRole },
+    { label: uiCopy.technicalApproach, value: displayProject.keywords.join(" -> ") },
+    { label: uiCopy.keyContribution, value: displayProject.impact },
   ] as const);
   const toggleEvidencePanel = (panel: "notes" | "logic") => {
     setActiveEvidencePanel((current) => (current === panel ? null : panel));
@@ -236,7 +254,7 @@ function ProjectDetail({ project, index, toneOffset }: { project: ResearchProjec
     >
       {images.length > 0 ? (
         <div className="grid gap-3">
-          <ProjectVisual name={project.name} images={images} />
+          <ProjectVisual name={displayProject.name} images={images} />
         </div>
       ) : null}
 
@@ -244,7 +262,7 @@ function ProjectDetail({ project, index, toneOffset }: { project: ResearchProjec
         <div className="flex flex-wrap items-center gap-2">
           <div className="inline-flex items-center gap-2 rounded-full bg-accent-soft px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-accent">
             <Sparkles className="h-3.5 w-3.5" />
-            Research contribution
+            {uiCopy.contribution}
           </div>
           {project.github ? (
             <Link
@@ -259,8 +277,8 @@ function ProjectDetail({ project, index, toneOffset }: { project: ResearchProjec
           ) : null}
         </div>
 
-        <h4 className="mt-4 text-2xl font-semibold tracking-normal text-foreground">{project.name}</h4>
-        <p className="mt-3 text-sm leading-7 text-muted-foreground">{project.description}</p>
+        <h4 className="mt-4 text-2xl font-semibold tracking-normal text-foreground">{displayProject.name}</h4>
+        <p className="mt-3 text-sm leading-7 text-muted-foreground">{displayProject.description}</p>
 
         {readmeHighlights.length > 0 ? (
           <div className="mt-4">
@@ -277,7 +295,7 @@ function ProjectDetail({ project, index, toneOffset }: { project: ResearchProjec
                 aria-expanded={activeEvidencePanel === "notes"}
               >
                 <BookOpenCheck className="h-3.5 w-3.5" />
-                README Notes
+                {uiCopy.readmeNotes}
                 <ChevronDown
                   className={cn("h-3.5 w-3.5 transition duration-300", activeEvidencePanel === "notes" ? "rotate-180" : "")}
                 />
@@ -294,7 +312,7 @@ function ProjectDetail({ project, index, toneOffset }: { project: ResearchProjec
                 aria-expanded={activeEvidencePanel === "logic"}
               >
                 <Layers3 className="h-3.5 w-3.5" />
-                Logic chain
+                {uiCopy.logicChain}
                 <ChevronDown
                   className={cn("h-3.5 w-3.5 transition duration-300", activeEvidencePanel === "logic" ? "rotate-180" : "")}
                 />
@@ -315,7 +333,7 @@ function ProjectDetail({ project, index, toneOffset }: { project: ResearchProjec
                     <div className="mt-3 rounded-2xl border border-white/10 bg-surface/25 p-4 shadow-sm backdrop-blur-xl">
                       <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-accent">
                         <BookOpenCheck className="h-3.5 w-3.5" />
-                        README Notes
+                        {uiCopy.readmeNotes}
                       </div>
                       <ul className="mt-3 grid gap-2.5">
                         {readmeHighlights.map((highlight) => (
@@ -328,7 +346,7 @@ function ProjectDetail({ project, index, toneOffset }: { project: ResearchProjec
                     </div>
                   ) : (
                     <div className="mt-3 rounded-2xl border border-white/10 bg-accent-soft/20 p-4 shadow-sm backdrop-blur-xl">
-                      <div className="text-xs font-semibold uppercase tracking-[0.16em] text-accent">Logic chain</div>
+                      <div className="text-xs font-semibold uppercase tracking-[0.16em] text-accent">{uiCopy.logicChain}</div>
                       <ol className="mt-3 grid gap-3">
                         {readmeLogic.map((step, stepIndex) => (
                           <li key={step.label} className="grid grid-cols-[2rem_minmax(0,1fr)] gap-3 text-sm leading-6">
@@ -353,25 +371,25 @@ function ProjectDetail({ project, index, toneOffset }: { project: ResearchProjec
         ) : null}
 
         <div className="mt-5 grid gap-3 lg:grid-cols-3">
-          <InfoBlock label="Research question" value={project.platformRole} />
-          <InfoBlock label="Technical approach" value={project.keywords.join(" / ")} />
-          <InfoBlock label="Key contribution" value={project.impact} />
+          <InfoBlock label={uiCopy.researchQuestion} value={displayProject.platformRole} />
+          <InfoBlock label={uiCopy.technicalApproach} value={displayProject.keywords.join(" / ")} />
+          <InfoBlock label={uiCopy.keyContribution} value={displayProject.impact} />
         </div>
 
-        {project.knowledgeIntro || learningPath.length > 0 ? (
+        {displayProject.knowledgeIntro || learningPath.length > 0 ? (
           <div className="mt-5 rounded-2xl border border-white/10 bg-surface/20 p-4 shadow-sm backdrop-blur-xl">
             <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-accent">
               <GraduationCap className="h-3.5 w-3.5" />
-              Professional knowledge
+              {uiCopy.professionalKnowledge}
             </div>
-            {project.knowledgeIntro ? (
-              <p className="mt-3 text-sm leading-7 text-muted-foreground">{project.knowledgeIntro}</p>
+            {displayProject.knowledgeIntro ? (
+              <p className="mt-3 text-sm leading-7 text-muted-foreground">{displayProject.knowledgeIntro}</p>
             ) : null}
 
             {learningPath.length > 0 ? (
               <>
                 <div className="mt-4 text-xs font-semibold uppercase tracking-[0.16em] text-accent/90">
-                  Official learning path
+                  {uiCopy.learningPath}
                 </div>
                 <div className="mt-3 grid gap-2 md:grid-cols-2 xl:grid-cols-3">
                   {learningPath.map((item, pathIndex) => (
@@ -387,7 +405,15 @@ function ProjectDetail({ project, index, toneOffset }: { project: ResearchProjec
                         {item.source}
                       </span>
                       <span className="mt-1 flex items-start justify-between gap-3 text-sm font-semibold text-foreground">
-                        <span>{item.label}</span>
+                        <span className="flex min-w-0 items-start gap-2">
+                          <OfficialBrandIcon
+                            brand={getLearningPathBrand(item)}
+                            className="learning-path-title-icon mt-0.5 h-5 w-5"
+                            imageClassName="p-[3px]"
+                            fallbackClassName="text-[0.48rem]"
+                          />
+                          <span className="min-w-0">{item.label}</span>
+                        </span>
                         <ArrowUpRight className="learning-path-arrow mt-0.5 h-3.5 w-3.5 shrink-0 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                       </span>
                       <span className="mt-2 block text-xs leading-5 text-muted-foreground">{item.description}</span>
@@ -411,11 +437,13 @@ function ProjectDetail({ project, index, toneOffset }: { project: ResearchProjec
   );
 }
 
-function ProjectInlineDirectory() {
+function ProjectInlineDirectory({ locale }: { locale: Locale }) {
+  const uiCopy = projectModuleCopy[locale];
+
   return (
     <nav
       className="project-inline-index sticky top-20 z-30 -mx-1 flex gap-2 overflow-x-auto rounded-3xl px-2 py-2 xl:hidden"
-      aria-label="Project directory"
+      aria-label={uiCopy.directory}
     >
       {researchProjectLinks.map((item) => (
         <a

@@ -2,6 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import { ListTree } from "lucide-react";
+import { getLocaleFromPathname, projectModuleCopy } from "@/data/site-copy";
 import { researchProjectLinks } from "@/lib/research-project-index";
 
 function dispatchProjectJump(projectId: string) {
@@ -10,8 +11,10 @@ function dispatchProjectJump(projectId: string) {
 
 export function ProjectJumpSidebar() {
   const pathname = usePathname();
+  const locale = getLocaleFromPathname(pathname);
+  const copy = projectModuleCopy[locale];
 
-  if (pathname !== "/" && pathname !== "/asrl_agent_ml_dl_cv_nlp") {
+  if (pathname !== "/" && pathname !== "/asrl_agent_ml_dl_cv_nlp" && pathname !== "/zh/asrl_agent_ml_dl_cv_nlp") {
     return null;
   }
 
@@ -19,7 +22,7 @@ export function ProjectJumpSidebar() {
     <aside className="project-jump-sidebar fixed right-4 top-1/2 z-40 hidden max-h-[72vh] w-[7.6rem] -translate-y-1/2 flex-col overflow-hidden rounded-3xl px-2.5 py-3 xl:flex">
       <div className="flex items-center gap-2 px-2 pb-2 text-[0.64rem] font-semibold uppercase tracking-[0.16em] text-accent">
         <ListTree className="h-3.5 w-3.5" />
-        Projects
+        {copy.directory}
       </div>
       <nav className="project-jump-list grid gap-1 overflow-y-auto pr-1" aria-label="Project directory">
         {researchProjectLinks.map((item) => (

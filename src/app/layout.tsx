@@ -61,8 +61,8 @@ export default function RootLayout({
           <BackgroundVideo />
           <div className="site-video-scrim" />
         </div>
+        <SiteHeader />
         <div className="site-page-shell">
-          <SiteHeader />
           <main>{children}</main>
           <SiteFooter />
         </div>

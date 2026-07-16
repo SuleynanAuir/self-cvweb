@@ -17,6 +17,9 @@ import {
   Star,
   UsersRound,
 } from "lucide-react";
+import { OfficialBrandIcon } from "@/components/official-brand-icon";
+import { defaultLocale, heroCopy, type Locale } from "@/data/site-copy";
+import { heroOfficialBrands } from "@/lib/learning-path-brands";
 
 const githubProfileStats = [
   { label: "Repositories", value: "25", icon: Layers3 },
@@ -172,7 +175,9 @@ const evolutionStages = [
   },
 ] as const;
 
-export function ResearchHero() {
+export function ResearchHero({ locale = defaultLocale }: { locale?: Locale }) {
+  const copy = heroCopy[locale];
+
   return (
     <section className="relative overflow-hidden border-b border-white/10 bg-background/10">
       <div className="mx-auto grid max-w-7xl gap-5 px-6 pb-8 pt-8 lg:min-h-[calc(100svh-72px)] lg:grid-cols-[minmax(0,0.58fr)_minmax(340px,0.42fr)] lg:items-stretch lg:px-8 lg:pb-8 lg:pt-8 xl:grid-cols-[minmax(0,0.6fr)_minmax(360px,0.4fr)]">
@@ -184,7 +189,7 @@ export function ResearchHero() {
             className="inline-flex items-center gap-2 text-sm font-semibold text-accent"
           >
             <Sparkles className="h-4 w-4" />
-            AI Systems Research Laboratory
+            {copy.labName}
           </motion.div>
 
           <motion.h1
@@ -194,10 +199,10 @@ export function ResearchHero() {
             className="mt-6 max-w-none text-[1.7rem] font-semibold leading-[1.04] tracking-normal text-foreground sm:text-[2.65rem] md:text-[3.2rem] lg:text-[2.75rem] xl:text-[3.25rem]"
           >
             <span className="block whitespace-nowrap">
-              From <span className="gradient-text">Foundation Models</span>
+              {copy.h1Line1Prefix} <span className="gradient-text">{copy.h1Line1Highlight}</span>
             </span>
             <span className="block whitespace-nowrap">
-              to <span className="text-accent">Agentic AI Laboratory 🧑‍🍳</span>
+              {copy.h1Line2Prefix} <span className="text-accent">{copy.h1Line2Highlight}</span>
             </span>
           </motion.h1>
 
@@ -207,7 +212,7 @@ export function ResearchHero() {
             transition={{ duration: 0.62, delay: 0.16, ease: "easeOut" }}
             className="mt-5 max-w-2xl text-base leading-7 text-muted-foreground md:text-[1.04rem]"
           >
-            Exploring evolution of AI from learning algorithms to autonomous reasoning systems.
+            {copy.description}
           </motion.p>
 
           <motion.div
@@ -216,7 +221,7 @@ export function ResearchHero() {
             transition={{ duration: 0.56, delay: 0.22, ease: "easeOut" }}
             className="mt-5 flex max-w-full flex-wrap gap-2"
           >
-            {["LLM Agents 🤖", "GraphRAG 🧩", "AI for Science 🧑‍🔬"].map((tag) => (
+            {copy.tags.map((tag) => (
               <span
                 key={tag}
                 className="rounded-2xl border border-white/10 bg-surface/25 px-4 py-2 text-xs font-medium uppercase tracking-[0.14em] text-muted-foreground shadow-sm backdrop-blur-xl"
@@ -238,7 +243,7 @@ export function ResearchHero() {
               className="h-14 w-14 shrink-0 rounded-2xl border border-white/20 object-cover shadow-sm"
             />
             <div className="min-w-0">
-              <div className="text-[0.65rem] font-semibold uppercase tracking-[0.16em] text-accent">Author</div>
+              <div className="text-[0.65rem] font-semibold uppercase tracking-[0.16em] text-accent">{copy.author}</div>
               <Link
                 href="https://github.com/SuleynanAuir"
                 target="_blank"
@@ -251,7 +256,7 @@ export function ResearchHero() {
               <div className="mt-0.5 text-xs text-muted-foreground">github.com/SuleynanAuir</div>
             </div>
             <div className="flex flex-wrap gap-2 sm:ml-auto sm:justify-end">
-              {githubProfileStats.map((stat) => (
+              {githubProfileStats.map((stat, statIndex) => (
                 <div
                   key={stat.label}
                   className="inline-flex min-w-[5rem] items-center gap-2 rounded-2xl border border-white/10 bg-surface/25 px-3 py-2 text-xs text-muted-foreground shadow-sm"
@@ -259,7 +264,7 @@ export function ResearchHero() {
                   <stat.icon className="h-3.5 w-3.5 text-accent" />
                   <span>
                     <span className="block font-semibold leading-none text-foreground">{stat.value}</span>
-                    <span className="mt-0.5 block leading-none">{stat.label}</span>
+                    <span className="mt-0.5 block leading-none">{copy.profileStats[statIndex] ?? stat.label}</span>
                   </span>
                 </div>
               ))}
@@ -270,24 +275,41 @@ export function ResearchHero() {
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.62, delay: 0.28, ease: "easeOut" }}
-            className="mt-6 flex flex-col gap-3 sm:flex-row"
+            className="mt-6 flex flex-col gap-4 lg:flex-row lg:items-center"
           >
-            <Link
-              href="#research-projects"
-              className="material-button focus-ring inline-flex h-12 items-center justify-center gap-2 rounded-2xl px-6 text-sm font-medium text-white transition hover:-translate-y-0.5"
+            <div className="flex flex-col gap-3 sm:flex-row">
+              <Link
+                href="#research-projects"
+                className="material-button focus-ring inline-flex h-12 items-center justify-center gap-2 rounded-2xl px-6 text-sm font-medium text-white transition hover:-translate-y-0.5"
+              >
+                {copy.explore}
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+              <Link
+                href="https://github.com/SuleynanAuir"
+                target="_blank"
+                rel="noreferrer"
+                className="focus-ring inline-flex h-12 items-center justify-center gap-2 rounded-2xl border border-white/10 bg-surface/25 px-6 text-sm font-medium text-foreground shadow-sm backdrop-blur-xl transition hover:-translate-y-0.5 hover:bg-surface/40 hover:text-accent"
+              >
+                <Github className="h-4 w-4" />
+                GitHub
+              </Link>
+            </div>
+
+            <div
+              className="hero-official-icons grid w-fit grid-flow-col grid-rows-2 gap-2"
+              aria-label="Official technology icons"
             >
-              Explore Research
-              <ArrowRight className="h-4 w-4" />
-            </Link>
-            <Link
-              href="https://github.com/SuleynanAuir"
-              target="_blank"
-              rel="noreferrer"
-              className="focus-ring inline-flex h-12 items-center justify-center gap-2 rounded-2xl border border-white/10 bg-surface/25 px-6 text-sm font-medium text-foreground shadow-sm backdrop-blur-xl transition hover:-translate-y-0.5 hover:bg-surface/40 hover:text-accent"
-            >
-              <Github className="h-4 w-4" />
-              GitHub
-            </Link>
+              {heroOfficialBrands.map((brand) => (
+                <OfficialBrandIcon
+                  key={brand.name}
+                  brand={brand}
+                  className="hero-official-brand-icon h-8 w-8"
+                  imageClassName="p-1.5"
+                  fallbackClassName="text-[0.56rem]"
+                />
+              ))}
+            </div>
           </motion.div>
         </div>
 
@@ -297,7 +319,7 @@ export function ResearchHero() {
           transition={{ duration: 0.72, delay: 0.18, ease: "easeOut" }}
           className="relative z-10 flex lg:min-h-[340px]"
         >
-          <ResearchNavigation />
+          <ResearchNavigation locale={locale} />
         </motion.div>
 
         <motion.div
@@ -306,14 +328,15 @@ export function ResearchHero() {
           transition={{ duration: 0.66, delay: 0.36, ease: "easeOut" }}
           className="relative z-10 lg:col-span-2"
         >
-          <EvolutionTimeline />
+          <EvolutionTimeline locale={locale} />
         </motion.div>
       </div>
     </section>
   );
 }
 
-function ResearchNavigation() {
+function ResearchNavigation({ locale }: { locale: Locale }) {
+  const copy = heroCopy[locale];
   const reduceMotion = useReducedMotion();
   const [navBodies, setNavBodies] = useState<ResearchNavBody[]>(initialResearchNavBodies);
   const [hoveredId, setHoveredId] = useState<ResearchNavItemId | null>(null);
@@ -573,10 +596,10 @@ function ResearchNavigation() {
     <div className="flex min-h-[330px] w-full flex-col p-3 md:p-3.5">
       <div className="relative z-20 flex items-start justify-between gap-5">
         <div>
-          <div className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">Research Laboratory Index</div>
-          <h2 className="mt-1.5 text-2xl font-semibold tracking-normal text-foreground md:text-[1.7rem]">Research ecosystem</h2>
+          <div className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">{copy.indexEyebrow}</div>
+          <h2 className="mt-1.5 text-2xl font-semibold tracking-normal text-foreground md:text-[1.7rem]">{copy.ecosystemTitle}</h2>
           <p className="mt-1.5 max-w-sm text-sm leading-6 text-muted-foreground">
-            Projects, agents, knowledge systems.
+            {copy.ecosystemDescription}
           </p>
         </div>
         <div className="hidden rounded-full bg-surface/20 p-3 text-accent shadow-sm backdrop-blur-xl sm:block">
@@ -640,13 +663,14 @@ function ResearchNavigation() {
           className="research-core-node absolute z-20"
           style={{ left: `${researchNavCore.x}%`, top: `${researchNavCore.y}%`, transform: "translate(-50%, -50%)" }}
         >
-          <div className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-accent/80">Core</div>
-          <div className="mt-1 text-sm font-semibold leading-4 text-foreground">AI Lab</div>
-          <div className="mt-1 text-[0.62rem] leading-3 text-muted-foreground">Research Converge here</div>
+          <div className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-accent/80">{copy.core}</div>
+          <div className="mt-1 text-sm font-semibold leading-4 text-foreground">{copy.coreTitle}</div>
+          <div className="mt-1 text-[0.62rem] leading-3 text-muted-foreground">{copy.coreDescription}</div>
         </div>
 
         {researchNavItems.map((item) => {
           const body = getNavBody(item.id);
+          const itemCopy = copy.navItems[item.id];
 
           return (
             <div
@@ -662,8 +686,8 @@ function ResearchNavigation() {
                 href={item.href}
                 target={item.external ? "_blank" : undefined}
                 rel={item.external ? "noreferrer" : undefined}
-                title={item.body}
-                aria-label={`${item.title}: ${item.body}`}
+                title={itemCopy.body}
+                aria-label={`${itemCopy.title}: ${itemCopy.body}`}
                 onPointerDown={(event) => handleNodePointerDown(item.id, event)}
                 onPointerMove={(event) => handleNodePointerMove(item.id, event)}
                 onPointerUp={(event) => handleNodePointerUp(item.id, event)}
@@ -694,7 +718,7 @@ function ResearchNavigation() {
                 <span className="mx-auto grid h-7 w-7 place-items-center rounded-full bg-surface/25 text-accent shadow-sm transition group-hover/item:bg-surface/40">
                   <item.icon className="h-3.5 w-3.5" />
                 </span>
-                <span className="mt-1.5 block text-[0.72rem] font-semibold leading-4 text-foreground">{item.title}</span>
+                <span className="mt-1.5 block text-[0.72rem] font-semibold leading-4 text-foreground">{itemCopy.title}</span>
                 <span className="mt-1 block text-[0.66rem] font-medium uppercase tracking-[0.16em] text-accent/70">{item.number}</span>
               </Link>
             </div>
@@ -705,12 +729,14 @@ function ResearchNavigation() {
   );
 }
 
-function EvolutionTimeline() {
+function EvolutionTimeline({ locale }: { locale: Locale }) {
+  const copy = heroCopy[locale];
+
   return (
     <div className="p-1.5 md:p-2">
       <div className="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
         <div className="inline-flex w-fit rounded-2xl border border-white/10 bg-surface/25 px-3 py-1.5 text-xs font-medium text-accent shadow-sm backdrop-blur-xl">
-          Current focus: AI Agents + Scientific AI
+          {copy.currentFocus}
         </div>
       </div>
 
@@ -729,6 +755,7 @@ function EvolutionTimeline() {
           {evolutionStages.map((stage, index) => {
             const Icon = timelineIcons[index] ?? Sparkles;
             const active = stage.title === "AI Agents" || stage.title === "Scientific AI";
+            const stageCopy = copy.stages[index] ?? stage;
 
             return (
               <motion.div
@@ -761,13 +788,13 @@ function EvolutionTimeline() {
                   </div>
 
                   <div className="mt-2.5 flex min-h-7 items-end text-sm font-semibold leading-5 tracking-normal text-foreground">
-                    {stage.title}
+                    {stageCopy.title}
                   </div>
                   <p className="mt-1 min-h-7 text-xs leading-5 text-muted-foreground">
-                    {stage.description}
+                    {stageCopy.description}
                   </p>
                   <div className="mt-auto grid gap-1.5 pt-1.5">
-                    {stage.keywords.map((keyword) => (
+                    {stageCopy.keywords.map((keyword) => (
                       <span
                         key={keyword}
                         className={[

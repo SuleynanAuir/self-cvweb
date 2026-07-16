@@ -7,6 +7,13 @@ export const aiEvolution = [
   "Scientific AI",
 ] as const;
 
+export type LearningPathLink = {
+  label: string;
+  href: string;
+  source: string;
+  description: string;
+};
+
 export type ResearchProject = {
   name: string;
   description: string;
@@ -14,6 +21,8 @@ export type ResearchProject = {
   github?: string;
   impact: string;
   platformRole: string;
+  knowledgeIntro?: string;
+  learningPath?: readonly LearningPathLink[];
   logicChain?: readonly {
     label: string;
     value: string;
@@ -32,6 +41,349 @@ export type ResearchCategory = {
 
 const imagePath = "/assets/web_page";
 
+const projectLearningPaths = {
+  agentYouMustKnows: [
+    {
+      label: "Agents guide",
+      href: "https://developers.openai.com/api/docs/guides/agents",
+      source: "OpenAI Docs",
+      description: "Agent concepts, tool orchestration, state handling, guardrails, and production evaluation basics.",
+    },
+    {
+      label: "LangChain agents",
+      href: "https://docs.langchain.com/oss/python/langchain/agents",
+      source: "LangChain Docs",
+      description: "Model-tool loops, structured outputs, middleware, memory, and practical agent runtime design.",
+    },
+    {
+      label: "LlamaIndex agents",
+      href: "https://docs.llamaindex.ai/en/stable/module_guides/deploying/agents/",
+      source: "LlamaIndex Docs",
+      description: "Data-aware agents that connect retrieval, tool calls, workflows, and deployment-oriented patterns.",
+    },
+  ],
+  nexus: [
+    {
+      label: "Multi-agent systems",
+      href: "https://langchain-ai.github.io/langgraph/concepts/multi_agent/",
+      source: "LangGraph Docs",
+      description: "Agent graph topologies, handoffs, supervisors, shared state, and collaboration control patterns.",
+    },
+    {
+      label: "AutoGen agent teams",
+      href: "https://microsoft.github.io/autogen/stable/user-guide/agentchat-user-guide/tutorial/agents.html",
+      source: "Microsoft AutoGen",
+      description: "Agent roles, team conversation patterns, tool use, and collaborative task decomposition.",
+    },
+    {
+      label: "Property graph index",
+      href: "https://docs.llamaindex.ai/en/stable/module_guides/indexing/lpg_index_guide/",
+      source: "LlamaIndex Docs",
+      description: "Entity-relation extraction, property graph storage, graph retrieval, and knowledge-centric reasoning.",
+    },
+  ],
+  uparisDs: [
+    {
+      label: "RAG concepts",
+      href: "https://docs.llamaindex.ai/en/stable/understanding/rag/",
+      source: "LlamaIndex Docs",
+      description: "Grounded retrieval, context construction, response synthesis, and failure modes in evidence workflows.",
+    },
+    {
+      label: "Retrieval systems",
+      href: "https://docs.langchain.com/oss/python/langchain/retrieval",
+      source: "LangChain Docs",
+      description: "Document loaders, retrievers, query construction, and retrieval quality patterns for deep search.",
+    },
+    {
+      label: "File search tool",
+      href: "https://developers.openai.com/api/docs/guides/tools-file-search",
+      source: "OpenAI Docs",
+      description: "Managed file search, vector stores, retrieval annotations, and evidence-backed answer construction.",
+    },
+  ],
+  cognitiveTemp: [
+    {
+      label: "Text generation controls",
+      href: "https://developers.openai.com/api/docs/guides/text",
+      source: "OpenAI Docs",
+      description: "Sampling controls, response shaping, output configuration, and generation behavior management.",
+    },
+    {
+      label: "Prompt engineering",
+      href: "https://developers.openai.com/api/docs/guides/prompt-engineering",
+      source: "OpenAI Docs",
+      description: "Instruction design, reasoning constraints, task decomposition, and prompt patterns for controllable agents.",
+    },
+    {
+      label: "Persistence and memory",
+      href: "https://langchain-ai.github.io/langgraph/concepts/persistence/",
+      source: "LangGraph Docs",
+      description: "Checkpoints, thread state, long-lived context, and recoverable reasoning trajectories.",
+    },
+  ],
+  llamaFactoryFineTuning: [
+    {
+      label: "LLaMA Factory docs",
+      href: "https://llamafactory.readthedocs.io/en/latest/",
+      source: "LLaMA Factory",
+      description: "End-to-end instruction tuning, training configuration, inference, export, and deployment workflow.",
+    },
+    {
+      label: "Chat templates",
+      href: "https://huggingface.co/docs/transformers/en/chat_templating",
+      source: "Hugging Face Transformers",
+      description: "Conversation formatting, system/user/assistant turns, tokenizer templates, and SFT data preparation.",
+    },
+    {
+      label: "LoRA developer guide",
+      href: "https://huggingface.co/docs/peft/en/developer_guides/lora",
+      source: "Hugging Face PEFT",
+      description: "Low-rank adapters, target modules, adapter merging, and parameter-efficient model adaptation.",
+    },
+  ],
+  qwenHotelService: [
+    {
+      label: "Qwen2 model guide",
+      href: "https://huggingface.co/docs/transformers/en/model_doc/qwen2",
+      source: "Hugging Face Transformers",
+      description: "Qwen architecture, tokenizer usage, generation setup, and model-specific inference details.",
+    },
+    {
+      label: "bitsandbytes quantization",
+      href: "https://huggingface.co/docs/transformers/en/quantization/bitsandbytes",
+      source: "Hugging Face Transformers",
+      description: "8-bit and 4-bit loading, memory reduction, quantized fine-tuning, and constrained GPU training.",
+    },
+    {
+      label: "DPO Trainer",
+      href: "https://huggingface.co/docs/trl/en/dpo_trainer",
+      source: "Hugging Face TRL",
+      description: "Preference-pair training, chosen/rejected data format, reward-free alignment, and DPO configuration.",
+    },
+  ],
+  weiboSentimentBot: [
+    {
+      label: "Text classification",
+      href: "https://huggingface.co/docs/transformers/en/tasks/sequence_classification",
+      source: "Hugging Face Transformers",
+      description: "Sequence classification heads, tokenizer batching, labels, metrics, and sentiment-model training.",
+    },
+    {
+      label: "Datasets quickstart",
+      href: "https://huggingface.co/docs/datasets/en/quickstart",
+      source: "Hugging Face Datasets",
+      description: "Dataset loading, preprocessing, mapping functions, train/test splits, and dataset inspection.",
+    },
+    {
+      label: "Evaluate quick tour",
+      href: "https://huggingface.co/docs/evaluate/en/a_quick_tour",
+      source: "Hugging Face Evaluate",
+      description: "Metric loading, prediction evaluation, accuracy/F1 workflows, and reproducible evaluation reports.",
+    },
+  ],
+  chronos2: [
+    {
+      label: "Forecasting with Chronos",
+      href: "https://auto.gluon.ai/stable/tutorials/timeseries/forecasting-chronos.html",
+      source: "AutoGluon Docs",
+      description: "Chronos model usage, zero-shot forecasting, prediction horizons, and probabilistic time-series outputs.",
+    },
+    {
+      label: "Time Series Transformer",
+      href: "https://huggingface.co/docs/transformers/en/model_doc/time_series_transformer",
+      source: "Hugging Face Transformers",
+      description: "Transformer-based probabilistic forecasting with context windows, lags, and known future features.",
+    },
+    {
+      label: "PyTorch Forecasting tutorial",
+      href: "https://pytorch-forecasting.readthedocs.io/en/stable/tutorials/stallion.html",
+      source: "PyTorch Forecasting",
+      description: "Dataset windows, covariates, Temporal Fusion Transformer training, and forecast interpretation.",
+    },
+  ],
+  veFloodBn: [
+    {
+      label: "Create Bayesian Networks",
+      href: "https://pgmpy.org/examples/Creating%20a%20Discrete%20Bayesian%20Network.html",
+      source: "pgmpy Docs",
+      description: "Discrete DAG construction, CPD definition, model validation, and probability-table structure.",
+    },
+    {
+      label: "Discrete BN inference",
+      href: "https://pgmpy.org/examples/Inference%20in%20Discrete%20Bayesian%20Networks.html",
+      source: "pgmpy Docs",
+      description: "Exact inference, evidence conditioning, posterior queries, and probabilistic decision support.",
+    },
+    {
+      label: "GeoPandas mapping",
+      href: "https://geopandas.org/en/stable/docs/user_guide/mapping.html",
+      source: "GeoPandas Docs",
+      description: "Spatial joins, choropleths, legends, map classification, and geographic risk visualization.",
+    },
+  ],
+  clinicalBrainTumor: [
+    {
+      label: "HOG feature extraction",
+      href: "https://scikit-image.org/docs/stable/auto_examples/features_detection/plot_hog.html",
+      source: "scikit-image Docs",
+      description: "Histogram of oriented gradients, visual descriptors, and classical image-feature pipelines.",
+    },
+    {
+      label: "Support vector machines",
+      href: "https://scikit-learn.org/stable/modules/svm.html",
+      source: "scikit-learn Docs",
+      description: "SVM classification, kernels, margins, hyperparameters, and small-sample image baseline modeling.",
+    },
+    {
+      label: "XGBoost model guide",
+      href: "https://xgboost.readthedocs.io/en/stable/tutorials/model.html",
+      source: "XGBoost Docs",
+      description: "Gradient-boosted trees, objective functions, regularization, and structured clinical-feature modeling.",
+    },
+  ],
+  scratchOmlNids: [
+    {
+      label: "Broadcasting",
+      href: "https://numpy.org/doc/stable/user/basics.broadcasting.html",
+      source: "NumPy Docs",
+      description: "Vectorized array operations, shape rules, efficient arithmetic, and from-scratch optimizer implementation.",
+    },
+    {
+      label: "Naive Bayes",
+      href: "https://scikit-learn.org/stable/modules/naive_bayes.html",
+      source: "scikit-learn Docs",
+      description: "Gaussian likelihoods, posterior estimation, independence assumptions, and probabilistic classifiers.",
+    },
+    {
+      label: "Imbalanced learning",
+      href: "https://imbalanced-learn.org/stable/user_guide.html",
+      source: "imbalanced-learn Docs",
+      description: "Resampling, class imbalance diagnostics, evaluation strategies, and robust classification workflows.",
+    },
+  ],
+  customerAnalytics: [
+    {
+      label: "Group by operations",
+      href: "https://pandas.pydata.org/docs/user_guide/groupby.html",
+      source: "pandas Docs",
+      description: "Cohort analysis, aggregation, split-apply-combine, and customer behavior feature engineering.",
+    },
+    {
+      label: "Clustering",
+      href: "https://scikit-learn.org/stable/modules/clustering.html",
+      source: "scikit-learn Docs",
+      description: "K-means, hierarchical clustering, density methods, validation, and customer segmentation patterns.",
+    },
+    {
+      label: "Model inspection",
+      href: "https://scikit-learn.org/stable/modules/inspection.html",
+      source: "scikit-learn Docs",
+      description: "Permutation importance, partial dependence, decision explanations, and marketing model interpretation.",
+    },
+  ],
+  drlBasis: [
+    {
+      label: "Environment loop",
+      href: "https://gymnasium.farama.org/introduction/basic_usage/",
+      source: "Gymnasium Docs",
+      description: "Reset/step loops, observations, actions, rewards, truncation, and environment-agent interaction.",
+    },
+    {
+      label: "DQN tutorial",
+      href: "https://docs.pytorch.org/tutorials/intermediate/reinforcement_q_learning.html",
+      source: "PyTorch Tutorials",
+      description: "Replay memory, Q-learning targets, target networks, epsilon-greedy exploration, and value approximation.",
+    },
+    {
+      label: "PPO algorithm",
+      href: "https://spinningup.openai.com/en/latest/algorithms/ppo.html",
+      source: "OpenAI Spinning Up",
+      description: "Clipped policy objectives, advantage estimation, policy updates, and actor-critic optimization.",
+    },
+  ],
+  omniRec: [
+    {
+      label: "Basic retrieval",
+      href: "https://www.tensorflow.org/recommenders/examples/basic_retrieval",
+      source: "TensorFlow Recommenders",
+      description: "Candidate retrieval, embedding models, retrieval losses, and scalable two-tower recommendation.",
+    },
+    {
+      label: "Basic ranking",
+      href: "https://www.tensorflow.org/recommenders/examples/basic_ranking",
+      source: "TensorFlow Recommenders",
+      description: "Ranking models, rating prediction, feature crosses, and second-stage recommendation scoring.",
+    },
+    {
+      label: "RecBole quick start",
+      href: "https://recbole.io/docs/get_started/quick_start.html",
+      source: "RecBole Docs",
+      description: "Dataset formatting, recommendation model training, evaluation protocols, and experiment configuration.",
+    },
+  ],
+  peanutVideoRestoration: [
+    {
+      label: "Optical flow",
+      href: "https://docs.opencv.org/4.x/d4/dee/tutorial_optical_flow.html",
+      source: "OpenCV Docs",
+      description: "Sparse and dense motion estimation, frame correspondence, and temporal consistency for video tasks.",
+    },
+    {
+      label: "Video model inference",
+      href: "https://pytorchvideo.org/docs/tutorial_torchhub_inference",
+      source: "PyTorchVideo Docs",
+      description: "Video clip preprocessing, temporal sampling, model inference, and frame-sequence handling.",
+    },
+    {
+      label: "TorchVision transforms",
+      href: "https://docs.pytorch.org/vision/stable/transforms.html",
+      source: "TorchVision Docs",
+      description: "Image/video transforms, augmentation pipelines, tensor conversion, and visual preprocessing primitives.",
+    },
+  ],
+  pAdonisOcr: [
+    {
+      label: "Image filtering",
+      href: "https://docs.opencv.org/4.x/d4/d13/tutorial_py_filtering.html",
+      source: "OpenCV Docs",
+      description: "Blurring, denoising, smoothing kernels, and preprocessing for noisy scanned document images.",
+    },
+    {
+      label: "Super resolution",
+      href: "https://docs.pytorch.org/tutorials/advanced/super_resolution_with_onnxruntime.html",
+      source: "PyTorch Tutorials",
+      description: "Image super-resolution model export, ONNX Runtime inference, and restoration-oriented deployment.",
+    },
+    {
+      label: "Tesseract documentation",
+      href: "https://tesseract-ocr.github.io/tessdoc/",
+      source: "Tesseract OCR",
+      description: "OCR engine usage, trained data, image quality considerations, and text-recognition configuration.",
+    },
+  ],
+  hatefulMemes: [
+    {
+      label: "CLIP model guide",
+      href: "https://huggingface.co/docs/transformers/en/model_doc/clip",
+      source: "Hugging Face Transformers",
+      description: "Image-text contrastive encoders, zero-shot classification, and multimodal semantic alignment.",
+    },
+    {
+      label: "Image-text-to-text",
+      href: "https://huggingface.co/docs/transformers/en/tasks/image_text_to_text",
+      source: "Hugging Face Transformers",
+      description: "Vision-language inputs, crossmodal generation, multimodal prompts, and image-conditioned responses.",
+    },
+    {
+      label: "Moderation guide",
+      href: "https://developers.openai.com/api/docs/guides/moderation",
+      source: "OpenAI Docs",
+      description: "Safety classification, harmful-content categories, moderation workflows, and socially sensitive outputs.",
+    },
+  ],
+} as const satisfies Record<string, readonly LearningPathLink[]>;
+
 export const researchCategories: readonly ResearchCategory[] = [
   {
     title: "Autonomous Intelligence",
@@ -49,6 +401,9 @@ export const researchCategories: readonly ResearchCategory[] = [
           "Converts scattered agent papers and concepts into a reusable research map for understanding agent theory, architecture patterns, and implementation routes.",
         platformRole:
           "Serves as the agent knowledge foundation for the portfolio, linking concepts, papers, frameworks, engineering patterns, and system-level practice.",
+        knowledgeIntro:
+          "Professional focus: agent systems combine planning, memory, retrieval, tool calling, reflection, and evaluation. This project is best read as a structured map of the agent field before building production agents.",
+        learningPath: projectLearningPaths.agentYouMustKnows,
         logicChain: [
           {
             label: "Knowledge scope",
@@ -78,6 +433,11 @@ export const researchCategories: readonly ResearchCategory[] = [
           "Frames the agent field as an evolution from text-generating LLMs toward systems with perception, reasoning, action, and continuous improvement.",
         ],
         image: `${imagePath}/agent_you_must_knows.png`,
+        images: [
+          `${imagePath}/agent_you_must_knows.png`,
+          `${imagePath}/agent_you_must_knows_additional1.png`,
+          `${imagePath}/agent_you_must_knows_additional2.png`,
+        ],
       },
       {
         name: "NEXUS",
@@ -90,6 +450,9 @@ export const researchCategories: readonly ResearchCategory[] = [
           "Combines autonomous agents, knowledge priors, attention anchors, and digital-twin simulation to produce deeper analysis with a more controlled token budget.",
         platformRole:
           "Acts as the orchestration layer where retrieval, agent collaboration, simulation, user attention, and deep insight generation converge.",
+        knowledgeIntro:
+          "Professional focus: multi-agent systems require coordination protocols, shared state, retrieval-grounded context, event modeling, and cost-aware reasoning. NEXUS emphasizes how agents can cooperate inside a simulated information environment.",
+        learningPath: projectLearningPaths.nexus,
         logicChain: [
           {
             label: "Information input",
@@ -119,6 +482,11 @@ export const researchCategories: readonly ResearchCategory[] = [
           "Optimizes agent collaboration and reasoning flow to preserve depth while lowering token cost.",
         ],
         image: `${imagePath}/nexus_page.png`,
+        images: [
+          `${imagePath}/nexus_page.png`,
+          `${imagePath}/nexus_page_additional1.png`,
+          `${imagePath}/nexus_page_additional2.png`,
+        ],
       },
       {
         name: "UPARIS-DS Agents",
@@ -130,6 +498,9 @@ export const researchCategories: readonly ResearchCategory[] = [
           "Improves deep-search reliability by turning uncertain retrieval fragments into iteratively refined evidence objects with hallucination-aware synthesis.",
         platformRole:
           "Functions as the verification and refinement layer for research agents and GraphRAG-style evidence workflows.",
+        knowledgeIntro:
+          "Professional focus: deep-search agents need evidence grading, uncertainty handling, retrieval refinement, and citation-aware synthesis. UPARIS-DS is positioned around paragraph-level reliability rather than generic answer generation.",
+        learningPath: projectLearningPaths.uparisDs,
         logicChain: [
           {
             label: "Problem",
@@ -159,6 +530,7 @@ export const researchCategories: readonly ResearchCategory[] = [
           "Targets hallucination mitigation and answer grounding in GraphRAG and research-agent workflows.",
         ],
         image: `${imagePath}/uparis_ds.png`,
+        images: [`${imagePath}/uparis_ds.png`, `${imagePath}/uparis_ds_additional.png`],
       },
       {
         name: "CognitiveTemp DeepSearch Agents",
@@ -170,6 +542,9 @@ export const researchCategories: readonly ResearchCategory[] = [
           "Adds controllable reasoning temperament, search depth, and exploration style to autonomous research workflows.",
         platformRole:
           "Provides behavior-control logic for agents that need to switch between conservative evidence checking and broader exploration.",
+        knowledgeIntro:
+          "Professional focus: controllable agent behavior depends on sampling temperature, search breadth, reasoning strictness, and evaluation feedback. This project treats cognitive style as a configurable system parameter.",
+        learningPath: projectLearningPaths.cognitiveTemp,
         logicChain: [
           {
             label: "Control objective",
@@ -217,6 +592,9 @@ export const researchCategories: readonly ResearchCategory[] = [
           "Turns foundation-model adaptation from scattered fine-tuning commands into a reproducible model engineering workflow with flexible and secure deployment paths.",
         platformRole:
           "Supplies the model adaptation layer that prepares tuned assistants for downstream agent, QA, and knowledge-platform tasks.",
+        knowledgeIntro:
+          "Professional focus: foundation-model adaptation connects data preparation, supervised fine-tuning, PEFT/LoRA, evaluation, deployment, and repeatable experiment management. The project demonstrates the full engineering route rather than a single training command.",
+        learningPath: projectLearningPaths.llamaFactoryFineTuning,
         logicChain: [
           {
             label: "Data layer",
@@ -246,6 +624,11 @@ export const researchCategories: readonly ResearchCategory[] = [
           "Targets enterprise-grade applications where repeatability and operational clarity matter.",
         ],
         image: `${imagePath}/llamafactory.png`,
+        images: [
+          `${imagePath}/llamafactory.png`,
+          `${imagePath}/llamafactory_additional2.png`,
+          `${imagePath}/llamafactory_additional3.png`,
+        ],
       },
       {
         name: "Qwen HotelService Master",
@@ -257,6 +640,9 @@ export const researchCategories: readonly ResearchCategory[] = [
           "Demonstrates practical domain adaptation under real infrastructure limits while improving hotel-service answer quality through staged supervised and preference optimization.",
         platformRole:
           "Represents a task-specific foundation model that can be embedded into service agents and domain QA systems.",
+        knowledgeIntro:
+          "Professional focus: service-domain assistants need instruction data, parameter-efficient adaptation, quantized training under GPU limits, and preference alignment. The learning path should move from language-model training to LoRA/QLoRA and then DPO.",
+        learningPath: projectLearningPaths.qwenHotelService,
         logicChain: [
           {
             label: "Domain target",
@@ -298,6 +684,9 @@ export const researchCategories: readonly ResearchCategory[] = [
           "Shows how compact aligned LLMs can become focused social-media sentiment and public-opinion analysis assistants through staged training.",
         platformRole:
           "Adds a compact alignment case study for specialized QA, opinion analysis, and response-behavior optimization.",
+        knowledgeIntro:
+          "Professional focus: compact domain LLMs rely on precise task framing, small-model fine-tuning, sentiment-specific evaluation, and preference data for answer behavior. This project is a lightweight alignment case for public-opinion analysis.",
+        learningPath: projectLearningPaths.weiboSentimentBot,
         logicChain: [
           {
             label: "Task framing",
@@ -327,6 +716,11 @@ export const researchCategories: readonly ResearchCategory[] = [
           "Focuses on sentiment polarity and public-opinion QA instead of broad general-purpose chat.",
         ],
         image: `${imagePath}/weibo_sentiment_qabot.png`,
+        images: [
+          `${imagePath}/weibo_sentiment_qabot.png`,
+          `${imagePath}/weibo_sentiment_qabot_additional1.png`,
+          `${imagePath}/weibo_sentiment_qabot_additional2.png`,
+        ],
       },
     ],
   },
@@ -346,6 +740,9 @@ export const researchCategories: readonly ResearchCategory[] = [
           "Extends foundation-model methods into temporal prediction tasks that require future-state estimation, scenario modeling, and known-future covariate handling.",
         platformRole:
           "Provides the temporal intelligence module for scientific monitoring, market forecasting, and operational prediction.",
+        knowledgeIntro:
+          "Professional focus: time-series foundation models combine context windows, covariates, probabilistic forecasts, cross-series transfer, and forecast evaluation. This project links sequence modeling with scientific and operational forecasting.",
+        learningPath: projectLearningPaths.chronos2,
         logicChain: [
           {
             label: "Forecasting scope",
@@ -375,6 +772,7 @@ export const researchCategories: readonly ResearchCategory[] = [
           "Distinguishes historical covariates from known-future covariates such as holidays, planned events, or future weather assumptions.",
         ],
         image: `${imagePath}/chronos2.png`,
+        images: [`${imagePath}/chronos2.png`, `${imagePath}/chronos2_additional.png`],
       },
       {
         name: "VeFloodBN",
@@ -386,6 +784,9 @@ export const researchCategories: readonly ResearchCategory[] = [
           "Combines interpretable causal structure, uncertainty-aware inference, Markov blanket analysis, spatial risk visualization, and robustness checks for Top-N risk ranking.",
         platformRole:
           "Represents the probabilistic reasoning module for scientific risk analysis and evidence-backed decision support.",
+        knowledgeIntro:
+          "Professional focus: Bayesian networks model uncertain causal dependencies through DAGs, conditional probability tables, exact/approximate inference, and sensitivity checks. The geospatial layer then turns posterior risk into decision maps.",
+        learningPath: projectLearningPaths.veFloodBn,
         logicChain: [
           {
             label: "Causal structure",
@@ -415,6 +816,7 @@ export const researchCategories: readonly ResearchCategory[] = [
           "Produces GeoPandas municipality heatmaps and evaluates Top-N risk ranking robustness with Jaccard and Overlap metrics.",
         ],
         image: `${imagePath}/VeFloodBN.png`,
+        images: [`${imagePath}/VeFloodBN.png`, `${imagePath}/VeFloodBN_additional1.png`],
       },
       {
         name: "Clinical Brain Tumor Detection",
@@ -427,6 +829,9 @@ export const researchCategories: readonly ResearchCategory[] = [
           "Demonstrates how carefully engineered classical models and preprocessing can support medical-image analysis under lightweight implementation constraints.",
         platformRole:
           "Adds a medical AI case study focused on lightweight implementation, preprocessing rigor, and model comparison.",
+        knowledgeIntro:
+          "Professional focus: medical-image baselines require disciplined preprocessing, feature extraction, small-sample validation, classifier comparison, and clinically meaningful error analysis. This project emphasizes transparent classical ML before heavy deep-learning stacks.",
+        learningPath: projectLearningPaths.clinicalBrainTumor,
         logicChain: [
           {
             label: "Clinical task",
@@ -456,6 +861,12 @@ export const researchCategories: readonly ResearchCategory[] = [
           "Highlights small-sample learning and transparent medical-image experimentation without advanced libraries.",
         ],
         image: `${imagePath}/clinical_brain_tumor_detection.png`,
+        images: [
+          `${imagePath}/clinical_brain_tumor_detection.png`,
+          `${imagePath}/clinical_brain_tumor_detection_additional1.png`,
+          `${imagePath}/clinical_brain_tumor_detection_additional2.png`,
+          `${imagePath}/clinical_brain_tumor_detection_additional3.png`,
+        ],
       },
     ],
   },
@@ -475,6 +886,9 @@ export const researchCategories: readonly ResearchCategory[] = [
           "Connects from-scratch optimization, class-imbalance handling, interaction feature engineering, posterior fusion, ROC/PR evaluation, Top-K confidence analysis, and error diagnosis in one system.",
         platformRole:
           "Forms the classical ML foundation beneath modern LLM, agent, and scientific AI workflows.",
+        knowledgeIntro:
+          "Professional focus: from-scratch ML clarifies optimization, gradients, posterior probabilities, model bias, calibration, and evaluation metrics. The intrusion-detection pipeline shows how fundamentals become a full applied system.",
+        learningPath: projectLearningPaths.scratchOmlNids,
         logicChain: [
           {
             label: "Data challenge",
@@ -504,6 +918,11 @@ export const researchCategories: readonly ResearchCategory[] = [
           "Reports end-to-end evaluation with ROC/PR curves, 10x10 confusion matrix, Top-K confidence analysis, error diagnosis, and 10-class macro-F1 around 0.44.",
         ],
         image: `${imagePath}/scratchoml_NIDS.png`,
+        images: [
+          `${imagePath}/scratchoml_NIDS.png`,
+          `${imagePath}/scratchoml_NIDS_additional1.png`,
+          `${imagePath}/scratchoml_NIDS_additional2.png`,
+        ],
       },
       {
         name: "Customer Analytics Platform",
@@ -515,6 +934,9 @@ export const researchCategories: readonly ResearchCategory[] = [
           "Turns tabular customer data into interpretable behavior segments, marketing response signals, value indicators, and decision-support insights.",
         platformRole:
           "Represents applied structured-data intelligence and business analytics inside the broader AI systems portfolio.",
+        knowledgeIntro:
+          "Professional focus: customer analytics combines data cleaning, cohort segmentation, supervised prediction, unsupervised clustering, feature interpretation, and business-facing metric design.",
+        learningPath: projectLearningPaths.customerAnalytics,
         logicChain: [
           {
             label: "Business question",
@@ -544,7 +966,11 @@ export const researchCategories: readonly ResearchCategory[] = [
           "Produces interpretable customer segments and decision signals for applied business analytics.",
         ],
         image: `${imagePath}/customer_platform1.png`,
-        images: [`${imagePath}/customer_platform1.png`, `${imagePath}/customer_platform2.png`],
+        images: [
+          `${imagePath}/customer_platform1.png`,
+          `${imagePath}/customer_platform2.png`,
+          `${imagePath}/customer_platform_additional1.png`,
+        ],
       },
     ],
   },
@@ -564,6 +990,9 @@ export const researchCategories: readonly ResearchCategory[] = [
           "Builds the decision-learning foundation for agents that improve behavior through reward, environment interaction, value approximation, and policy optimization.",
         platformRole:
           "Supplies policy-learning concepts for autonomous systems that must adapt from feedback rather than static supervision.",
+        knowledgeIntro:
+          "Professional focus: reinforcement learning requires the Markov decision process view, environment interaction, reward design, exploration, replay buffers, value learning, and policy optimization. This project builds the conceptual bridge from supervised prediction to adaptive agents.",
+        learningPath: projectLearningPaths.drlBasis,
         logicChain: [
           {
             label: "Learning setup",
@@ -593,6 +1022,7 @@ export const researchCategories: readonly ResearchCategory[] = [
           "Organizes DRL-Basis-Project-v2 as a compact modular implementation for learning, experimentation, and reproducible research.",
         ],
         image: `${imagePath}/rl.png`,
+        images: [`${imagePath}/rl.png`, `${imagePath}/rl_additional1.png`, `${imagePath}/rl_additional2.png`],
       },
       {
         name: "OMNI-Rec",
@@ -604,6 +1034,9 @@ export const researchCategories: readonly ResearchCategory[] = [
           "Reframes recommendation from discriminative ranking into generative, context-aware, preference-aligned intelligence for short-video platforms.",
         platformRole:
           "Connects reinforcement learning, multimodal representation, and user-preference modeling for interactive AI systems.",
+        knowledgeIntro:
+          "Professional focus: recommender systems combine retrieval, ranking, sequence modeling, multimodal item representation, feedback loops, and reward-aware optimization. OMNI-Rec frames recommendation as generative preference modeling rather than static scoring.",
+        learningPath: projectLearningPaths.omniRec,
         logicChain: [
           {
             label: "Paradigm shift",
@@ -633,6 +1066,7 @@ export const researchCategories: readonly ResearchCategory[] = [
           "Combines generative modeling, context awareness, and reinforcement-learning reward optimization for end-to-end recommendation.",
         ],
         image: `${imagePath}/omni_rec.png`,
+        images: [`${imagePath}/omni_rec.png`, `${imagePath}/omni_rec_additional1.png`, `${imagePath}/omni_rec_additional2.png`],
       },
     ],
   },
@@ -652,6 +1086,9 @@ export const researchCategories: readonly ResearchCategory[] = [
           "Bridges language prompts, segmentation masks, motion cues, temporal consistency, and restoration objectives in a high-fidelity multimodal video pipeline.",
         platformRole:
           "Adds temporal visual perception and restoration capability to the portfolio's multimodal intelligence layer.",
+        knowledgeIntro:
+          "Professional focus: video restoration depends on motion estimation, optical flow, temporal consistency, segmentation guidance, and perceptual quality control. This project connects prompt-conditioned masks with frame-to-frame visual reasoning.",
+        learningPath: projectLearningPaths.peanutVideoRestoration,
         logicChain: [
           {
             label: "Restoration problem",
@@ -693,6 +1130,9 @@ export const researchCategories: readonly ResearchCategory[] = [
           "Turns degraded visual documents into more reliable structured text for downstream search, retrieval, knowledge extraction, and document understanding.",
         platformRole:
           "Works as a document-ingestion module for converting papers, PDFs, and scanned artifacts into usable evidence.",
+        knowledgeIntro:
+          "Professional focus: OCR systems combine image restoration, text-region enhancement, layout understanding, recognition confidence, and structured text extraction. P-ADONIS positions super-resolution as a preprocessing layer for downstream document intelligence.",
+        learningPath: projectLearningPaths.pAdonisOcr,
         logicChain: [
           {
             label: "Input problem",
@@ -721,6 +1161,8 @@ export const researchCategories: readonly ResearchCategory[] = [
           "Targets noisy or low-resolution PDFs where text recognition quality is poor.",
           "Improves document ingestion by converting degraded visual text into more reliable structured content.",
         ],
+        image: `${imagePath}/P-DOINS0.png`,
+        images: [`${imagePath}/P-DOINS0.png`, `${imagePath}/P-DOINS1.png`, `${imagePath}/P-DOINS2.png`],
       },
       {
         name: "Hateful Memes Detection",
@@ -732,6 +1174,9 @@ export const researchCategories: readonly ResearchCategory[] = [
           "Tests multimodal reasoning under ambiguous, implicit, sarcastic, and socially sensitive image-text evidence.",
         platformRole:
           "Adds multimodal safety, semantic alignment, and robust image-text understanding to the AI research portfolio.",
+        knowledgeIntro:
+          "Professional focus: multimodal safety requires image-text representation learning, semantic alignment, context-aware reasoning, prompt-based inspection, and careful handling of implicit or sarcastic signals.",
+        learningPath: projectLearningPaths.hatefulMemes,
         logicChain: [
           {
             label: "Safety problem",
@@ -761,6 +1206,7 @@ export const researchCategories: readonly ResearchCategory[] = [
           "Applies prompt engineering and multi-LLM reasoning to improve output quality for ambiguous visual-language cases.",
         ],
         image: `${imagePath}/hateful_memes_detection.png`,
+        images: [`${imagePath}/hateful_memes_detection.png`, `${imagePath}/hateful_memes_detection_additional1.png`],
       },
     ],
   },

@@ -1,10 +1,11 @@
 "use client";
 
-import { useState, type CSSProperties } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
-import { BookOpenCheck, ChevronDown, Github, Layers3, Sparkles } from "lucide-react";
+import { ArrowUpRight, BookOpenCheck, ChevronDown, Github, GraduationCap, Layers3, Sparkles } from "lucide-react";
 import { researchCategories, type ResearchProject } from "@/data/portfolio";
+import { getResearchProjectId, researchProjectLinks } from "@/lib/research-project-index";
 import { cn } from "@/lib/utils";
 
 const topicChipClass =
@@ -19,6 +20,17 @@ const moduleTones = [
   { accent: "264 26% 47%", soft: "265 32% 90%", glow: "264 26% 47%" },
 ] as const;
 
+const learningPathTones = [
+  { accent: "97 29% 38%", soft: "86 42% 88%" },
+  { accent: "39 76% 45%", soft: "43 70% 88%" },
+  { accent: "174 36% 34%", soft: "168 39% 88%" },
+  { accent: "212 28% 40%", soft: "210 34% 89%" },
+  { accent: "350 38% 45%", soft: "354 45% 90%" },
+  { accent: "264 26% 44%", soft: "265 32% 90%" },
+  { accent: "18 48% 43%", soft: "26 55% 89%" },
+  { accent: "146 30% 34%", soft: "142 36% 88%" },
+] as const;
+
 function getModuleToneStyle(index: number): CSSProperties {
   const tone = moduleTones[index % moduleTones.length];
 
@@ -29,11 +41,65 @@ function getModuleToneStyle(index: number): CSSProperties {
   } as CSSProperties;
 }
 
+function getLearningPathToneStyle(index: number): CSSProperties {
+  const tone = learningPathTones[index % learningPathTones.length];
+
+  return {
+    "--learning-accent": tone.accent,
+    "--learning-soft": tone.soft,
+  } as CSSProperties;
+}
+
 export function ResearchProjectModules() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
+  useEffect(() => {
+    let jumpTimer: number | null = null;
+
+    const jumpToProject = (projectId?: string) => {
+      const id = projectId ?? decodeURIComponent(window.location.hash.replace(/^#/, ""));
+      if (!id) {
+        return;
+      }
+
+      const target = researchProjectLinks.find((item) => item.id === id);
+      if (!target) {
+        return;
+      }
+
+      setOpenIndex(target.categoryIndex);
+
+      if (jumpTimer) {
+        window.clearTimeout(jumpTimer);
+      }
+
+      jumpTimer = window.setTimeout(() => {
+        document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 420);
+    };
+
+    const handleHashChange = () => jumpToProject();
+    const handleProjectJump = (event: Event) => {
+      const detail = (event as CustomEvent<{ id?: string }>).detail;
+      jumpToProject(detail?.id);
+    };
+
+    window.addEventListener("hashchange", handleHashChange);
+    window.addEventListener("research-project-jump", handleProjectJump);
+    jumpToProject();
+
+    return () => {
+      if (jumpTimer) {
+        window.clearTimeout(jumpTimer);
+      }
+      window.removeEventListener("hashchange", handleHashChange);
+      window.removeEventListener("research-project-jump", handleProjectJump);
+    };
+  }, []);
+
   return (
     <div className="mt-12 grid gap-5">
+      <ProjectInlineDirectory />
       {researchCategories.map((category, index) => {
         const isOpen = openIndex === index;
         const moduleToneStyle = getModuleToneStyle(index);
@@ -65,7 +131,7 @@ export function ResearchProjectModules() {
                       key={image}
                       src={image}
                       alt={`${category.title} project preview ${imageIndex + 1}`}
-                      className="h-[clamp(7rem,9.4vw,9.75rem)] w-auto max-w-full min-w-0 rounded-2xl object-contain shadow-material-sm transition duration-500 group-hover:-translate-y-1 group-hover:scale-[1.015]"
+                      className="h-[clamp(7rem,9.4vw,9.75rem)] w-auto max-w-full min-w-0 object-contain transition duration-500 group-hover:-translate-y-1 group-hover:scale-[1.015]"
                     />
                   ))}
                 </div>
@@ -124,7 +190,12 @@ export function ResearchProjectModules() {
                   <div className="border-t border-white/10 p-5 md:p-6">
                     <div className="grid gap-4">
                       {category.projects.map((project, projectIndex) => (
-                        <ProjectDetail key={project.name} project={project} index={projectIndex} />
+                        <ProjectDetail
+                          key={project.name}
+                          project={project}
+                          index={projectIndex}
+                          toneOffset={index * 4 + projectIndex}
+                        />
                       ))}
                     </div>
                   </div>
@@ -138,9 +209,10 @@ export function ResearchProjectModules() {
   );
 }
 
-function ProjectDetail({ project, index }: { project: ResearchProject; index: number }) {
+function ProjectDetail({ project, index, toneOffset }: { project: ResearchProject; index: number; toneOffset: number }) {
   const images = project.images ?? (project.image ? [project.image] : []);
   const readmeHighlights = project.readmeHighlights ?? [];
+  const learningPath = project.learningPath ?? [];
   const [activeEvidencePanel, setActiveEvidencePanel] = useState<"notes" | "logic" | null>(null);
   const readmeLogic = project.logicChain ?? ([
     { label: "Research object", value: project.platformRole },
@@ -153,11 +225,12 @@ function ProjectDetail({ project, index }: { project: ResearchProject; index: nu
 
   return (
     <motion.article
+      id={getResearchProjectId(project.name)}
       initial={{ opacity: 0, y: 18 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.045, duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
       className={cn(
-        "grid gap-5 rounded-[28px] border border-white/10 bg-surface/25 p-4 shadow-sm backdrop-blur-xl lg:items-start",
+        "scroll-mt-28 grid gap-5 rounded-[28px] border border-white/10 bg-surface/25 p-4 shadow-sm backdrop-blur-xl lg:items-start",
         images.length > 0 ? "lg:grid-cols-[minmax(220px,0.34fr)_minmax(0,1fr)]" : "",
       )}
     >
@@ -285,6 +358,47 @@ function ProjectDetail({ project, index }: { project: ResearchProject; index: nu
           <InfoBlock label="Key contribution" value={project.impact} />
         </div>
 
+        {project.knowledgeIntro || learningPath.length > 0 ? (
+          <div className="mt-5 rounded-2xl border border-white/10 bg-surface/20 p-4 shadow-sm backdrop-blur-xl">
+            <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-accent">
+              <GraduationCap className="h-3.5 w-3.5" />
+              Professional knowledge
+            </div>
+            {project.knowledgeIntro ? (
+              <p className="mt-3 text-sm leading-7 text-muted-foreground">{project.knowledgeIntro}</p>
+            ) : null}
+
+            {learningPath.length > 0 ? (
+              <>
+                <div className="mt-4 text-xs font-semibold uppercase tracking-[0.16em] text-accent/90">
+                  Official learning path
+                </div>
+                <div className="mt-3 grid gap-2 md:grid-cols-2 xl:grid-cols-3">
+                  {learningPath.map((item, pathIndex) => (
+                    <Link
+                      key={`${project.name}-${item.href}`}
+                      href={item.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      style={getLearningPathToneStyle(toneOffset * 3 + pathIndex)}
+                      className="learning-path-card focus-ring group rounded-2xl border p-3 text-left transition hover:-translate-y-0.5"
+                    >
+                      <span className="learning-path-source block text-[0.68rem] font-semibold uppercase tracking-[0.14em]">
+                        {item.source}
+                      </span>
+                      <span className="mt-1 flex items-start justify-between gap-3 text-sm font-semibold text-foreground">
+                        <span>{item.label}</span>
+                        <ArrowUpRight className="learning-path-arrow mt-0.5 h-3.5 w-3.5 shrink-0 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                      </span>
+                      <span className="mt-2 block text-xs leading-5 text-muted-foreground">{item.description}</span>
+                    </Link>
+                  ))}
+                </div>
+              </>
+            ) : null}
+          </div>
+        ) : null}
+
         <div className="mt-5 flex flex-wrap gap-2">
           {project.keywords.map((keyword) => (
             <span key={keyword} className="rounded-full border border-white/10 bg-surface/25 px-3 py-1 text-xs font-medium text-muted-foreground">
@@ -297,27 +411,41 @@ function ProjectDetail({ project, index }: { project: ResearchProject; index: nu
   );
 }
 
+function ProjectInlineDirectory() {
+  return (
+    <nav
+      className="project-inline-index sticky top-20 z-30 -mx-1 flex gap-2 overflow-x-auto rounded-3xl px-2 py-2 xl:hidden"
+      aria-label="Project directory"
+    >
+      {researchProjectLinks.map((item) => (
+        <a
+          key={item.id}
+          href={`#${item.id}`}
+          title={`${item.projectName} - ${item.categoryTitle}`}
+          onClick={() => {
+            window.dispatchEvent(new CustomEvent("research-project-jump", { detail: { id: item.id } }));
+          }}
+          className="project-jump-link focus-ring shrink-0 rounded-2xl px-3 py-2 text-xs font-semibold"
+        >
+          {item.shortName}
+        </a>
+      ))}
+    </nav>
+  );
+}
+
 function ProjectVisual({ name, images }: { name: string; images: readonly string[] }) {
   return (
-    <>
-      <img
-        src={images[0]}
-        alt={`${name} screenshot`}
-        className="h-72 w-auto max-w-full rounded-3xl object-contain shadow-material-sm"
-      />
-      {images.length > 1 ? (
-        <div className="flex flex-wrap items-center gap-3">
-          {images.slice(1, 3).map((image, index) => (
-            <img
-              key={image}
-              src={image}
-              alt={`${name} supporting screenshot ${index + 1}`}
-              className="h-36 w-auto max-w-full rounded-2xl object-contain shadow-material-sm"
-            />
-          ))}
-        </div>
-      ) : null}
-    </>
+    <div className="grid w-full max-w-[34rem] gap-3">
+      {images.map((image, index) => (
+        <img
+          key={image}
+          src={image}
+          alt={index === 0 ? `${name} screenshot` : `${name} supporting screenshot ${index}`}
+          className="block w-full max-w-full object-contain"
+        />
+      ))}
+    </div>
   );
 }
 

@@ -314,6 +314,77 @@ a {
   color: hsl(var(--module-accent));
 }
 
+.learning-path-card {
+  --learning-accent: var(--accent);
+  --learning-soft: var(--accent-soft);
+  border-color: hsl(var(--learning-accent) / 0.16);
+  background:
+    radial-gradient(circle at 16% 0%, hsl(var(--learning-soft) / 0.62), transparent 52%),
+    linear-gradient(135deg, hsl(var(--surface) / 0.32), hsl(var(--learning-soft) / 0.36)),
+    hsl(var(--surface) / 0.20);
+  box-shadow:
+    0 10px 26px rgba(72, 56, 31, 0.045),
+    inset 0 1px 0 hsl(0 0% 100% / 0.20);
+}
+
+.learning-path-card:hover {
+  border-color: hsl(var(--learning-accent) / 0.26);
+  background:
+    radial-gradient(circle at 16% 0%, hsl(var(--learning-soft) / 0.76), transparent 54%),
+    linear-gradient(135deg, hsl(var(--surface) / 0.42), hsl(var(--learning-soft) / 0.48)),
+    hsl(var(--surface) / 0.26);
+  box-shadow:
+    0 14px 32px rgba(72, 56, 31, 0.06),
+    0 0 0 1px hsl(var(--learning-accent) / 0.045),
+    inset 0 1px 0 hsl(0 0% 100% / 0.24);
+}
+
+.learning-path-card:focus-visible {
+  outline-color: hsl(var(--learning-accent));
+}
+
+.learning-path-source,
+.learning-path-arrow {
+  color: hsl(var(--learning-accent));
+}
+
+.project-jump-sidebar,
+.project-inline-index {
+  border: 1px solid hsl(0 0% 100% / 0.12);
+  background:
+    radial-gradient(circle at 12% 0%, hsl(var(--lume-gold) / 0.11), transparent 42%),
+    linear-gradient(145deg, hsl(var(--surface) / 0.40), hsl(var(--lume-mist) / 0.18)),
+    hsl(var(--surface) / 0.24);
+  box-shadow:
+    0 18px 42px rgba(72, 56, 31, 0.075),
+    inset 0 1px 0 hsl(0 0% 100% / 0.22);
+  backdrop-filter: blur(18px) saturate(1.06);
+}
+
+.project-jump-list,
+.project-inline-index {
+  scrollbar-width: none;
+}
+
+.project-jump-list::-webkit-scrollbar,
+.project-inline-index::-webkit-scrollbar {
+  display: none;
+}
+
+.project-jump-link {
+  color: hsl(var(--muted-foreground));
+  transition:
+    transform 160ms ease,
+    color 160ms ease,
+    background-color 160ms ease;
+}
+
+.project-jump-link:hover {
+  transform: translateX(-2px);
+  background: hsl(var(--accent-soft) / 0.52);
+  color: hsl(var(--accent));
+}
+
 .video-fused-panel {
   border-color: hsl(0 0% 100% / 0.10);
   background:

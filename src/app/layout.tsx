@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { BackgroundVideo } from "@/components/background-video";
+import { ProjectJumpSidebar } from "@/components/project-jump-sidebar";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 
@@ -65,6 +66,7 @@ export default function RootLayout({
           <main>{children}</main>
           <SiteFooter />
         </div>
+        <ProjectJumpSidebar />
       </body>
     </html>
   );

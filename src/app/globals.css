@@ -998,6 +998,71 @@ a {
   transform: translateY(0) scale(0.98);
 }
 
+.evolution-stage-line {
+  background:
+    linear-gradient(
+      90deg,
+      hsl(38 74% 44% / 0.88),
+      hsl(78 34% 38% / 0.86),
+      hsl(108 29% 36% / 0.86),
+      hsl(160 34% 34% / 0.84),
+      hsl(205 33% 40% / 0.82),
+      hsl(258 27% 45% / 0.80)
+    );
+}
+
+.evolution-stage-card {
+  border-color: hsl(var(--stage-accent) / 0.18);
+  background:
+    radial-gradient(circle at 16% 0%, hsl(var(--stage-glow) / 0.16), transparent 42%),
+    radial-gradient(circle at 92% 100%, hsl(var(--stage-soft) / 0.34), transparent 44%),
+    linear-gradient(150deg, hsl(var(--surface) / 0.34), hsl(var(--stage-soft) / 0.28)),
+    hsl(var(--surface) / 0.18);
+  box-shadow:
+    0 18px 42px rgba(72, 56, 31, 0.075),
+    0 0 0 1px hsl(var(--stage-accent) / 0.035),
+    inset 0 1px 0 hsl(0 0% 100% / 0.24),
+    inset 0 -1px 0 hsl(var(--stage-accent) / 0.06);
+}
+
+.evolution-stage-card:hover {
+  border-color: hsl(var(--stage-accent) / 0.25);
+  background:
+    radial-gradient(circle at 16% 0%, hsl(var(--stage-glow) / 0.20), transparent 42%),
+    radial-gradient(circle at 92% 100%, hsl(var(--stage-soft) / 0.42), transparent 44%),
+    linear-gradient(150deg, hsl(var(--surface) / 0.40), hsl(var(--stage-soft) / 0.34)),
+    hsl(var(--surface) / 0.22);
+  box-shadow:
+    0 22px 50px rgba(72, 56, 31, 0.09),
+    0 0 0 1px hsl(var(--stage-accent) / 0.055),
+    inset 0 1px 0 hsl(0 0% 100% / 0.28),
+    inset 0 -1px 0 hsl(var(--stage-accent) / 0.08);
+}
+
+.evolution-stage-icon,
+.evolution-stage-index,
+.evolution-stage-keyword {
+  border-color: hsl(var(--stage-accent) / 0.14);
+  color: hsl(var(--stage-accent));
+}
+
+.evolution-stage-icon {
+  background:
+    radial-gradient(circle at 32% 18%, hsl(var(--stage-soft) / 0.72), transparent 64%),
+    hsl(var(--surface) / 0.36);
+}
+
+.evolution-stage-index,
+.evolution-stage-keyword {
+  background:
+    linear-gradient(135deg, hsl(var(--surface) / 0.42), hsl(var(--stage-soft) / 0.44)),
+    hsl(var(--surface) / 0.24);
+}
+
+.evolution-stage-keyword {
+  box-shadow: inset 0 1px 0 hsl(0 0% 100% / 0.18);
+}
+
 .analysis-line {
   position: relative;
   overflow: hidden;

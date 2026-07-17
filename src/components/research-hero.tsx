@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState, type PointerEvent } from "react";
+import { useEffect, useMemo, useRef, useState, type CSSProperties, type PointerEvent } from "react";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import {
@@ -141,6 +141,15 @@ const researchNavRelations = [
 ] as const;
 
 const timelineIcons = [Cpu, Database, Layers3, Bot, UsersRound, FlaskConical] as const;
+
+const evolutionStageTones = [
+  { accent: "38 74% 44%", soft: "39 70% 88%", glow: "42 88% 60%" },
+  { accent: "78 34% 38%", soft: "79 44% 87%", glow: "76 46% 56%" },
+  { accent: "108 29% 36%", soft: "108 38% 88%", glow: "108 38% 55%" },
+  { accent: "160 34% 34%", soft: "160 42% 88%", glow: "166 42% 52%" },
+  { accent: "205 33% 40%", soft: "205 46% 90%", glow: "204 44% 57%" },
+  { accent: "258 27% 45%", soft: "258 42% 91%", glow: "260 38% 62%" },
+] as const;
 
 const evolutionStages = [
   {
@@ -746,7 +755,7 @@ function EvolutionTimeline({ locale }: { locale: Locale }) {
             initial={{ width: "0%" }}
             animate={{ width: "100%" }}
             transition={{ duration: 2.8, delay: 0.55, ease: [0.22, 1, 0.36, 1] }}
-            className="h-full rounded-full bg-[linear-gradient(90deg,hsl(var(--green)),hsl(var(--amber)),hsl(var(--green)))]"
+            className="evolution-stage-line h-full rounded-full"
           />
           <div className="analysis-line absolute inset-0" />
         </div>
@@ -754,8 +763,13 @@ function EvolutionTimeline({ locale }: { locale: Locale }) {
         <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
           {evolutionStages.map((stage, index) => {
             const Icon = timelineIcons[index] ?? Sparkles;
-            const active = stage.title === "AI Agents" || stage.title === "Scientific AI";
             const stageCopy = copy.stages[index] ?? stage;
+            const tone = evolutionStageTones[index] ?? evolutionStageTones[0];
+            const stageStyle = {
+              "--stage-accent": tone.accent,
+              "--stage-soft": tone.soft,
+              "--stage-glow": tone.glow,
+            } as CSSProperties;
 
             return (
               <motion.div
@@ -766,23 +780,14 @@ function EvolutionTimeline({ locale }: { locale: Locale }) {
                 className="relative"
               >
                 <div
-                  className={[
-                    "group flex h-full min-h-[140px] flex-col rounded-[18px] border bg-surface/25 p-3 text-left shadow-sm backdrop-blur-xl transition duration-300 hover:-translate-y-1",
-                    active
-                      ? "border-white/20 bg-accent-soft/30 text-accent shadow-material-sm"
-                      : "border-white/10 text-muted-foreground hover:bg-surface/40 hover:shadow-material-sm",
-                  ].join(" ")}
+                  className="evolution-stage-card group flex h-full min-h-[140px] flex-col rounded-[18px] border p-3 text-left shadow-sm backdrop-blur-xl transition duration-300 hover:-translate-y-1"
+                  style={stageStyle}
                 >
                   <div className="flex items-center justify-between gap-3">
-                    <div
-                      className={[
-                        "grid h-8 w-8 shrink-0 place-items-center rounded-2xl border bg-surface/30 shadow-sm",
-                        active ? "border-white/20 text-accent" : "border-white/10 text-muted-foreground",
-                      ].join(" ")}
-                    >
+                    <div className="evolution-stage-icon grid h-8 w-8 shrink-0 place-items-center rounded-2xl border shadow-sm">
                       <Icon className="h-3.5 w-3.5" />
                     </div>
-                    <div className="rounded-full border border-white/10 bg-surface/25 px-2.5 py-1 text-[0.62rem] font-semibold uppercase tracking-[0.12em] text-accent">
+                    <div className="evolution-stage-index rounded-full border px-2.5 py-1 text-[0.62rem] font-semibold uppercase tracking-[0.12em]">
                       {String(index + 1).padStart(2, "0")}
                     </div>
                   </div>
@@ -797,10 +802,7 @@ function EvolutionTimeline({ locale }: { locale: Locale }) {
                     {stageCopy.keywords.map((keyword) => (
                       <span
                         key={keyword}
-                        className={[
-                          "inline-flex min-h-6 items-center rounded-full border border-white/10 bg-surface/25 px-3 text-[0.62rem] font-semibold uppercase tracking-[0.10em]",
-                          active ? "text-accent" : "text-accent/85",
-                        ].join(" ")}
+                        className="evolution-stage-keyword inline-flex min-h-6 items-center rounded-full border px-3 text-[0.62rem] font-semibold uppercase tracking-[0.10em]"
                       >
                         {keyword}
                       </span>
